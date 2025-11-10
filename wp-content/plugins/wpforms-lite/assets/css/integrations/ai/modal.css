@@ -15,7 +15,7 @@
 }
 
 .jconfirm-wpforms-ai-purple wpforms-ai-chat .wpforms-ai-chat-welcome-screen-sample-prompts li::after {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-send-purple.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-send-purple.svg");
 }
 
 .jconfirm-wpforms-ai-purple wpforms-ai-chat .wpforms-ai-chat-welcome-screen-sample-prompts li:hover a {
@@ -75,7 +75,7 @@ body .jconfirm.jconfirm-wpforms-ai-modal .jconfirm-box-container .jconfirm-box .
 
 body .jconfirm.jconfirm-wpforms-ai-modal .jconfirm-box-container .jconfirm-box .jconfirm-closeIcon:after {
   content: '';
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/close.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/close.svg");
   background-size: 13px 13px;
   background-position: center;
   background-repeat: no-repeat;
@@ -124,7 +124,7 @@ body .jconfirm.jconfirm-wpforms-ai-modal .jconfirm-box-container .jconfirm-box .
 body .jconfirm.jconfirm-wpforms-ai-modal .jconfirm-box-container .jconfirm-box .wpforms-ai-modal-top-bar .wpforms-ai-modal-pin:after {
   display: inline-block;
   content: '';
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/pin-chat.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/pin-chat.svg");
   background-size: 14px 12px;
   width: 14px;
   height: 12px;
@@ -190,7 +190,7 @@ body .jconfirm.jconfirm-wpforms-ai-modal.pinned .jconfirm-holder .jconfirm-box .
 }
 
 body .jconfirm.jconfirm-wpforms-ai-modal.pinned .jconfirm-holder .jconfirm-box .wpforms-ai-modal-top-bar .wpforms-ai-modal-pin:after {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/unpin-chat.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/unpin-chat.svg");
   background-size: 14px;
   width: 14px;
   height: 14px;

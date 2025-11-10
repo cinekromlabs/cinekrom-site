@@ -2,7 +2,7 @@
   border-radius: 2px;
   box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
-  background: #444 url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/getting-started.png") center right no-repeat;
+  background: #444 url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/getting-started.png") center right no-repeat;
   background-size: contain;
 }
 
@@ -84,12 +84,12 @@
 .wpforms-challenge .wpforms-challenge-list-block .list-block-button.toggle-list {
   display: none;
   inset-inline-end: 30px;
-  background-image: url(https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/chevron-circle-down-regular.svg);
+  background-image: url(https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/chevron-circle-down-regular.svg);
 }
 
 .wpforms-challenge .wpforms-challenge-list-block .list-block-button.challenge-skip, .wpforms-challenge .wpforms-challenge-list-block .list-block-button.challenge-cancel {
   inset-inline-end: 10px;
-  background-image: url(https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/times-circle-regular.svg);
+  background-image: url(https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/times-circle-regular.svg);
   color: #b6b6b6;
 }
 
@@ -223,7 +223,7 @@
   width: 0;
   height: 8px;
   border-radius: 0;
-  background-image: url(https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/bar-bg.png);
+  background-image: url(https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/bar-bg.png);
   background-size: auto 8px;
   background-repeat: repeat-x;
   animation: wpforms-challenge-bar-shift 1.5s linear infinite;
@@ -456,7 +456,7 @@ span.wpforms-challenge-dot.wpforms-challenge-dot-completed:before {
 }
 
 .wpforms-challenge-popup-congrats {
-  background: #ffffff url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/confetti.svg") repeat center;
+  background: #ffffff url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/confetti.svg") repeat center;
 }
 
 .wpforms-challenge-popup-header {
@@ -467,7 +467,7 @@ span.wpforms-challenge-dot.wpforms-challenge-dot-completed:before {
 }
 
 .wpforms-challenge-popup-header-contact {
-  background: #eeeeee url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/popup-contact.png") no-repeat center;
+  background: #eeeeee url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/popup-contact.png") no-repeat center;
   background-size: auto 57%;
 }
 
@@ -849,7 +849,7 @@ span.wpforms-challenge-dot.wpforms-challenge-dot-completed:before {
   height: 42px;
   top: -65px;
   left: 145px;
-  background-image: url(https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/red-arrow.svg);
+  background-image: url(https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/challenge/red-arrow.svg);
   background-size: 15px 42px;
   background-repeat: no-repeat;
 }

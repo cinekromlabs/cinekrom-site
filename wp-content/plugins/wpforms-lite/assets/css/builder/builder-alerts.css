@@ -251,7 +251,7 @@
 .wpforms-fullscreen-notice .close,
 .wpforms-fullscreen-notice .dismiss {
   background-color: transparent;
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/times-circle.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/times-circle.svg");
   border: none;
   color: #81b5d5;
   cursor: pointer;
@@ -319,7 +319,7 @@
 
 #wpforms-builder-abort-message .waving-hand-emoji {
   display: inline-block;
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/empty-states/waving-hand-emoji.png");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/empty-states/waving-hand-emoji.png");
   background-repeat: no-repeat;
   background-size: 24px 24px;
   background-position: 0 0;

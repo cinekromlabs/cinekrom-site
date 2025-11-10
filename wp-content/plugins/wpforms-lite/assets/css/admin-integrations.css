@@ -420,7 +420,7 @@
   vertical-align: middle;
   width: 16px;
   height: 16px;
-  background-image: url(https://cinekrom.com/wp-content/plugins/wpforms-lite/images/integrations/ai/ai-feature.svg);
+  background-image: url(https://www.cinekrom.com/wp-content/plugins/wpforms-lite/images/integrations/ai/ai-feature.svg);
   background-size: 16px 16px;
   margin-inline-end: 8px;
   opacity: .85;
@@ -596,7 +596,7 @@
 }
 
 .wpforms-admin-empty-state-container .waving-hand-emoji {
-  background-image: url(https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/empty-states/waving-hand-emoji.png);
+  background-image: url(https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/empty-states/waving-hand-emoji.png);
   background-position: 0 0;
   background-repeat: no-repeat;
   background-size: 24px 24px;
@@ -868,8 +868,8 @@
 
 @font-face {
   font-family: 'Icon WPForms';
-  src: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/elementor/font/icon-wpforms.eot");
-  src: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/elementor/font/icon-wpforms.eot#iefix") format("embedded-opentype"), url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/elementor/font/icon-wpforms.woff2") format("woff2"), url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/elementor/font/icon-wpforms.woff") format("woff"), url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/elementor/font/icon-wpforms.ttf") format("truetype"), url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/elementor/font/icon-wpforms.svg") format("svg");
+  src: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/elementor/font/icon-wpforms.eot");
+  src: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/elementor/font/icon-wpforms.eot#iefix") format("embedded-opentype"), url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/elementor/font/icon-wpforms.woff2") format("woff2"), url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/elementor/font/icon-wpforms.woff") format("woff"), url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/elementor/font/icon-wpforms.ttf") format("truetype"), url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/elementor/font/icon-wpforms.svg") format("svg");
 }
 
 #elementor-editor-wrapper .elementor-control-type-wpforms_themes .wpforms-elementor-themes-radio-group, .elementor-edit-area .elementor-control-type-wpforms_themes .wpforms-elementor-themes-radio-group {
@@ -1403,7 +1403,7 @@
 
 .et-db #et-boc .et-l .et-fb-modules-list ul > li.wpforms_selector::before {
   content: '';
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/divi/wpforms-icon.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/divi/wpforms-icon.svg");
   height: 16px;
   font-variant: normal;
   background-position: center center;
@@ -1635,32 +1635,32 @@
 }
 
 .edit-post-sidebar .wpforms-gutenberg-panel .wpforms-panel-preview-themes, .interface-interface-skeleton__sidebar .wpforms-gutenberg-panel .wpforms-panel-preview-themes {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/gutenberg/panel-themes.png");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/gutenberg/panel-themes.png");
   height: 390px;
 }
 
 .edit-post-sidebar .wpforms-gutenberg-panel .wpforms-panel-preview-field, .interface-interface-skeleton__sidebar .wpforms-gutenberg-panel .wpforms-panel-preview-field {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/gutenberg/panel-field.png");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/gutenberg/panel-field.png");
   height: 310px;
 }
 
 .edit-post-sidebar .wpforms-gutenberg-panel .wpforms-panel-preview-label, .interface-interface-skeleton__sidebar .wpforms-gutenberg-panel .wpforms-panel-preview-label {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/gutenberg/panel-label.png");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/gutenberg/panel-label.png");
   height: 220px;
 }
 
 .edit-post-sidebar .wpforms-gutenberg-panel .wpforms-panel-preview-button, .interface-interface-skeleton__sidebar .wpforms-gutenberg-panel .wpforms-panel-preview-button {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/gutenberg/panel-button.png");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/gutenberg/panel-button.png");
   height: 340px;
 }
 
 .edit-post-sidebar .wpforms-gutenberg-panel .wpforms-panel-preview-container, .interface-interface-skeleton__sidebar .wpforms-gutenberg-panel .wpforms-panel-preview-container {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/gutenberg/panel-container.png");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/gutenberg/panel-container.png");
   height: 290px;
 }
 
 .edit-post-sidebar .wpforms-gutenberg-panel .wpforms-panel-preview-background, .interface-interface-skeleton__sidebar .wpforms-gutenberg-panel .wpforms-panel-preview-background {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/gutenberg/panel-background.png");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/gutenberg/panel-background.png");
   height: 140px;
 }
 
@@ -1935,7 +1935,7 @@
 }
 
 .wpforms-loading-spinner {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/spinner.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/spinner.svg");
   background-repeat: no-repeat;
   background-size: 15px 15px;
   background-position: center;
@@ -1952,11 +1952,11 @@
 }
 
 .wpforms-loading-spinner.wpforms-loading-white {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/spinner-white.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/spinner-white.svg");
 }
 
 .wpforms-loading-spinner.wpforms-loading-blue {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/spinner-blue.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/spinner-blue.svg");
   background-size: 14px 15px;
 }
 
@@ -2060,7 +2060,7 @@
   display: block;
   width: 48px;
   height: 48px;
-  mask-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/exclamation-circle.svg");
+  mask-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/exclamation-circle.svg");
   mask-size: 48px 48px;
   margin: 0 auto;
 }
@@ -2159,7 +2159,7 @@ div.wpforms-container .wpforms-form .choices[data-type*="select-one"] input.choi
 }
 
 div.wpforms-container .wpforms-form .choices[data-type*="select-one"] .choices__button {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross-inverse.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross-inverse.svg");
   padding: 0;
   background-size: 8px;
   position: absolute;
@@ -2261,7 +2261,7 @@ div.wpforms-container .wpforms-form .choices[data-type*="text"] .choices__button
   margin-inline-start: 5px;
   padding: 0;
   background-color: transparent;
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross.svg");
   background-size: 12px;
   background-position: center center;
   background-repeat: no-repeat;

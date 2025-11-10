@@ -207,7 +207,7 @@
 }
 
 .wpforms-panel-fields .no-fields-preview::before {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/empty-states/no-fields.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/empty-states/no-fields.svg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 371px 260px;
@@ -218,7 +218,7 @@
 }
 
 .wpforms-panel-fields .no-fields-preview::after {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/builder/default-arrow.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/builder/default-arrow.svg");
   background-repeat: no-repeat;
   background-size: 97px 83px;
   content: "";

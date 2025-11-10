@@ -76,7 +76,7 @@ div.wpforms-container .wpforms-form .choices[data-type*="select-one"] input.choi
 }
 
 div.wpforms-container .wpforms-form .choices[data-type*="select-one"] .choices__button {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross-inverse.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross-inverse.svg");
   padding: 0;
   background-size: 8px;
   position: absolute;
@@ -178,7 +178,7 @@ div.wpforms-container .wpforms-form .choices[data-type*="text"] .choices__button
   margin-inline-start: 5px;
   padding: 0;
   background-color: transparent;
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross.svg");
   background-size: 12px;
   background-position: center center;
   background-repeat: no-repeat;

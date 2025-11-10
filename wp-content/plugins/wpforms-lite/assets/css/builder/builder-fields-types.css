@@ -76,7 +76,7 @@
 }
 
 .choices[data-type*="select-one"] .choices__button {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross-inverse.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross-inverse.svg");
   padding: 0;
   background-size: 8px;
   position: absolute;
@@ -178,7 +178,7 @@
   margin-inline-start: 5px;
   padding: 0;
   background-color: transparent;
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross.svg");
   background-size: 12px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -538,7 +538,7 @@ body.rtl .choices[data-type*="select-multiple"] .choices__button, body.rtl .choi
 
 .wpforms-builder-provider .choices[data-type*="text"] .choices__button,
 .wpforms-builder-provider .choices[data-type*="select-multiple"] .choices__button {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross.svg");
   background-size: 12px;
   width: 12px;
   border: none;
@@ -983,7 +983,7 @@ div.wpforms-container.wpforms-edit-entry-container .wpforms-form .choices .choic
 .wpforms-panel-fields .wpforms-field-radio ul.wpforms-image-choices-modern .wpforms-image-choices-image:after,
 .wpforms-panel-fields .wpforms-field-payment-multiple ul.wpforms-image-choices-modern .wpforms-image-choices-image:after,
 .wpforms-panel-fields .wpforms-field-payment-checkbox ul.wpforms-image-choices-modern .wpforms-image-choices-image:after {
-  background: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/builder/check-circle.svg") no-repeat;
+  background: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/builder/check-circle.svg") no-repeat;
   background-size: 32px 32px;
   border-radius: 50%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
@@ -3003,7 +3003,7 @@ div.wpforms-container.wpforms-edit-entry-container .wpforms-form .choices .choic
   height: 11px;
   width: 20px;
   box-shadow: 0 0 1px 0 #888;
-  background: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/phone/us-flag.png") no-repeat;
+  background: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/phone/us-flag.png") no-repeat;
   background-size: 100%;
 }
 
@@ -3660,7 +3660,7 @@ table.wpforms-order-summary-preview tr.wpforms-order-summary-preview-total td {
 .wpforms-panel-fields .wpforms-field-richtext .wpforms-richtext-wrap .mce-toolbar-grp {
   height: 43px;
   display: block;
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/richtext/tinymce-toolbar-full.png");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/richtext/tinymce-toolbar-full.png");
   background-repeat: no-repeat;
   background-position: left center;
   background-size: auto 38px;
@@ -3669,15 +3669,15 @@ table.wpforms-order-summary-preview tr.wpforms-order-summary-preview-total td {
 }
 
 .wpforms-panel-fields .wpforms-field-richtext .wpforms-richtext-wrap .mce-toolbar-grp.wpforms-field-richtext-media-enabled {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/richtext/tinymce-toolbar-full-mb.png");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/richtext/tinymce-toolbar-full-mb.png");
 }
 
 .wpforms-panel-fields .wpforms-field-richtext .wpforms-richtext-wrap .mce-toolbar-grp.wpforms-field-richtext-toolbar-basic {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/richtext/tinymce-toolbar-basic.png");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/richtext/tinymce-toolbar-basic.png");
 }
 
 .wpforms-panel-fields .wpforms-field-richtext .wpforms-richtext-wrap .mce-toolbar-grp.wpforms-field-richtext-toolbar-basic.wpforms-field-richtext-media-enabled {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/richtext/tinymce-toolbar-basic-mb.png");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/richtext/tinymce-toolbar-basic-mb.png");
 }
 
 .wpforms-field-option-row-choices ul.wpforms-ai-choices li:last-of-type {
@@ -3703,7 +3703,7 @@ table.wpforms-order-summary-preview tr.wpforms-order-summary-preview-total td {
   vertical-align: middle;
   width: 16px;
   height: 16px;
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/ai-feature.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/ai-feature.svg");
   background-size: 16px 16px;
   margin-inline-end: 8px;
   opacity: .85;
@@ -3953,7 +3953,7 @@ table.wpforms-order-summary-preview .wpforms-order-summary-preview-coupon-total 
   margin: 0 0 0 -8px;
   width: 16px;
   height: 16px;
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/css/images/check.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/css/images/check.svg");
   background-size: contain;
   z-index: 1;
   border: 0;

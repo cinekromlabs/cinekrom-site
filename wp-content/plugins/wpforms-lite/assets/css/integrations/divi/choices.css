@@ -75,7 +75,7 @@ div.wpforms-container .wpforms-form .choices[data-type*="select-one"] input.choi
 }
 
 div.wpforms-container .wpforms-form .choices[data-type*="select-one"] .choices__button {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/css/integrations/images/cross-inverse.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/css/integrations/images/cross-inverse.svg");
   padding: 0;
   background-size: 8px;
   position: absolute;
@@ -175,7 +175,7 @@ div.wpforms-container .wpforms-form .choices[data-type*="select-multiple"] .choi
   margin-inline-start: 5px;
   padding: 0;
   background-color: transparent;
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/css/integrations/images/cross.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/css/integrations/images/cross.svg");
   background-size: 12px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -485,11 +485,11 @@ body.rtl div.wpforms-container .wpforms-form .choices[data-type*="select-multipl
 
 div.wpforms-container .wpforms-form .choices[data-type*="select-multiple"] .choices__button,
 div.wpforms-container .wpforms-form .choices[data-type*="text"] .choices__button {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross.svg");
 }
 
 div.wpforms-container .wpforms-form .choices[data-type*="select-one"] .choices__button {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross-inverse.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross-inverse.svg");
 }
 
 .et-db #et-boc .et-l .et_pb_module div.wpforms-container .wpforms-form .choices {
@@ -569,7 +569,7 @@ div.wpforms-container .wpforms-form .choices[data-type*="select-one"] .choices__
 }
 
 .et-db #et-boc .et-l .et_pb_module div.wpforms-container .wpforms-form .choices[data-type*="select-one"] .choices__button {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/css/integrations/images/cross-inverse.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/css/integrations/images/cross-inverse.svg");
   padding: 0;
   background-size: 8px;
   position: absolute;
@@ -669,7 +669,7 @@ div.wpforms-container .wpforms-form .choices[data-type*="select-one"] .choices__
   margin-inline-start: 5px;
   padding: 0;
   background-color: transparent;
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/css/integrations/images/cross.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/css/integrations/images/cross.svg");
   background-size: 12px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -986,10 +986,10 @@ div.wpforms-container .wpforms-form .choices[data-type*="select-one"] .choices__
 
 .et-db #et-boc .et-l .et_pb_module div.wpforms-container .wpforms-form .choices[data-type*="select-multiple"] .choices__button,
 .et-db #et-boc .et-l .et_pb_module div.wpforms-container .wpforms-form .choices[data-type*="text"] .choices__button {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross.svg");
 }
 
 .et-db #et-boc .et-l .et_pb_module div.wpforms-container .wpforms-form .choices[data-type*="select-one"] .choices__button {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross-inverse.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/cross-inverse.svg");
   cursor: not-allowed;
 }

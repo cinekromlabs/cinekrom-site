@@ -71,7 +71,7 @@
   content: '';
   position: absolute;
   left: 20px;
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/back.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/back.svg");
   background-size: 13px 11px;
   width: 13px;
   height: 11px;
@@ -99,7 +99,7 @@
 }
 
 #wpforms-panel-ai-form .wpforms-panel-content .wpforms-panel-empty-state::before {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/ai-form-empty-state.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/ai-form-empty-state.svg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 568px 284px;
@@ -371,27 +371,27 @@ wpforms-ai-chat[mode="forms"] .wpforms-ai-chat-message-input textarea {
 }
 
 wpforms-ai-chat[mode="forms"] .wpforms-ai-chat-welcome-screen-sample-prompts i.wpforms-ai-chat-sample-restaurant {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-restaurant.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-restaurant.svg");
 }
 
 wpforms-ai-chat[mode="forms"] .wpforms-ai-chat-welcome-screen-sample-prompts i.wpforms-ai-chat-sample-ticket {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-ticket.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-ticket.svg");
 }
 
 wpforms-ai-chat[mode="forms"] .wpforms-ai-chat-welcome-screen-sample-prompts i.wpforms-ai-chat-sample-design {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-design.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-design.svg");
 }
 
 wpforms-ai-chat[mode="forms"] .wpforms-ai-chat-welcome-screen-sample-prompts i.wpforms-ai-chat-sample-stop {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-stop-sign.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-stop-sign.svg");
 }
 
 wpforms-ai-chat[mode="forms"] .wpforms-ai-chat-welcome-screen-sample-prompts i.wpforms-ai-chat-sample-pizza {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-pizza.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-pizza.svg");
 }
 
 wpforms-ai-chat[mode="forms"] .wpforms-ai-chat-welcome-screen-sample-prompts i.wpforms-ai-chat-sample-market {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-market.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-market.svg");
 }
 
 wpforms-ai-chat.wpforms-ai-chat-blue .wpforms-ai-chat-message-list .wpforms-ai-chat-message-item .wpforms-ai-chat-header .wpforms-ai-chat-header-description {
@@ -455,7 +455,7 @@ wpforms-ai-chat.wpforms-ai-chat-blue .wpforms-ai-chat-message-list .wpforms-chat
 
 wpforms-ai-chat.wpforms-ai-chat-blue .wpforms-ai-chat-message-list .wpforms-chat-item-answer:not(.active) .wpforms-ai-chat-answer-buttons .wpforms-ai-chat-answer-buttons-response .wpforms-ai-chat-answer-button.dislike,
 wpforms-ai-chat.wpforms-ai-chat-blue .wpforms-ai-chat-message-list .wpforms-chat-item-warning:not(.active) .wpforms-ai-chat-answer-buttons .wpforms-ai-chat-answer-buttons-response .wpforms-ai-chat-answer-button.dislike {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/thumbs-down-inactive.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/thumbs-down-inactive.svg");
 }
 
 wpforms-ai-chat.wpforms-ai-chat-blue .wpforms-ai-chat-message-list .wpforms-chat-item-answer:not(.active) .wpforms-ai-chat-answer-buttons .wpforms-ai-chat-answer-buttons-response button,
@@ -548,7 +548,7 @@ wpforms-ai-chat.wpforms-ai-chat-blue .wpforms-ai-chat-welcome-screen-sample-prom
 }
 
 wpforms-ai-chat.wpforms-ai-chat-blue .wpforms-ai-chat-welcome-screen-sample-prompts li::after {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-send-blue.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/icon-send-blue.svg");
 }
 
 wpforms-ai-chat.wpforms-ai-chat-blue .wpforms-ai-chat-welcome-screen-sample-prompts li:hover a {

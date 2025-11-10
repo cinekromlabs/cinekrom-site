@@ -500,7 +500,7 @@
 }
 
 #wpforms-builder-help-content #wpforms-builder-help-search.wpforms-empty input {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/search.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/search.svg");
 }
 
 #wpforms-builder-help-content .wpforms-builder-help-error {
@@ -703,7 +703,7 @@
   position: absolute;
   bottom: 0;
   inset-inline-end: 0;
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/smtp/pattie-2.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/smtp/pattie-2.svg");
   background-size: 100%;
   z-index: 1;
 }
@@ -817,7 +817,7 @@
 
 .wpforms-admin-page .wpforms-panel-content .wpforms-alert.wpforms-pro-fields-notice .wpforms-alert-message {
   padding: 20px 20px 20px 50px;
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/bulb-orange.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/bulb-orange.svg");
   background-size: 14px 21px;
   background-repeat: no-repeat;
   background-position: 20px 22px;
@@ -848,7 +848,7 @@
 }
 
 .wpforms-admin-page .wpforms-panel-content .wpforms-alert.wpforms-pro-fields-notice.wpforms-alert-error .wpforms-alert-message {
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/bulb-red.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/bulb-red.svg");
 }
 
 .wpforms-admin-page .wpforms-panel-content .wpforms-alert.wpforms-pro-fields-notice .wpforms-alert-buttons {
@@ -862,7 +862,7 @@
 
 .wpforms-admin-page .wpforms-panel-content .wpforms-alert.wpforms-pro-fields-notice .wpforms-alert-buttons button:before {
   content: '';
-  background-image: url("https://cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/close.svg");
+  background-image: url("https://www.cinekrom.com/wp-content/plugins/wpforms-lite/assets/images/integrations/ai/close.svg");
   background-size: 12px 12px;
   width: 12px;
   height: 12px;
