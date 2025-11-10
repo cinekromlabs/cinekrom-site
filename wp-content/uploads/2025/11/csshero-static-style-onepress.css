@@ -1,0 +1,128 @@
+.section-parallax .parallax-bg img,
+#parallax-hero .parallax-bg img {
+  opacity: 0;
+  filter: blur(100px);
+  transform: scale(1.1);
+  animation: fadeInZoomBlur 3s ease-out forwards;
+}
+@keyframes fadeInZoomBlur {
+  0% {
+    opacity: 0;
+    filter: blur(100px);
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+  }
+}
+#header-section > #parallax-hero > #hero .row {
+  margin-top: -1px;
+}
+#hero .hcl2-content {
+  text-align: left;
+}
+body > #page > #content #features {
+  background-color: #292929;
+}
+body > #page > #content #services {
+  background-color: #161616;
+}
+#services .wow > .service-item {
+  background-color: #272626;
+}
+.row > .wow .service-title {
+  color: #ffffff;
+}
+#main > #features .section-title {
+  color: #bdbdbd;
+}
+body > #page > #content #team {
+  background-color: #162f40;
+}
+body > #page > #content #news {
+  background-color: #1c1c1c;
+}
+.list-article > .list-article-content a {
+  color: #e2e2e2;
+  text-transform: uppercase;
+}
+.blog-entry > .list-article p {
+  color: #929292;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 17px;
+}
+#main > #features .row {
+  font-weight: 200;
+}
+.followWrap > #masthead #nav-toggle {
+  display: none;
+}
+.onepress-menu {
+  display: none;
+}
+body > #page > #content #about {
+  background-color: #162f40;
+}
+@media screen and (max-width: 1024px) {
+  #hero .hcl2-content {
+    text-align: left;
+  }
+}
+@media screen and (max-width: 768px) {
+  #hero .hcl2-content {
+    text-align: left;
+  }
+  .container #footer-1 p {
+    text-align: center;
+  }
+  .container #footer-2 p {
+    text-align: center;
+  }
+  .container #footer-3 p {
+    text-align: center;
+  }
+  #footer-4 > #block-19 .wp-image-1452 {
+    transform: scale3d(0.73, 0.73, 1);
+  }
+  .container .wp-block-image {
+    text-align: center;
+  }
+  .container #footer-4 p {
+    text-align: center;
+  }
+}
+@media screen and (max-width: 375px) {
+  #hero .hcl2-content {
+    text-align: left;
+  }
+  .container #footer-1 p {
+    text-align: center;
+  }
+  .container #footer-2 p {
+    text-align: center;
+  }
+  .container #footer-3 p {
+    text-align: center;
+  }
+  #footer-4 > #block-19 .wp-image-1452 {
+    transform: scale3d(0.8, 0.8, 1);
+  }
+  .wow li {
+    text-align: left !important;
+  }
+  .service-content > .wp-block-columns p {
+    text-align: left;
+  }
+  .row > .clearleft p {
+    text-align: justify;
+  }
+  .container .wp-block-image {
+    text-align: center;
+  }
+  .container #footer-4 p {
+    text-align: center;
+  }
+}
