@@ -2639,161 +2639,177 @@ html.smooth-off { scroll-behavior: auto !important; }
   <div id="waitlist-bubbles" style="position: absolute; inset: 0; z-index: 0;"></div>
 
   <!-- Script -->
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const form      = document.getElementById("waitlist-form");
-    const message   = document.getElementById("form-message");
-    const customBtn = document.getElementById("custom-submit-btn");
-    const email     = form.querySelector('input[type="email"]');
-    const waitlistSection = document.getElementById('waitlist');
+ <script>
+document.addEventListener("DOMContentLoaded", function () {
+  /* ========= Refs ========= */
+  const form        = document.getElementById("waitlist-form");
+  const message     = document.getElementById("form-message");
+  const customBtn   = document.getElementById("custom-submit-btn");
+  const email       = form.querySelector('input[type="email"]');
+  const waitlistSec = document.getElementById("waitlist");
 
-    /* === iOS: evitar salto/zoom al enfocar === */
-    function centerEmail() {
-      try { email.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' }); }
-      catch (e) { email.scrollIntoView(); }
+  /* ========= Helpers scroll/focus (iOS) ========= */
+  const disableSmooth = () => document.documentElement.classList.add('smooth-off');
+  const enableSmooth  = () => document.documentElement.classList.remove('smooth-off');
+
+  function centerEmail() {
+    try {
+      email.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' });
+    } catch {
+      email.scrollIntoView();
     }
-    function disableSmooth() { document.documentElement.classList.add('smooth-off'); }
-    function enableSmooth()  { document.documentElement.classList.remove('smooth-off'); }
+  }
 
-    email.addEventListener('focus', () => {
-      disableSmooth();
-      waitlistSection.classList.add('freeze-bg');   // BLACKOUT on
-      setTimeout(centerEmail, 300);
-    });
+  let vvAttached = false;
+  const onVV = () => {
+    // Solo recentra si realmente está en foco
+    if (document.activeElement === email) centerEmail();
+  };
+  function attachVV() {
+    if (!('visualViewport' in window) || vvAttached) return;
+    window.visualViewport.addEventListener('resize', onVV);
+    window.visualViewport.addEventListener('scroll', onVV);
+    vvAttached = true;
+  }
+  function detachVV() {
+    if (!('visualViewport' in window) || !vvAttached) return;
+    window.visualViewport.removeEventListener('resize', onVV);
+    window.visualViewport.removeEventListener('scroll', onVV);
+    vvAttached = false;
+  }
 
-    // --- BLUR con reinicio limpio de animación (mata seam al reactivar) ---
-    email.addEventListener('blur', () => {
-      enableSmooth();
-      waitlistSection.classList.remove('freeze-bg'); // BLACKOUT off
+  function enterFocusMode() {
+    disableSmooth();
+    attachVV();
+    // espera a que aparezca el teclado
+    setTimeout(centerEmail, 300);
+  }
+  function exitFocusMode() {
+    detachVV();
+    enableSmooth();
+  }
 
-      // Reinicio limpio del background animado para evitar flicker/seam
-      const prevAnim = getComputedStyle(waitlistSection).animation;
-      waitlistSection.style.animation = 'none';
-      // fuerza reflow
-      void waitlistSection.offsetHeight;
-      // restaura en el siguiente frame (usa la regla CSS)
-      requestAnimationFrame(() => {
-        waitlistSection.style.animation = '';
+  /* ========= Eventos de foco ========= */
+  email.addEventListener('focus', enterFocusMode);
+  email.addEventListener('blur',  exitFocusMode);
+
+  /* ========= Mensajes UI ========= */
+  function showMsg(html, ok = false) {
+    message.innerHTML = html;
+    message.style.color = ok ? '#9effa0' : '#ffd2d2';
+  }
+
+  /* ========= Validación ========= */
+  function validateBeforeSend() {
+    if (!form.checkValidity()) { form.reportValidity(); return false; }
+    const v = email.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
+      showMsg('❌ Please enter a valid email address.', false);
+      email.focus();
+      return false;
+    }
+    return true;
+  }
+
+  /* ========= Envío (con protección doble clic) ========= */
+  let sending = false;
+  async function submitForm(e) {
+    e?.preventDefault();
+    if (sending) return;
+
+    if (!validateBeforeSend()) return;
+
+    // Clave: soltar foco y desmontar recentrado antes de enviar
+    email.blur();      // dispara exitFocusMode en navegadores normales
+    exitFocusMode();   // por si acaso algún navegador no emite blur
+
+    showMsg('Sending…', true);
+    sending = true;
+
+    const data = new FormData(form);
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: data,
+        headers: { 'Accept': 'application/json' }
       });
-    });
 
-    // Si tocan el form antes de enfocar, aplica blackout ya
-    form.addEventListener('pointerdown', () => waitlistSection.classList.add('freeze-bg'), { passive: true });
-    form.addEventListener('touchstart',  () => waitlistSection.classList.add('freeze-bg'), { passive: true });
+      let payload = null;
+      try { payload = await response.json(); } catch {}
 
-    // Mientras el teclado virtual mueve el viewport
-    if ('visualViewport' in window) {
-      const onVV = () => {
-        if (document.activeElement === email || form.matches(':focus-within')) {
-          waitlistSection.classList.add('freeze-bg');
-          centerEmail();
-        }
-      };
-      window.visualViewport.addEventListener('resize', onVV);
-      window.visualViewport.addEventListener('scroll', onVV);
-    }
+      if (response.ok) {
+        showMsg("✅ You're now on the waitlist. We'll be in touch.", true);
+        form.reset();
 
-    /* === VALIDACIÓN + ENVÍO === */
-    function showMsg(html, ok=false) {
-      message.innerHTML = html;
-      message.style.color = ok ? '#9effa0' : '#ffd2d2';
-    }
-
-    function validateBeforeSend() {
-      // Validación nativa
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return false;
-      }
-      // Guardia extra por si algún navegador no valida bien el type="email"
-      const v = email.value.trim();
-      const basicEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!basicEmail.test(v)) {
-        showMsg('❌ Please enter a valid email address.', false);
-        email.focus();
-        return false;
-      }
-      return true;
-    }
-
-    async function submitForm() {
-      if (!validateBeforeSend()) {
-        // apaga blackout si estaba activo para mostrar tooltips/mensajes
-        waitlistSection.classList.remove('freeze-bg');
-        return;
-      }
-
-      showMsg('Sending…', true);
-
-      const data = new FormData(form);
-      try {
-        const response = await fetch(form.action, {
-          method: "POST",
-          body: data,
-          headers: { 'Accept': 'application/json' }
+        // Asegura que el documento quede scrolleable y “despegado”
+        requestAnimationFrame(() => {
+          enableSmooth();
+          detachVV();
+          // micro-nudge para soltar cualquier pegado del viewport
+          window.scrollTo(window.scrollX, window.scrollY + 1);
+          setTimeout(() => {
+            window.scrollTo(window.scrollX, Math.max(0, window.scrollY - 1));
+          }, 0);
         });
-
-        let payload = null;
-        try { payload = await response.json(); } catch (_) {}
-
-        if (response.ok) {
-          showMsg("✅ You're now on the waitlist. We'll be in touch.", true);
-          form.reset();
-        } else {
-          const serverMsg = payload?.errors?.map(e => e.message).join('<br>') ||
-                            payload?.message ||
-                            '❌ Something went wrong. Please try again.';
-          showMsg(serverMsg, false);
-          email.focus();
-        }
-      } catch (err) {
-        showMsg('❌ Network error. Please try again.', false);
-      } finally {
-        // apaga blackout en cualquier caso
-        waitlistSection.classList.remove('freeze-bg');
+      } else {
+        const serverMsg = payload?.errors?.map(e => e.message).join('<br>') ||
+                          payload?.message ||
+                          '❌ Something went wrong. Please try again.';
+        showMsg(serverMsg, false);
+        // Permite corregir: re-enfoca
+        email.focus();
       }
+    } catch {
+      showMsg('❌ Network error. Please try again.', false);
+      email.focus();
+    } finally {
+      sending = false;
     }
+  }
 
-    // Botón visual → submit controlado
-    customBtn.addEventListener("click", function (e) {
-      e.preventDefault();
-      submitForm();
-    });
+  /* ========= Listeners de envío y accesibilidad ========= */
+  customBtn.addEventListener("click", submitForm);
 
-    // Accesibilidad: Enter/Espacio
-    customBtn.addEventListener("keydown", function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); submitForm(); }
-    });
-
-    // Por si el usuario presiona Enter dentro del input:
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      submitForm();
-    });
-
-    /* === PARTÍCULAS (solo en esta sección) === */
-    if (window.particlesJS) {
-      particlesJS("waitlist-particles", {
-        "particles": {
-          "number": { "value": 60 },
-          "color": { "value": "#ffffff" },
-          "shape": { "type": "circle" },
-          "opacity": { "value": 0.2 },
-          "size": { "value": 3 },
-          "line_linked": {
-            "enable": true, "distance": 150, "color": "#ffffff",
-            "opacity": 0.1, "width": 1
-          },
-          "move": { "enable": true, "speed": 1 }
-        },
-        "interactivity": {
-          "events": { "onhover": { "enable": true, "mode": "repulse" } }
-        },
-        "retina_detect": true
-      });
+  // Accesibilidad en <a role="button" tabindex="0">: Enter + Space
+  customBtn.addEventListener("keydown", function (e) {
+    const k = e.key;
+    if (k === ' ' || k === 'Spacebar' || k === 'Enter') {
+      e.preventDefault(); // evita scroll con Space y doble activación
+      submitForm(e);
     }
   });
-  </script>
+
+  // Enter dentro del input (submit nativo del form)
+  form.addEventListener('submit', submitForm);
+
+  /* ========= Partículas (solo una inicialización) ========= */
+  if (window.particlesJS && !document.getElementById('waitlist-particles').dataset.init) {
+    particlesJS("waitlist-particles", {
+      "particles": {
+        "number": { "value": 60 },
+        "color": { "value": "#ffffff" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.2 },
+        "size": { "value": 3 },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ffffff",
+          "opacity": 0.1,
+          "width": 1
+        },
+        "move": { "enable": true, "speed": 1 }
+      },
+      "interactivity": {
+        "events": { "onhover": { "enable": true, "mode": "repulse" } }
+      },
+      "retina_detect": true
+    });
+    // marca para no reinicializar si vuelves a inyectar scripts
+    document.getElementById('waitlist-particles').dataset.init = "1";
+  }
+});
+</script>
 </section></main></div>
 
 <footer id="colophon" class="site-footer" role="contentinfo"><style>
