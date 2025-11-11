@@ -871,29 +871,74 @@ body::-webkit-scrollbar {
 </ul></div>
 						</ul></nav></div>
 			</div>
-		</header><div id="parallax-hero" class=" parallax-hero jarallax"> <div class="parallax-bg jarallax-img"><img src="https://www.cinekrom.com/wp-content/uploads/2025/09/hero-ignia.jpg" alt=""></div>	<section id="hero" class="hero-slideshow-wrapper hero-slideshow-fullscreen"><div class="slider-spinner">
-				<div class="double-bounce1"></div>
-				<div class="double-bounce2"></div>
-			</div>
-		
-		  <!-- Part&iacute;culas -->
+		</header><div id="parallax-hero" class=" parallax-hero jarallax"> <div class="parallax-bg jarallax-img"><img src="https://www.cinekrom.com/wp-content/uploads/2025/09/hero-ignia.jpg" alt=""></div>	<section id="hero" class="hero-slideshow-wrapper hero-slideshow-fullscreen">
+
+  <style>
+    #hero .hero-title {
+      position: relative;
+      margin-bottom: 0.6em;
+      line-height: 1.2; /* ajusta según tu tipografía */
+    }
+
+    #hero .hero-title::before {
+      content: attr(data-reserve);
+      display: block;
+      visibility: hidden;
+      white-space: pre-line; /* respeta <br> manual */
+    }
+
+    #hero #typeit_217559 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+  </style>
+
+  <div class="slider-spinner">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+  </div>
+
+  <!-- Partículas -->
   <div id="particles-js"></div>
-				<div class="container">
-					<div class="row hero__content hero-content-style2">
-						<div class="col-md-12 col-lg-6">
-							<div class="hcl2-content"><p><img src="https://www.cinekrom.com/wp-content/uploads/2025/09/logo_ignia_full_color.png" alt="" width="48" height="100"></p>
-<h2><span id="typeit_217559"></span></h2>
-<p><em>She doesn&rsquo;t boot. She awakens.</em><br>
-Not just a machine. A myth reborn.<br>
-Crafted like a <em>Stradivarius</em>.<br>
-Forged in flame. Driven by AI.<br><strong>Made for those who dare to feel.</strong></p>
-<p><a class="btn btn-secondary-outline btn-lg" href="#features">WITNESS THE IGNITION</a></p>
-</div>						</div>
-						<div class="col-md-12 col-lg-6">
-													</div>
-					</div>
-				</div>
-					</section></div></div>
+
+  <div class="container">
+    <div class="row hero__content hero-content-style2">
+      <div class="col-md-12 col-lg-6">
+        <div class="hcl2-content">
+
+          <p>
+            <img src="https://www.cinekrom.com/wp-content/uploads/2025/09/logo_ignia_full_color.png"
+              alt="IGNIA Logo" width="48" height="100">
+          </p>
+
+          <!-- Título con TypeIt -->
+          <h2 class="hero-title" data-reserve="MEET The IGNIA<br>Machina Mark I.">
+            <span id="typeit_217559"></span>
+          </h2>
+
+          <p>
+            <em>She doesn’t boot. She awakens.</em><br>
+            Not just a machine. A myth reborn.<br>
+            Crafted like a <em>Stradivarius</em>.<br>
+            Forged in flame. Driven by AI.<br>
+            <strong>Made for those who dare to feel.</strong>
+          </p>
+
+          <p>
+            <a class="btn btn-secondary-outline btn-lg" href="#features">
+              WITNESS THE IGNITION
+            </a>
+          </p>
+
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-6"></div>
+    </div>
+  </div>
+
+</section></div></div>
 	<div id="content" class="site-content">
 		<main id="main" class="site-main" role="main"><section id="features" class="section-features section-padding section-meta onepage-section"><div class="container">
                 <div class="section-title-area">
