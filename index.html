@@ -2639,7 +2639,7 @@ html.smooth-off { scroll-behavior: auto !important; }
   <div id="waitlist-bubbles" style="position: absolute; inset: 0; z-index: 0;"></div>
 
   <!-- Script -->
- <script>
+<script>
 document.addEventListener("DOMContentLoaded", function () {
   /* ========= Refs ========= */
   const form        = document.getElementById("waitlist-form");
@@ -2647,49 +2647,32 @@ document.addEventListener("DOMContentLoaded", function () {
   const customBtn   = document.getElementById("custom-submit-btn");
   const email       = form.querySelector('input[type="email"]');
   const waitlistSec = document.getElementById("waitlist");
+  const host        = document.getElementById("waitlist-particles");
 
   /* ========= Helpers scroll/focus (iOS) ========= */
   const disableSmooth = () => document.documentElement.classList.add('smooth-off');
   const enableSmooth  = () => document.documentElement.classList.remove('smooth-off');
 
   function centerEmail() {
-    try {
-      email.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' });
-    } catch {
-      email.scrollIntoView();
-    }
+    try { email.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' }); }
+    catch { email.scrollIntoView(); }
   }
 
   let vvAttached = false;
-  const onVV = () => {
-    // Solo recentra si realmente está en foco
-    if (document.activeElement === email) centerEmail();
-  };
-  function attachVV() {
-    if (!('visualViewport' in window) || vvAttached) return;
+  const onVV = () => { if (document.activeElement === email) centerEmail(); };
+  function attachVV(){ if (!('visualViewport' in window) || vvAttached) return;
     window.visualViewport.addEventListener('resize', onVV);
     window.visualViewport.addEventListener('scroll', onVV);
     vvAttached = true;
   }
-  function detachVV() {
-    if (!('visualViewport' in window) || !vvAttached) return;
+  function detachVV(){ if (!('visualViewport' in window) || !vvAttached) return;
     window.visualViewport.removeEventListener('resize', onVV);
     window.visualViewport.removeEventListener('scroll', onVV);
     vvAttached = false;
   }
+  function enterFocusMode(){ disableSmooth(); attachVV(); setTimeout(centerEmail, 300); }
+  function exitFocusMode(){ detachVV(); enableSmooth(); }
 
-  function enterFocusMode() {
-    disableSmooth();
-    attachVV();
-    // espera a que aparezca el teclado
-    setTimeout(centerEmail, 300);
-  }
-  function exitFocusMode() {
-    detachVV();
-    enableSmooth();
-  }
-
-  /* ========= Eventos de foco ========= */
   email.addEventListener('focus', enterFocusMode);
   email.addEventListener('blur',  exitFocusMode);
 
@@ -2719,9 +2702,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!validateBeforeSend()) return;
 
-    // Clave: soltar foco y desmontar recentrado antes de enviar
-    email.blur();      // dispara exitFocusMode en navegadores normales
-    exitFocusMode();   // por si acaso algún navegador no emite blur
+    // soltar foco y recentrados antes de enviar
+    email.blur();
+    exitFocusMode();
 
     showMsg('Sending…', true);
     sending = true;
@@ -2734,29 +2717,22 @@ document.addEventListener("DOMContentLoaded", function () {
         headers: { 'Accept': 'application/json' }
       });
 
-      let payload = null;
-      try { payload = await response.json(); } catch {}
+      let payload = null; try { payload = await response.json(); } catch {}
 
       if (response.ok) {
         showMsg("✅ You're now on the waitlist. We'll be in touch.", true);
         form.reset();
-
-        // Asegura que el documento quede scrolleable y “despegado”
         requestAnimationFrame(() => {
-          enableSmooth();
-          detachVV();
-          // micro-nudge para soltar cualquier pegado del viewport
+          enableSmooth(); detachVV();
+          // nudge para despegar viewport si el teclado cerró raro
           window.scrollTo(window.scrollX, window.scrollY + 1);
-          setTimeout(() => {
-            window.scrollTo(window.scrollX, Math.max(0, window.scrollY - 1));
-          }, 0);
+          setTimeout(() => window.scrollTo(window.scrollX, Math.max(0, window.scrollY - 1)), 0);
         });
       } else {
         const serverMsg = payload?.errors?.map(e => e.message).join('<br>') ||
                           payload?.message ||
                           '❌ Something went wrong. Please try again.';
         showMsg(serverMsg, false);
-        // Permite corregir: re-enfoca
         email.focus();
       }
     } catch {
@@ -2767,47 +2743,91 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  /* ========= Listeners de envío y accesibilidad ========= */
   customBtn.addEventListener("click", submitForm);
-
-  // Accesibilidad en <a role="button" tabindex="0">: Enter + Space
   customBtn.addEventListener("keydown", function (e) {
     const k = e.key;
-    if (k === ' ' || k === 'Spacebar' || k === 'Enter') {
-      e.preventDefault(); // evita scroll con Space y doble activación
-      submitForm(e);
-    }
+    if (k === ' ' || k === 'Spacebar' || k === 'Enter') { e.preventDefault(); submitForm(e); }
   });
-
-  // Enter dentro del input (submit nativo del form)
   form.addEventListener('submit', submitForm);
 
-  /* ========= Partículas (solo una inicialización) ========= */
-  if (window.particlesJS && !document.getElementById('waitlist-particles').dataset.init) {
-    particlesJS("waitlist-particles", {
-      "particles": {
-        "number": { "value": 60 },
-        "color": { "value": "#ffffff" },
-        "shape": { "type": "circle" },
-        "opacity": { "value": 0.2 },
-        "size": { "value": 3 },
-        "line_linked": {
-          "enable": true,
-          "distance": 150,
-          "color": "#ffffff",
-          "opacity": 0.1,
-          "width": 1
-        },
-        "move": { "enable": true, "speed": 1 }
-      },
-      "interactivity": {
-        "events": { "onhover": { "enable": true, "mode": "repulse" } }
-      },
-      "retina_detect": true
-    });
-    // marca para no reinicializar si vuelves a inyectar scripts
-    document.getElementById('waitlist-particles').dataset.init = "1";
+  /* ========= Partículas (SECCIÓN AUTOSUFICIENTE) ========= */
+  // Forzamos nuestra config (cuadradas + multicolor), destruyendo init previas SOLO en este contenedor
+  const ua = navigator.userAgent || "";
+  const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+  function destroyParticlesInHost() {
+    if (!window.pJSDom || !pJSDom.length) return;
+    for (let i = pJSDom.length - 1; i >= 0; i--) {
+      const inst = pJSDom[i];
+      if (inst?.pJS?.canvas?.el?.parentElement === host) {
+        try { inst.pJS.fn.vendors.destroypJS(); } catch(_) {}
+        pJSDom.splice(i, 1);
+      }
+    }
   }
+
+  function getConfig() {
+    const num = isIOS ? 50 : 70;
+    const spd = isIOS ? 1.2 : 2;
+    return {
+      particles: {
+        number: { value: num },
+        size:   { value: 2 },
+        opacity:{ value: 0.4 },
+        color:  { value: ["#ffffff","#ffff00","#00ffff","#00ff00","#ff00ff","#ff0000","#0000ff"] },
+        shape:  { type: "edge" },  // ← CUADRADAS
+        move:   { enable: true, speed: spd },
+        line_linked: { enable: false }
+      },
+      interactivity: { events: { onhover: { enable: true, mode: "repulse" } } },
+      retina_detect: true
+    };
+  }
+
+  function ensureCanvasStyle() {
+    // Estilo local para evitar herencias (bordes redondeados, filtros, etc.)
+    const style = document.createElement("style");
+    style.textContent = `#waitlist #waitlist-particles canvas{ border-radius:0 !important; }`;
+    waitlistSec.appendChild(style);
+  }
+
+  function initParticlesNow() {
+    if (!host) return;
+    // si algún init previo marcó data-init, elimínalo (no tocaremos otros contenedores)
+    if (host.dataset && 'init' in host.dataset) delete host.dataset.init;
+    if (!window.particlesJS) return false;
+    destroyParticlesInHost();
+    particlesJS("waitlist-particles", getConfig());
+    ensureCanvasStyle();
+    return true;
+  }
+
+  // Intento inmediato
+  let ok = initParticlesNow();
+
+  // Si todavía no está disponible particlesJS (o Hero la pisa después), reintenta:
+  if (!ok) {
+    let tries = 0;
+    const timer = setInterval(() => {
+      tries++;
+      if (initParticlesNow() || tries > 20) clearInterval(timer); // ~2s de ventana
+    }, 100);
+  }
+
+  // Intento al fully-loaded (por si scripts externos corren tarde)
+  window.addEventListener('load', () => { initParticlesNow(); });
+
+  // Fallback: si otro script reinyecta un canvas distinto después, lo detectamos y reconfiguramos UNA vez
+  const mo = new MutationObserver(() => {
+    const cvs = host?.querySelector('canvas');
+    if (!cvs) return;
+    // Checa si el shape no es edge (proxy: atributo data-color no existe en canvas; preferimos reinit ciego)
+    destroyParticlesInHost();
+    initParticlesNow();
+    mo.disconnect();
+  });
+  if (host) mo.observe(host, { childList: true });
+
 });
 </script>
 </section></main></div>
