@@ -1648,7 +1648,7 @@ setActive(active){
     }
     hideCTA();
     const top = wrapper.getBoundingClientRect().top + window.scrollY;
-    try{ window.scrollTo({ top: top + 50, behavior: 'smooth' }); }catch(_){ window.scrollTo(0, top + 2); }
+    try{ window.scrollTo({ top: top + 100, behavior: 'smooth' }); }catch(_){ window.scrollTo(0, top + 2); }
     if (window._igniaManifestAudio){
       window._igniaManifestAudio.setActive(true);
       window._igniaManifestAudio.updateProgress(0.02);
