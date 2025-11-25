@@ -152,7 +152,23 @@ display: none;
 
 
 
+#manifest-wrapper {
+  scroll-behavior: smooth;
+  /* Solo en móvil/touch: */
+  scroll-snap-type: y proximity; /* ← "proximity" en lugar de "mandatory" */
+}
 
+.manifest-text {
+  scroll-snap-align: center;
+  scroll-snap-stop: normal; /* permite scrollear a través de varios textos */
+}
+
+/* Opcional: solo activar snap en móviles */
+@media (pointer: coarse) {
+  #manifest-wrapper {
+    scroll-snap-type: y proximity;
+  }
+}
 
 
 
@@ -1353,15 +1369,15 @@ function handleProgress(scrollProgress){
       const local = (scrollProgress - textStart) / textDuration;
 
       // mantiene tu lógica, solo usa AMP en lugar de 150 ★
-      if (local < 0.4) {
-        const f = local / 0.4;
-        opacity = f; translateY = AMP * (1 - f);
-      } else if (local < 0.6) {
-        opacity = 1; translateY = 0;
-      } else {
-        const f = (local - 0.6) / 0.4;
-        opacity = 1 - f; translateY = -AMP * f;
-      }
+ if (local < 0.35) {           // Entrada: 35%
+  const f = local / 0.35;
+  opacity = f; translateY = AMP * (1 - f);
+} else if (local < 0.65) {    // Centro: 30%
+  opacity = 1; translateY = 0;
+} else {                      // Salida: 35%
+  const f = (local - 0.65) / 0.35;
+  opacity = 1 - f; translateY = -AMP * f;
+}
     }
 
     // === Aplicar estilos finales (suavizado Chrome viejo)
