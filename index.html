@@ -1369,13 +1369,13 @@ function handleProgress(scrollProgress){
       const local = (scrollProgress - textStart) / textDuration;
 
       // mantiene tu lógica, solo usa AMP en lugar de 150 ★
- if (local < 0.35) {           // Entrada: 35%
-  const f = local / 0.35;
+if (local < 0.3) {           // Entrada: 30%
+  const f = local / 0.3;
   opacity = f; translateY = AMP * (1 - f);
-} else if (local < 0.65) {    // Centro: 30%
+} else if (local < 0.7) {    // Centro: 40% ← MÁS TIEMPO
   opacity = 1; translateY = 0;
-} else {                      // Salida: 35%
-  const f = (local - 0.65) / 0.35;
+} else {                      // Salida: 30%
+  const f = (local - 0.7) / 0.3;
   opacity = 1 - f; translateY = -AMP * f;
 }
     }
