@@ -2650,30 +2650,40 @@ setActive(active){
     <img src="https://www.cinekrom.com/wp-content/uploads/2025/09/ai-evolution.webp" alt="Cinekrom IGNIA Mark I">
   </div>
 
-  <section id="ignia-pricing" class="section-padding section-inverse onepage-section">
-    <div class="container">
+  <section id="ignia-pricing" class="section-padding section-inverse onepage-section" style="text-align:center;">
+    <div class="container" style="max-width: 900px; margin: 0 auto;">
 
-      <h3 class="videolightbox__heading">
+      <!-- puedes meter este style en tu CSS global; aquí te lo dejo inline para probar -->
+      <style>
+        .section-parallax-pricing p {
+          opacity: 1;              /* todos los párrafos de esta sección al 100% */
+        }
+        .section-parallax-pricing p.global-pricing {
+          opacity: 0.7;            /* solo este bajito */
+        }
+      </style>
+
+      <h3 class="videolightbox__heading" style="margin-bottom: 20px;">
         Cinekrom IGNIA Mark I
       </h3>
 
-      <p class="lead">
+      <p class="lead" style="font-size: 1.2rem; margin-bottom: 20px;">
         Hybrid AI Workstation — hand-built as a single, uncompromising flagship model.
       </p>
 
-      <p style="font-size: 2rem; font-weight: 700; margin-top: 25px;">
+      <p style="font-size: 2.4rem; font-weight: 800; margin-top: 35px; margin-bottom: 5px;">
         🔥 UNDER $35K MSRP
       </p>
 
-      <p style="opacity: 0.7; margin-top: -10px; font-size: 0.9rem;">
+      <p class="global-pricing" style="font-size: 1rem; margin-bottom: 25px;">
         (Global Pricing)
       </p>
 
-      <p style="margin-top: 20px;">
+      <p style="font-size: 1rem; margin-bottom: 30px;">
         Final pricing provided after a short technical diagnostic.
       </p>
 
-      <p style="margin-top: 30px; font-size: 1rem; max-width: 700px;">
+      <p style="font-size: 1rem; line-height: 1.5; margin: 0 auto; max-width: 680px;">
         <strong>Founders Edition</strong> — preferred early-adopter pricing,<br>
         significantly lower than global MSRP.<br>
         Strictly limited to the first 50 units worldwide.
