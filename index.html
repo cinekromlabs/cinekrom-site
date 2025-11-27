@@ -2750,7 +2750,7 @@ setActive(active){
 
       if (Math.abs(diff) > 0.01) {
         // factor de suavizado: 0.15 = responde rápido pero suave
-        currentFrame += diff * 0.07;
+        currentFrame += diff * 0.05;
 
         let frameIndex = Math.round(currentFrame);
         frameIndex = Math.max(0, Math.min(totalFrames - 1, frameIndex));
