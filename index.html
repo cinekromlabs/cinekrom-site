@@ -2644,16 +2644,41 @@ setActive(active){
 </script>
 </section>
 
-<div class="section-parallax jarallax section-parallax-pricing">
-  <div class="parallax-bg jarallax-img">
-    <img src="https://www.cinekrom.com/wp-content/uploads/2025/09/ignia-pricing.webp" alt="Cinekrom IGNIA Mark I">
+<section id="ignia-pricing"
+         class="section-padding section-inverse onepage-section"
+         style="position:relative; text-align:center; overflow:hidden; background:#000;">
+
+  <!-- CAPA: SECUENCIA FULL-WIDTH DETRÁS DEL TEXTO -->
+  <div class="ignia-rotator-layer"
+       style="
+         position:absolute;
+         inset:0;
+         display:flex;
+         align-items:center;
+         justify-content:center;
+         pointer-events:none;
+         z-index:2;
+       ">
+<img
+  id="ignia-seq"
+  src="https://www.cinekrom.com/assets/scroll_seq/ignia-001.webp"
+  alt="Cinekrom IGNIA Mark I rotating"
+  style="
+    height: 100%;
+    width: auto;
+    max-width: none;
+    opacity: 0.6;
+    filter: drop-shadow(0 10px 25px rgba(0,0,0,0.85));
+    object-fit: contain;
+  "
+>
   </div>
 
-<section id="ignia-pricing" class="section-padding section-inverse onepage-section" style="text-align:center;">
-  <div class="container" style="max-width: 900px; margin: 0 auto;">
+  <!-- TEXTO AL FRENTE -->
+  <div class="container" style="position:relative; z-index:3; max-width: 900px; margin: 0 auto;">
 
     <h3 class="videolightbox__heading" style="margin-bottom: 20px; color:#FFFFFF;">
-      Cinekrom IGNIA Mark I
+      Cinekrom IGNIA Machina Mark I
     </h3>
 
     <p class="lead" style="font-size: 1.2rem; margin-bottom: 20px; color:#FFFFFF;">
@@ -2678,9 +2703,54 @@ setActive(active){
       <em>Strictly limited to the first 50 units worldwide</em>.
     </p>
 
+    <!-- SCRIPT: ROTACIÓN CON SCROLL DETRÁS DEL TEXTO -->
+    <script>
+      (function () {
+        const totalFrames = 20; // cambia según tus frames
+        const framePath = function (i) {
+          const num = String(i).padStart(3, '0');
+          return 'https://www.cinekrom.com/assets/scroll_seq/ignia-' + num + '.webp';
+        };
+
+        const imgEl   = document.getElementById('ignia-seq');
+        const section = document.getElementById('ignia-pricing');
+        const frames  = [];
+
+        if (!imgEl || !section) return;
+
+        // precarga
+        for (let i = 1; i <= totalFrames; i++) {
+          const im = new Image();
+          im.src = framePath(i);
+          frames.push(im);
+        }
+
+        function updateFrame() {
+          const rect = section.getBoundingClientRect();
+          const vh   = window.innerHeight;
+
+          const start = vh * 0.1;
+          const end   = vh + rect.height * 0.8;
+
+          const raw      = (vh - rect.top - start) / (end - start);
+          const progress = Math.max(0, Math.min(1, raw));
+
+          const frameIndex = (totalFrames - 1) - Math.floor(progress * (totalFrames - 1));
+          const frame      = frames[frameIndex];
+
+          if (frame && frame.src) {
+            imgEl.src = frame.src;
+          }
+        }
+
+        window.addEventListener('scroll', updateFrame);
+        window.addEventListener('resize', updateFrame);
+        updateFrame();
+      })();
+    </script>
+
   </div>
 </section>
-</div>
 
 
 <section id="team" class="section-team section-padding section-meta onepage-section"><div class="container">
