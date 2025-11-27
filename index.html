@@ -2704,50 +2704,74 @@ setActive(active){
     </p>
 
     <!-- SCRIPT: ROTACIÓN CON SCROLL DETRÁS DEL TEXTO -->
-    <script>
-      (function () {
-        const totalFrames = 20; // cambia según tus frames
-        const framePath = function (i) {
-          const num = String(i).padStart(3, '0');
-          return 'https://www.cinekrom.com/assets/scroll_seq/ignia-' + num + '.webp';
-        };
+   <script>
+  (function () {
+    const totalFrames = 20; // cambia según tus frames reales
+    const framePath = function (i) {
+      const num = String(i).padStart(3, '0');
+      return 'https://www.cinekrom.com/assets/scroll_seq/ignia-' + num + '.webp';
+    };
 
-        const imgEl   = document.getElementById('ignia-seq');
-        const section = document.getElementById('ignia-pricing');
-        const frames  = [];
+    const imgEl   = document.getElementById('ignia-seq');
+    const section = document.getElementById('ignia-pricing');
+    const frames  = [];
 
-        if (!imgEl || !section) return;
+    if (!imgEl || !section) return;
 
-        // precarga
-        for (let i = 1; i <= totalFrames; i++) {
-          const im = new Image();
-          im.src = framePath(i);
-          frames.push(im);
+    // precarga
+    for (let i = 1; i <= totalFrames; i++) {
+      const im = new Image();
+      im.src = framePath(i);
+      frames.push(im);
+    }
+
+    let currentFrame = 0;   // frame que se está mostrando
+    let targetFrame  = 0;   // frame al que queremos llegar según el scroll
+
+    function updateTargetFromScroll() {
+      const rect = section.getBoundingClientRect();
+      const vh   = window.innerHeight;
+
+      const start = vh * 0.1;
+      const end   = vh + rect.height * 0.8;
+
+      const raw      = (vh - rect.top - start) / (end - start);
+      const progress = Math.max(0, Math.min(1, raw));
+
+      // frame "ideal" continuo (float), en reversa como ya lo tenías
+      const ideal = (totalFrames - 1) - (progress * (totalFrames - 1));
+
+      targetFrame = ideal;
+    }
+
+    function render() {
+      // acercar poco a poco el currentFrame al targetFrame
+      const diff = targetFrame - currentFrame;
+
+      if (Math.abs(diff) > 0.01) {
+        // factor de suavizado: 0.15 = responde rápido pero suave
+        currentFrame += diff * 0.15;
+
+        let frameIndex = Math.round(currentFrame);
+        frameIndex = Math.max(0, Math.min(totalFrames - 1, frameIndex));
+
+        const frame = frames[frameIndex];
+        if (frame && frame.src && imgEl.src !== frame.src) {
+          imgEl.src = frame.src;
         }
+      }
 
-        function updateFrame() {
-          const rect = section.getBoundingClientRect();
-          const vh   = window.innerHeight;
+      requestAnimationFrame(render);
+    }
 
-          const start = vh * 0.1;
-          const end   = vh + rect.height * 0.8;
+    window.addEventListener('scroll', updateTargetFromScroll);
+    window.addEventListener('resize', updateTargetFromScroll);
 
-          const raw      = (vh - rect.top - start) / (end - start);
-          const progress = Math.max(0, Math.min(1, raw));
-
-          const frameIndex = (totalFrames - 1) - Math.floor(progress * (totalFrames - 1));
-          const frame      = frames[frameIndex];
-
-          if (frame && frame.src) {
-            imgEl.src = frame.src;
-          }
-        }
-
-        window.addEventListener('scroll', updateFrame);
-        window.addEventListener('resize', updateFrame);
-        updateFrame();
-      })();
-    </script>
+    // inicializar
+    updateTargetFromScroll();
+    render();
+  })();
+</script>
 
   </div>
 </section>
