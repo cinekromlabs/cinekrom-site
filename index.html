@@ -2680,7 +2680,7 @@ setActive(active){
    <h3 class="videolightbox__heading" style="margin-bottom: 20px; color:#FFFFFF; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);">
       Cinekrom IGNIA Machina Mark I
     </h3>
-    <p class="lead" style="font-size: 1.2rem; margin-bottom: 20px; color:#FFFFFF; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);">
+    <p class="lead" style="font-size: 1.2rem; margin-bottom: 20px; color:#FFFFFF; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);">
       Hybrid AI Workstation — hand-built as a single, uncompromising flagship model.
     </p>
 
@@ -2705,74 +2705,84 @@ setActive(active){
     <!-- SCRIPT: ROTACIÓN CON SCROLL DETRÁS DEL TEXTO -->
 <script>
   (function () {
-    const totalFrames = 37; // Total de frames exportados
-    const originalFPS = 24; // FPS del video original
-    const exportedFPS = 12; // FPS a los que se exportó (mitad del original)
-    
+    const totalFrames   = 37;  // Total de frames exportados
+    const exportedFPS   = 12;  // Info de referencia, por si luego ajustas
+
     const framePath = function (i) {
       const num = String(i).padStart(3, '0');
       return 'https://www.cinekrom.com/assets/scroll_seq/ignia-' + num + '.webp';
     };
-    
+
     const imgEl   = document.getElementById('ignia-seq');
     const section = document.getElementById('ignia-pricing');
     const frames  = [];
-    
+
     if (!imgEl || !section) return;
-    
+
+    // Opcional: setear el primer frame de entrada
+    imgEl.src = framePath(1);
+
     // Precarga de imágenes
     for (let i = 1; i <= totalFrames; i++) {
       const im = new Image();
       im.src = framePath(i);
       frames.push(im);
     }
-    
-    let currentFrame = 0;   // Frame que se está mostrando (float para suavizado)
-    let targetFrame  = 0;   // Frame objetivo según el scroll
-    const smoothing  = 0.12; // Factor de suavizado extra suave para 12fps
-    
+
+    let currentFrame = 0;    // float
+    let targetFrame  = 0;    // float
+    const smoothing  = 0.18; // un poco más rápido que 0.12 para 12fps
+
     function updateTargetFromScroll() {
       const rect = section.getBoundingClientRect();
       const vh   = window.innerHeight;
+
+      // Si la sección está completamente fuera de vista, no hacemos nada
+      if (rect.bottom < 0 || rect.top > vh) return;
+
       const start = vh * 0.1;
       const end   = vh + rect.height * 0.8;
-      
+
       const raw      = (vh - rect.top - start) / (end - start);
       const progress = Math.max(0, Math.min(1, raw));
-      
+
       // Frame objetivo en reversa (de 36 a 0)
       targetFrame = (totalFrames - 1) * (1 - progress);
     }
-    
-    function render() {
-      // Interpolación suave hacia el frame objetivo
+
+    let lastTime = performance.now();
+
+    function render(now) {
+      const dt = now - lastTime;
+      lastTime = now;
+
+      // Normalizamos el delta a "múltiplos" de 60fps (~16.67ms)
+      const step = Math.min(dt / 16.67, 2); // clamp para evitar saltos raros
+
       const diff = targetFrame - currentFrame;
-      
+
       if (Math.abs(diff) > 0.01) {
-        // Aplicar suavizado
-        currentFrame += diff * smoothing;
-        
-        // Convertir a índice entero para acceder al array
+        // Suavizado dependiente del tiempo
+        currentFrame += diff * smoothing * step;
+
         let frameIndex = Math.round(currentFrame);
         frameIndex = Math.max(0, Math.min(totalFrames - 1, frameIndex));
-        
-        // Actualizar imagen solo si cambió el frame
+
         const frame = frames[frameIndex];
         if (frame && frame.complete && imgEl.src !== frame.src) {
           imgEl.src = frame.src;
         }
       }
-      
+
       requestAnimationFrame(render);
     }
-    
-    // Event listeners
+
     window.addEventListener('scroll', updateTargetFromScroll, { passive: true });
     window.addEventListener('resize', updateTargetFromScroll);
-    
+
     // Inicializar
     updateTargetFromScroll();
-    render();
+    requestAnimationFrame(render);
   })();
 </script>
 
