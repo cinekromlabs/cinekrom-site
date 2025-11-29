@@ -2704,7 +2704,7 @@ setActive(active){
     </p>
 
     <!-- SCRIPT: ROTACIÓN CON SCROLL DETRÁS DEL TEXTO -->
-  <script>
+<script>
   (function () {
     const totalFrames = 37; // Total de frames exportados
     const originalFPS = 24; // FPS del video original
@@ -2730,7 +2730,7 @@ setActive(active){
     
     let currentFrame = 0;   // Frame que se está mostrando (float para suavizado)
     let targetFrame  = 0;   // Frame objetivo según el scroll
-    const smoothing  = 0.2; // Factor de suavizado optimizado para 12fps
+    const smoothing  = 0.12; // Factor de suavizado extra suave para 12fps
     
     function updateTargetFromScroll() {
       const rect = section.getBoundingClientRect();
