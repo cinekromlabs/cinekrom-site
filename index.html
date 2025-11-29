@@ -2704,70 +2704,74 @@ setActive(active){
     </p>
 
     <!-- SCRIPT: ROTACIÓN CON SCROLL DETRÁS DEL TEXTO -->
-   <script>
+  <script>
   (function () {
-    const totalFrames = 31; // cambia según tus frames reales
+    const totalFrames = 37; // Total de frames exportados
+    const originalFPS = 24; // FPS del video original
+    const exportedFPS = 12; // FPS a los que se exportó (mitad del original)
+    
     const framePath = function (i) {
       const num = String(i).padStart(3, '0');
       return 'https://www.cinekrom.com/assets/scroll_seq/ignia-' + num + '.webp';
     };
-
+    
     const imgEl   = document.getElementById('ignia-seq');
     const section = document.getElementById('ignia-pricing');
     const frames  = [];
-
+    
     if (!imgEl || !section) return;
-
-    // precarga
+    
+    // Precarga de imágenes
     for (let i = 1; i <= totalFrames; i++) {
       const im = new Image();
       im.src = framePath(i);
       frames.push(im);
     }
-
-    let currentFrame = 0;   // frame que se está mostrando
-    let targetFrame  = 0;   // frame al que queremos llegar según el scroll
-
+    
+    let currentFrame = 0;   // Frame que se está mostrando (float para suavizado)
+    let targetFrame  = 0;   // Frame objetivo según el scroll
+    const smoothing  = 0.2; // Factor de suavizado optimizado para 12fps
+    
     function updateTargetFromScroll() {
       const rect = section.getBoundingClientRect();
       const vh   = window.innerHeight;
-
       const start = vh * 0.1;
       const end   = vh + rect.height * 0.8;
-
+      
       const raw      = (vh - rect.top - start) / (end - start);
       const progress = Math.max(0, Math.min(1, raw));
-
-      // frame "ideal" continuo (float), en reversa como ya lo tenías
-      const ideal = (totalFrames - 1) - (progress * (totalFrames - 1));
-
-      targetFrame = ideal;
+      
+      // Frame objetivo en reversa (de 36 a 0)
+      targetFrame = (totalFrames - 1) * (1 - progress);
     }
-
+    
     function render() {
-      // acercar poco a poco el currentFrame al targetFrame
+      // Interpolación suave hacia el frame objetivo
       const diff = targetFrame - currentFrame;
-
+      
       if (Math.abs(diff) > 0.01) {
-        // factor de suavizado: 0.15 = responde rápido pero suave
-        currentFrame += diff * 0.15;
-
+        // Aplicar suavizado
+        currentFrame += diff * smoothing;
+        
+        // Convertir a índice entero para acceder al array
         let frameIndex = Math.round(currentFrame);
         frameIndex = Math.max(0, Math.min(totalFrames - 1, frameIndex));
-
+        
+        // Actualizar imagen solo si cambió el frame
         const frame = frames[frameIndex];
-        if (frame && frame.src && imgEl.src !== frame.src) {
+        if (frame && frame.complete && imgEl.src !== frame.src) {
           imgEl.src = frame.src;
         }
       }
-
+      
       requestAnimationFrame(render);
     }
-
-    window.addEventListener('scroll', updateTargetFromScroll);
+    
+    // Event listeners
+    window.addEventListener('scroll', updateTargetFromScroll, { passive: true });
     window.addEventListener('resize', updateTargetFromScroll);
-
-    // inicializar
+    
+    // Inicializar
     updateTargetFromScroll();
     render();
   })();
