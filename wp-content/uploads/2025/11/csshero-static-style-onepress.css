@@ -26,10 +26,10 @@
 body > #page > #content #features {
   background-color: #292929;
 }
-body > #page > #content #services {
+body > #page > #content #capabilities {
   background-color: #161616;
 }
-#services .wow > .service-item {
+#capabilities .wow > .service-item {
   background-color: #272626;
 }
 .row > .wow .service-title {
