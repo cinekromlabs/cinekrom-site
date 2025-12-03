@@ -890,19 +890,6 @@ body::-webkit-scrollbar {
   gap: 2rem;
   padding: 0 2.5rem 0 0;
   background: none !important;
-
-  /* 🔥 NUEVO: arranca oculto */
-  opacity: 0;
-  transform: translateY(-100%);
-  pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-/* Cuando ya se desbloqueó (después del manifiesto) */
-.ignia-roman-nav.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
 }
 
 /* LINKS ROMANOS */
@@ -919,14 +906,14 @@ body::-webkit-scrollbar {
   transition: opacity 0.25s ease, text-shadow 0.25s ease;
 }
 
-/* GLOW + HOVER + ACTIVO */
+/* GLOW + HOVER + ACTIVO (SOLO BLANCO MÁS FUERTE) */
 .ignia-roman-nav a:hover,
 .ignia-roman-nav a.is-active {
   opacity: 1;
-  text-shadow: 0 0 12px rgba(255, 120, 40, 0.55);
+  text-shadow: 0 0 6px rgba(255, 80, 80, 0.28);
 }
 
-/* SUBRAYADO ACTIVO (BASE) */
+/* SUBRAYADO ACTIVO (BASE, POR SI FALLA ALGO) */
 .ignia-roman-nav a.is-active::before {
   content: "";
   position: absolute;
@@ -938,6 +925,8 @@ body::-webkit-scrollbar {
   background: #ff3b3b;
   box-shadow: 0 0 6px rgba(255, 80, 80, 0.4);
 }
+
+
 
 /* SEPARADOR "•" */
 .ignia-roman-nav .dot {
@@ -967,8 +956,10 @@ body::-webkit-scrollbar {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.18s ease, transform 0.18s ease;
-  z-index: 10000;
+  z-index: 10000; /* para asegurarnos de que flote encima */
 }
+
+
 
 /* TOOLTIP ONLY ON DESKTOP */
 @media (hover: hover) and (pointer: fine) {
@@ -979,7 +970,26 @@ body::-webkit-scrollbar {
   }
 }
 
-/* 🔻 YA NO USAMOS MODOS COMPACT / is-hidden, PUEDES BORRARLOS */
+/* ============================
+   MODO COMPACT — OCULTA TODO
+   ============================ */
+.ignia-roman-nav.compact a,
+.ignia-roman-nav.compact .dot {
+  display: none !important;
+}
+
+/* ============================
+   ESTADO OCULTO (FADE)
+   ============================ */
+.ignia-roman-nav {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.ignia-roman-nav.is-hidden {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
 
 /* RESPONSIVE: SOLO MÓVIL */
 @media (max-width: 480px) {
@@ -3821,43 +3831,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!nav || !manifest) return;
 
-  // Arranca oculto siempre
-  nav.classList.remove("is-visible");
+  // Arrancamos siempre en compacto (I, II)
+  nav.classList.add("compact");
 
-  // Una vez que se desbloquea, NUNCA vuelve al modo compacto,
-  // pero sí puede ocultarse cuando el manifiesto está visible.
+  // Flag: cuando ya pasamos el manifiesto por abajo una vez,
+  // nunca volvemos a modo compacto.
   let unlocked = false;
 
   function updateMenuState() {
     const rect = manifest.getBoundingClientRect();
     const vh   = window.innerHeight || document.documentElement.clientHeight;
 
-    // ====== 1. Antes de desbloquear (no menú jamás) ======
+    // =========================
+    // FASE 1: ANTES DE DESBLOQUEAR
+    // =========================
     if (!unlocked) {
-
-      // Cuando salimos COMPLETAMENTE del manifiesto por abajo → desbloqueo
-      if (rect.bottom <= 0) {
-        unlocked = true;
-        nav.classList.add("is-visible");
+      // MANIFIESTO COMPLETAMENTE ABAJO DEL VIEWPORT → aún no llegas
+      // Menú compacto visible (I, II)
+      if (rect.top >= vh) {
+        nav.classList.remove("is-hidden");
+        nav.classList.add("compact");
+        return;
       }
 
+      // MANIFIESTO INTERSECANDO EL VIEWPORT → lo estás viendo
+      // Menú oculto
+      if (rect.top < vh && rect.bottom > 0) {
+        nav.classList.add("is-hidden");
+        return;
+      }
+
+      // MANIFIESTO COMPLETAMENTE ARRIBA DEL VIEWPORT → ya lo pasaste por abajo
+      // Primera vez: desbloquea y muestra menú completo
+      if (rect.bottom <= 0) {
+        unlocked = true;
+        nav.classList.remove("is-hidden");
+        nav.classList.remove("compact");
+        return;
+      }
+
+      // Por seguridad, si algo raro pasa, no hagamos nada más aquí.
       return;
     }
 
-    // ====== 2. Ya desbloqueado ======
-    // Si el manifiesto está tocando el viewport → esconder menú
+    // =========================
+    // FASE 2: YA DESBLOQUEADO
+    // =========================
+
+    // Si el manifiesto está visible (intersecando el viewport) → ocultar menú
     if (rect.top < vh && rect.bottom > 0) {
-      nav.classList.remove("is-visible");
+      nav.classList.add("is-hidden");
       return;
     }
 
-    // Manifiesto lejos del viewport → menú visible
-    nav.classList.add("is-visible");
+    // Si el manifiesto está totalmente arriba o totalmente abajo,
+    // menú completo (nunca más compacto).
+    nav.classList.remove("is-hidden");
+    nav.classList.remove("compact");
   }
 
   window.addEventListener("scroll", updateMenuState, { passive: true });
   window.addEventListener("resize", updateMenuState);
-  updateMenuState();
+  updateMenuState(); // primera evaluación al cargar
 });
 </script>
 </body></html>
