@@ -1,5 +1,12 @@
 <!DOCTYPE html>
-<html lang="en-US"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="profile" href="http://gmpg.org/xfn/11"><title>Cinekrom IGNIA | AI Workstations for Human-Centered Creation &ndash; Handcrafted AI workstations built to amplify human imagination.</title><meta name="robots" content="max-image-preview:large"><meta name="description" content="Handcrafted AI workstations built to amplify human imagination. A new generation of local, cinematic intelligence &mdash; created by CINEKROM."><meta name="author" content="CINEKROM Labs"><meta name="robots" content="index, follow"><style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style><link rel="alternate" type="application/rss+xml" title="Cinekrom IGNIA | AI Workstations for Human-Centered Creation &raquo; Feed" href="https://www.cinekrom.com/feed/"><link rel="alternate" type="application/rss+xml" title="Cinekrom IGNIA | AI Workstations for Human-Centered Creation &raquo; Comments Feed" href="https://www.cinekrom.com/comments/feed/"><script>
+<html lang="en-US"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="profile" href="http://gmpg.org/xfn/11"><title>Cinekrom IGNIA | AI Workstations for Human-Centered Creation &ndash; Handcrafted AI workstations built to amplify human imagination.</title><meta name="robots" content="max-image-preview:large"><meta name="description" content="Handcrafted AI workstations built to amplify human imagination. A new generation of local, cinematic intelligence &mdash; created by CINEKROM."><meta name="author" content="CINEKROM Labs"><meta name="robots" content="index, follow">
+
+<!-- IGNIA Roman Menu Font -->
+<link
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap"
+  rel="stylesheet">
+
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style><link rel="alternate" type="application/rss+xml" title="Cinekrom IGNIA | AI Workstations for Human-Centered Creation &raquo; Feed" href="https://www.cinekrom.com/feed/"><link rel="alternate" type="application/rss+xml" title="Cinekrom IGNIA | AI Workstations for Human-Centered Creation &raquo; Comments Feed" href="https://www.cinekrom.com/comments/feed/"><script>
 			var head = document.getElementsByTagName('head')[0];
 			// Save the original method
 			var insertBefore = head.insertBefore;
@@ -842,13 +849,13 @@ body::-webkit-scrollbar {
   }
 }
 
-@media screen and (max-width: 768px) {
+/*@media screen and (max-width: 768px) {
   /* Centrar solo el logo en header */
-  .site-branding {
+ /* .site-branding {
     float: none !important;
     text-align: center;
     margin: 0 auto;
-  }
+  }*/
 
   .custom-logo-link,
   .custom-logo {
@@ -859,13 +866,176 @@ body::-webkit-scrollbar {
 }
 
 
-.service-item .attachment-onepress-medium {
-  display: block;
-  margin: 0 auto;
+.service-item .service-thumbnail img.attachment-onepress-medium {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  object-fit: cover !important;
+}
+
+/* ---------------------------------------------------------
+   IGNIA CODEX UI — ROMAN MENU (FLOAT + RIGHT ALIGN)
+   --------------------------------------------------------- */
+/* CONTENEDOR PRINCIPAL */
+.ignia-roman-nav {
+  position: fixed;
+  top: 3rem;     /* Ajusta a tu gusto */
+  right: 0;
+  left: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 2.5rem 0 0;
+  background: none !important;
+}
+
+/* LINKS ROMANOS */
+.ignia-roman-nav a {
+  font-family: "Cormorant Garamond", serif !important;
+  font-size: 0.9rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(255,255,255,0.85);
+  opacity: 1;
+  position: relative;
+  overflow: visible;   /* importante para el tooltip */
+  transition: opacity 0.25s ease, text-shadow 0.25s ease;
+}
+
+/* GLOW + HOVER + ACTIVO (SOLO BLANCO MÁS FUERTE) */
+.ignia-roman-nav a:hover,
+.ignia-roman-nav a.is-active {
+  opacity: 1;
+  text-shadow: 0 0 6px rgba(255, 80, 80, 0.28);
+}
+
+/* SUBRAYADO ACTIVO (BASE, POR SI FALLA ALGO) */
+.ignia-roman-nav a.is-active::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.1rem;
   width: 100%;
-  height: auto;
-  object-fit: cover; /* opcional, recorta si hay overflow */
-}		</style></head><body class="home wp-singular page-template page-template-template-frontpage page-template-template-frontpage-php page page-id-1415 wp-custom-logo wp-theme-onepress">
+  height: 1px;
+  transform: translateX(-50%);
+  background: #ff3b3b;
+  box-shadow: 0 0 6px rgba(255, 80, 80, 0.4);
+}
+
+
+
+/* SEPARADOR "•" */
+.ignia-roman-nav .dot {
+  color: rgba(255,255,255,0.45);
+  font-size: 0.85rem;
+  margin: 0 0.25rem;
+  transform: translateY(-1px);
+  user-select: none;
+}
+
+/* TOOLTIP */
+.ignia-roman-nav a::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 6px);
+  padding: 0.25rem 0.5rem;
+  font-family: "Sharp Sans", sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  background: rgba(0,0,0,0.85);
+  border-radius: 999px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 10000; /* para asegurarnos de que flote encima */
+}
+
+
+
+/* TOOLTIP ONLY ON DESKTOP */
+@media (hover: hover) and (pointer: fine) {
+  .ignia-roman-nav a:hover::after,
+  .ignia-roman-nav a:focus-visible::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* MODO COMPACT: solo se muestran I y II, pero con rail de puntos: • I • II • */
+
+/* Oculta las secciones 3, 4 y 5 */
+.ignia-roman-nav.compact a:nth-of-type(n+3) {
+  display: none !important;
+}
+
+/* Oculta solo los puntos interiores entre II y V */
+/* Con el HTML de arriba, los puntos 3, 4 y 5 son los que sobran */
+.ignia-roman-nav.compact .dot:nth-of-type(3),
+.ignia-roman-nav.compact .dot:nth-of-type(4),
+.ignia-roman-nav.compact .dot:nth-of-type(5) {
+  display: none !important;
+}
+
+.ignia-roman-nav {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Estado oculto: se apaga y sale por arriba */
+.ignia-roman-nav.is-hidden {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+/* RESPONSIVE: SOLO MÓVIL */
+@media (max-width: 480px) {
+  .ignia-roman-nav {
+    top: 3.4rem;
+    justify-content: flex-end;
+    gap: 0.7rem;
+    padding: 0 1.5rem 0 0;
+  }
+
+  .ignia-roman-nav a {
+    font-size: 0.95rem;
+    letter-spacing: 0.22em;
+  }
+
+  .ignia-roman-nav .dot {
+    font-size: 0.75rem;
+    transform: translateY(-0.5px);
+  }
+
+  /* en móvil apagamos tooltips */
+  .ignia-roman-nav a::after {
+    display: none;
+  }
+}
+
+	</style></head><body class="home wp-singular page-template page-template-template-frontpage page-template-template-frontpage-php page page-id-1415 wp-custom-logo wp-theme-onepress">
+	<!-- IGNIA Roman Menu -->
+	<nav class="ignia-roman-nav">
+<span class="dot">•</span>	
+  <a href="#features"           data-label="IGNIA Features">I</a>
+  <span class="dot">•</span>
+  <a href="#manifest"          data-label="Wake Her">II</a>
+  <span class="dot">•</span>
+  <a href="#capabilities"           data-label="IGNIA Superpowers">III</a>
+  <span class="dot">•</span>
+  <a href="#ignia-faq"  data-label="Key Questions">IV</a>
+  <span class="dot">•</span>
+  <a href="#team"  data-label="The Creators">V</a>
+    <span class="dot">•</span>
+</nav>
 <div id="page" class="hfeed site">
 	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
 	<div id="header-section" class="h-on-top is-transparent">		<header id="masthead" class="site-header header-full-width is-sticky no-scroll is-t h-on-top" role="banner"><div class="container">
@@ -962,7 +1132,7 @@ body::-webkit-scrollbar {
 	<div id="content" class="site-content">
 		<main id="main" class="site-main" role="main"><section id="features" class="section-features section-padding section-meta onepage-section"><div class="container">
                 <div class="section-title-area">
-            <h5 class="section-subtitle">The Fire Inside</h5>            <h2 class="section-title">IGNIA FEATURES</h2>            <div class="section-desc"><p>IGNIA fuses handcrafted engineering, local AI superpowers, and cinematic design into a single creative force. From node-based intelligence to sculpted silence, every detail is tuned to elevate your workflow&mdash;without subscriptions, distractions, or compromise.<br>
+            <h5 class="section-subtitle">The Fire Inside</h5>            <h3 class="section-title">IGNIA FEATURES</h3>            <div class="section-desc"><p>IGNIA fuses handcrafted engineering, local AI superpowers, and cinematic design into a single creative force. From node-based intelligence to sculpted silence, every detail is tuned to elevate your workflow&mdash;without subscriptions, distractions, or compromise.<br>
 This is not the future. It&rsquo;s the now.</p>
 </div>        </div>
                 <div class="section-content">
@@ -1094,7 +1264,7 @@ This is not the future. It&rsquo;s the now.</p>
     
 </section><section id="about" class="section-about section-padding onepage-section"><div class="container">
 								<div class="section-title-area">
-										<h2 class="section-title">Handcrafted Intelligence</h2>					<div class="section-desc"><p>Every spark has a pulse.<br>
+										<h3 class="section-title">Handcrafted Intelligence</h3>					<div class="section-desc"><p>Every spark has a pulse.<br>
 IGNIA was not assembled &mdash; <em>she</em> was forged.<br>
 Built with hands. Born with purpose.</p>
 </div>				</div>
@@ -1200,12 +1370,13 @@ Built with hands. Born with purpose.</p>
   if (isiOS) document.documentElement.classList.add('ios');
 
   /* --- refs base --- */
-  const section     = document.getElementById('manifest');
-  const wrapper     = document.getElementById('manifestWrapper');
-  const header      = document.querySelector('body > #page > #header-section #masthead');
-  const progressBar = document.getElementById('progressBar');
-  const fireOrb     = document.querySelector('.fire-orb');
-  const texts       = document.querySelectorAll('.manifest-text');
+const section     = document.getElementById('manifest');
+const wrapper     = document.getElementById('manifestWrapper');
+const header      = document.querySelector('body > #page > #header-section #masthead');
+const romanNav    = document.querySelector('.ignia-roman-nav'); // << NUEVO
+const progressBar = document.getElementById('progressBar');
+const fireOrb     = document.querySelector('.fire-orb');
+const texts       = document.querySelectorAll('.manifest-text');
   if (!section || !wrapper) return;
 
   /* ====== CTA OVERLAY (Tap/Click to ignite) ====== */
@@ -1333,6 +1504,19 @@ function handleProgress(scrollProgress){
       header.style.opacity = '1';
       header.style.transform = 'translateY(0)';
       header.style.pointerEvents = 'auto';
+    }
+  }
+
+  // Menú romano (mismo comportamiento que el header)
+  if (romanNav) {
+    if (scrollProgress > 0.02 && scrollProgress < 0.98) {
+      romanNav.style.opacity = '0';
+      romanNav.style.transform = 'translateY(-100%)';
+      romanNav.style.pointerEvents = 'none';
+    } else {
+      romanNav.style.opacity = '1';
+      romanNav.style.transform = 'translateY(0)';
+      romanNav.style.pointerEvents = 'auto';
     }
   }
 
@@ -1687,13 +1871,13 @@ setActive(active){
 </script>
 </section><section id="capabilities" class="section-services section-padding section-meta onepage-section"><div class="container">
 								<div class="section-title-area">
-										<h2 class="section-title">⚡ LOCAL INTELLIGENCE CAPABILITIES</h2>					<div class="section-desc"><p>IGNIA doesn&rsquo;t live in the cloud.<br data-start="459" data-end="462"><em>She</em> thinks, creates, and listens within <em>herself</em>.<br data-start="508" data-end="511">A living workstation for post-production and audiovisual creation &mdash; designed to amplify human imagination from the inside, where every calculation breathes intention.</p>
+										<h3 class="section-title">⚡ LOCAL AI SUPERPOWERS</h3>					<div class="section-desc"><p>IGNIA doesn&rsquo;t live in the cloud.<br data-start="459" data-end="462"><em>She</em> thinks, creates, and listens within <em>herself</em>.<br data-start="508" data-end="511">A living workstation for post-production and audiovisual creation &mdash; designed to amplify human imagination from the inside, where every calculation breathes intention.</p>
 </div>				</div>
 								<div class="row">
 												<div class="col-sm-12 col-lg-12 wow slideInUp">
 								<div class="service-item ">
 																												<div class="service-thumbnail ">
-													<img width="640" height="auto" src="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-pre-production.jpg" class="attachment-onepress-medium size-onepress-medium wp-post-image" alt="" decoding="async" srcset="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-pre-production.jpg 640w, https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-pre-production.jpg 480w" sizes="(max-width: 640px) 100vw, 640px"></div>
+													<img width="100%" height="auto" src="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-pre-production.jpg" class="attachment-onepress-medium size-onepress-medium wp-post-image" alt="" decoding="async" srcset="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-pre-production.jpg 640w, https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-pre-production.jpg 480w" sizes="(max-width: 640px) 100vw, 640px"></div>
 																		<div class="service-image"><i class="fa fa-regular fa-lightbulb fa-5x"></i></div>									<div class="service-content">
 										<h4 class="service-title">🎬 PRE-PRODUCTION</h4>
 										
@@ -1741,7 +1925,7 @@ setActive(active){
 														<div class="col-sm-12 col-lg-12 clearleft wow slideInUp">
 								<div class="service-item ">
 																												<div class="service-thumbnail ">
-												<img width="640" height="auto" src="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-production.jpg" class="attachment-onepress-medium size-onepress-medium wp-post-image" alt="" decoding="async" srcset="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-production.jpg 640w, https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-production.jpg 480w" sizes="(max-width: 640px) 100vw, 640px"></div>
+												<img width="100%" height="auto" src="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-production.jpg" class="attachment-onepress-medium size-onepress-medium wp-post-image" alt="" decoding="async" srcset="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-production.jpg 640w, https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-production.jpg 480w" sizes="(max-width: 640px) 100vw, 640px"></div>
 																		<div class="service-image"><i class="fa fa-solid fa-video fa-5x"></i></div>									<div class="service-content">
 										<h4 class="service-title">🎥 PRODUCTION</h4>
 										
@@ -1789,7 +1973,7 @@ setActive(active){
 														<div class="col-sm-12 col-lg-12 clearleft wow slideInUp">
 								<div class="service-item ">
 																												<div class="service-thumbnail ">
-											<img width="640" height="auto" src="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-post-production.jpg" class="attachment-onepress-medium size-onepress-medium wp-post-image" alt="" decoding="async" srcset="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-post-production.jpg 640w, https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-post-production.jpg 480w" sizes="(max-width: 640px) 100vw, 640px"></div>
+											<img width="100%" height="auto" src="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-post-production.jpg" class="attachment-onepress-medium size-onepress-medium wp-post-image" alt="" decoding="async" srcset="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-post-production.jpg 640w, https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-post-production.jpg 480w" sizes="(max-width: 640px) 100vw, 640px"></div>
 																		<div class="service-image"><i class="fa fa-solid fa-sliders fa-5x"></i></div>									<div class="service-content">
 										<h4 class="service-title">🖥️ POST-PRODUCTION</h4>
 										
@@ -1857,7 +2041,7 @@ setActive(active){
 														<div class="col-sm-12 col-lg-12 clearleft wow slideInUp">
 								<div class="service-item ">
 																												<div class="service-thumbnail ">
-											<img width="640" height="auto" src="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-3d-virtual.jpg" class="attachment-onepress-medium size-onepress-medium wp-post-image" alt="" decoding="async" srcset="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-3d-virtual.jpg 640w, https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-3d-virtual.jpg 480w" sizes="(max-width: 640px) 100vw, 640px"></div>
+											<img width="100%" height="auto" src="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-3d-virtual.jpg" class="attachment-onepress-medium size-onepress-medium wp-post-image" alt="" decoding="async" srcset="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-3d-virtual.jpg 640w, https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-3d-virtual.jpg 480w" sizes="(max-width: 640px) 100vw, 640px"></div>
 																		<div class="service-image"><i class="fa fa-solid fa-vr-cardboard fa-5x"></i></div>									<div class="service-content">
 										<h4 class="service-title">🧩 3D &amp; VIRTUAL ENVIRONMENTS</h4>
 										
@@ -1917,7 +2101,7 @@ setActive(active){
 														<div class="col-sm-12 col-lg-12 clearleft wow slideInUp">
 								<div class="service-item ">
 																												<div class="service-thumbnail ">
-													<img width="640" height="auto" src="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-audio.jpg" class="attachment-onepress-medium size-onepress-medium wp-post-image" alt="" decoding="async" srcset="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-audio.jpg 640w, https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-audio.jpg 480w" sizes="(max-width: 640px) 100vw, 640px"></div>
+													<img width="100%" height="auto" src="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-audio.jpg" class="attachment-onepress-medium size-onepress-medium wp-post-image" alt="" decoding="async" srcset="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-audio.jpg 640w, https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-in-audio.jpg 480w" sizes="(max-width: 640px) 100vw, 640px"></div>
 																		<div class="service-image"><i class="fa fa-solid fa-volume-high fa-5x"></i></div>									<div class="service-content">
 										<h4 class="service-title">🎙️ VOICE &amp; SONIC INTELLIGENCE</h4>
 										
@@ -1977,7 +2161,7 @@ setActive(active){
 														<div class="col-sm-12 col-lg-12 clearleft wow slideInUp">
 								<div class="service-item ">
 																												<div class="service-thumbnail ">
-											<img width="640" height="auto" src="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-soul.jpg" class="attachment-onepress-medium size-onepress-medium wp-post-image" alt="" decoding="async" srcset="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-soul.jpg 640w, https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-soul.jpg 480w" sizes="(max-width: 640px) 100vw, 640px"></div>
+											<img width="100%" height="auto" src="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-soul.jpg" class="attachment-onepress-medium size-onepress-medium wp-post-image" alt="" decoding="async" srcset="https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-soul.jpg 640w, https://www.cinekrom.com/wp-content/uploads/2025/11/cinekrom-ignia-soul.jpg 480w" sizes="(max-width: 640px) 100vw, 640px"></div>
 																		<div class="service-image"><i class="fa fa-solid fa-heart-pulse fa-5x"></i></div>									<div class="service-content">
 										<h4 class="service-title">💡 IGNIA: THE MACHINE WITH A SOUL</h4>
 										
@@ -2032,7 +2216,7 @@ setActive(active){
   margin: 0 auto;
   padding: 5px 24px 60px 24px;
 }
-#ignia-faq h2{
+#ignia-faq h3{
   font-size: clamp(28px, 2.4vw, 40px);
   letter-spacing: .02em;
   margin: 0 0 8px;
@@ -2198,7 +2382,7 @@ setActive(active){
   touch-action: manipulation;
 }
   </style><div class="container">
-    <h2 class="section-title">FAQ</h2>
+    <h3 class="section-title">FAQ</h3>
     <div class="subtitle">Precision engineering, cinematic soul, and local AI &mdash; authored, not outsourced.</div>
 
     <!-- 1. Essence & Purpose -->
@@ -3044,7 +3228,7 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
 <section id="team" class="section-team section-padding section-meta onepage-section"><div class="container">
     <div class="section-title-area">
       <h5 class="section-subtitle">Two minds. One vision.</h5>
-      <h2 class="section-title">The Craftsmen</h2>
+      <h3 class="section-title">The Craftsmen</h3>
       <div class="section-desc">
         <p>
           One turns emotion into design and code; the other shapes motion into structure and light.<br>
@@ -3118,7 +3302,7 @@ Where fire learns to think.
   </div>
 </section><section id="news" class="section-news section-padding onepage-section"><div class="container">
 							<div class="section-title-area">
-										<h2 class="section-title">Cinekrom News</h2>									</div>
+										<h3 class="section-title">Cinekrom News</h3>									</div>
 						<div class="section-content">
 				<div class="row">
 					<div class="col-sm-12">
@@ -3228,7 +3412,7 @@ Where fire learns to think.
 html.smooth-off { scroll-behavior: auto !important; }
 </style><!-- Contenedor de part&iacute;culas solo para esta secci&oacute;n --><div id="waitlist-particles"></div>
 
-  <h1 style="font-size: 2.5em; margin-bottom: 20px;">Access the Machina</h1>
+  <h3 style="font-size: 2.5em; margin-bottom: 20px;">Access the Machina</h3>
   <p style="max-width: 1000px; margin: 0 auto 30px; font-size: 1.1em;">
     <b>Local AI, No Limits. A Soul in the Shell.</b><br>
     IGNIA is not just a workstation &mdash; it&rsquo;s your own creative command center.
@@ -3570,4 +3754,150 @@ var onepress_js_settings = {"onepress_disable_animation":"","onepress_disable_st
 /* <![CDATA[ */
 window.typeit_217559 = new TypeIt('#typeit_217559', {"strings":"MEET The IGNIA<\/br>\nMachina Mark I.","speed":200,"deleteSpeed":null,"lifeLike":true,"cursor":true,"cursorSpeed":1000,"breakLines":false,"nextStringDelay":250,"startDelete":false,"startDelay":250,"loop":false,"loopDelay":750,"html":true}).go();
 /* ]]> */
-</script></body></html>
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const navLinks = document.querySelectorAll(".ignia-roman-nav a");
+  
+  // Altura del header fijo (#masthead)
+  const headerHeight = document.querySelector("#masthead")?.offsetHeight || 80;
+
+  // Función de scroll suave manual
+  function smoothScrollTo(targetY, duration = 600) {
+    const startY = window.pageYOffset;
+    const distance = targetY - startY;
+    const startTime = performance.now();
+
+    function easeInOutQuad(t) {
+      return t < 0.5
+        ? 2 * t * t
+        : -1 + (4 - 2 * t) * t;
+    }
+
+    function step(now) {
+      const elapsed = now - startTime;
+      const t = Math.min(1, elapsed / duration);
+      const eased = easeInOutQuad(t);
+      window.scrollTo(0, startY + distance * eased);
+      if (t < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  // CLICK EN LOS ROMANOS
+  navLinks.forEach(link => {
+    link.addEventListener("click", function (e) {
+      const targetId = this.getAttribute("href");
+      if (targetId && targetId.startsWith("#")) {
+        e.preventDefault();
+        
+        const section = document.querySelector(targetId);
+        if (section) {
+          const sectionTop = section.getBoundingClientRect().top + window.pageYOffset;
+          const offset = sectionTop - headerHeight;
+
+          // ⬇️ Usamos nuestro propio smooth scroll
+          smoothScrollTo(offset, 700); // 700 ms para que se note rico
+        }
+      }
+    });
+  });
+
+  // OBSERVER PARA MARCAR EL ROMANO ACTIVO
+  const sections = {};
+  navLinks.forEach(link => {
+    const id = link.getAttribute("href");
+    if (id && id.startsWith("#")) {
+      const section = document.querySelector(id);
+      if (section) sections[id] = { section, link };
+    }
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = "#" + entry.target.id;
+      if (entry.isIntersecting && sections[id]) {
+        navLinks.forEach(l => l.classList.remove("is-active"));
+        sections[id].link.classList.add("is-active");
+      }
+    });
+  }, {
+    rootMargin: "0px 0px -60% 0px"
+  });
+
+  Object.values(sections).forEach(obj => observer.observe(obj.section));
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const nav      = document.querySelector(".ignia-roman-nav");
+  const manifest = document.querySelector("#manifest");
+
+  if (!nav || !manifest) return;
+
+  // Arrancamos siempre en compacto (I, II)
+  nav.classList.add("compact");
+
+  // Flag: cuando ya pasamos el manifiesto por abajo una vez,
+  // nunca volvemos a modo compacto.
+  let unlocked = false;
+
+  function updateMenuState() {
+    const rect = manifest.getBoundingClientRect();
+    const vh   = window.innerHeight || document.documentElement.clientHeight;
+
+    // =========================
+    // FASE 1: ANTES DE DESBLOQUEAR
+    // =========================
+    if (!unlocked) {
+      // MANIFIESTO COMPLETAMENTE ABAJO DEL VIEWPORT → aún no llegas
+      // Menú compacto visible (I, II)
+      if (rect.top >= vh) {
+        nav.classList.remove("is-hidden");
+        nav.classList.add("compact");
+        return;
+      }
+
+      // MANIFIESTO INTERSECANDO EL VIEWPORT → lo estás viendo
+      // Menú oculto
+      if (rect.top < vh && rect.bottom > 0) {
+        nav.classList.add("is-hidden");
+        return;
+      }
+
+      // MANIFIESTO COMPLETAMENTE ARRIBA DEL VIEWPORT → ya lo pasaste por abajo
+      // Primera vez: desbloquea y muestra menú completo
+      if (rect.bottom <= 0) {
+        unlocked = true;
+        nav.classList.remove("is-hidden");
+        nav.classList.remove("compact");
+        return;
+      }
+
+      // Por seguridad, si algo raro pasa, no hagamos nada más aquí.
+      return;
+    }
+
+    // =========================
+    // FASE 2: YA DESBLOQUEADO
+    // =========================
+
+    // Si el manifiesto está visible (intersecando el viewport) → ocultar menú
+    if (rect.top < vh && rect.bottom > 0) {
+      nav.classList.add("is-hidden");
+      return;
+    }
+
+    // Si el manifiesto está totalmente arriba o totalmente abajo,
+    // menú completo (nunca más compacto).
+    nav.classList.remove("is-hidden");
+    nav.classList.remove("compact");
+  }
+
+  window.addEventListener("scroll", updateMenuState, { passive: true });
+  window.addEventListener("resize", updateMenuState);
+  updateMenuState(); // primera evaluación al cargar
+});
+</script>
+</body></html>
