@@ -1011,6 +1011,87 @@ body::-webkit-scrollbar {
   }
 }
 
+/* ====================================================
+   APARICIÓN SECUENCIAL DE IZQUIERDA A DERECHA
+   ==================================================== */
+.ignia-roman-nav.first-fade {
+  /* El contenedor entra suavemente */
+  animation: containerFadeIn 0.5s ease-out;
+}
+
+@keyframes containerFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Cada elemento (dot y link) aparece en cascada */
+.ignia-roman-nav.first-fade > * {
+  opacity: 0;
+  animation: itemAppear 0.6s ease-out forwards;
+}
+
+/* Delays progresivos para cada elemento */
+.ignia-roman-nav.first-fade > *:nth-child(1) { animation-delay: 0s; }     /* primer dot */
+.ignia-roman-nav.first-fade > *:nth-child(2) { animation-delay: 0.15s; }  /* I */
+.ignia-roman-nav.first-fade > *:nth-child(3) { animation-delay: 0.3s; }   /* dot */
+.ignia-roman-nav.first-fade > *:nth-child(4) { animation-delay: 0.45s; }  /* II */
+.ignia-roman-nav.first-fade > *:nth-child(5) { animation-delay: 0.6s; }   /* dot */
+.ignia-roman-nav.first-fade > *:nth-child(6) { animation-delay: 0.75s; }  /* III */
+.ignia-roman-nav.first-fade > *:nth-child(7) { animation-delay: 0.9s; }   /* dot */
+.ignia-roman-nav.first-fade > *:nth-child(8) { animation-delay: 1.05s; }  /* IV */
+.ignia-roman-nav.first-fade > *:nth-child(9) { animation-delay: 1.2s; }   /* dot */
+.ignia-roman-nav.first-fade > *:nth-child(10) { animation-delay: 1.35s; } /* V */
+.ignia-roman-nav.first-fade > *:nth-child(11) { animation-delay: 1.5s; }  /* último dot */
+
+@keyframes itemAppear {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+    filter: blur(8px);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(2px);
+    text-shadow: 
+      0 0 20px rgba(255, 80, 80, 0.9),
+      0 0 40px rgba(255, 80, 80, 0.6),
+      0 0 60px rgba(255, 255, 255, 0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+    text-shadow: none;
+  }
+}
+
+/* Los dots tienen una animación más sutil */
+.ignia-roman-nav.first-fade .dot {
+  animation: dotAppear 0.4s ease-out forwards !important;
+}
+
+@keyframes dotAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  60% {
+    transform: scale(1.4);
+    text-shadow: 
+      0 0 10px rgba(255, 80, 80, 0.8),
+      0 0 20px rgba(255, 80, 80, 0.4);
+  }
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+    text-shadow: none;
+  }
+}
+
 	</style></head><body class="home wp-singular page-template page-template-template-frontpage page-template-template-frontpage-php page page-id-1415 wp-custom-logo wp-theme-onepress">
 	<!-- IGNIA Roman Menu -->
 	<nav class="ignia-roman-nav">
@@ -3823,20 +3904,20 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", () => {
   const nav      = document.querySelector(".ignia-roman-nav");
   const manifest = document.querySelector("#manifest");
-
   if (!nav || !manifest) return;
-
+  
   // Arrancamos siempre en compacto (I, II)
   nav.classList.add("compact");
-
+  
   // Flag: cuando ya pasamos el manifiesto por abajo una vez,
   // nunca volvemos a modo compacto.
   let unlocked = false;
-
+  let firstAppearance = true; // nuevo flag para controlar el fade inicial
+  
   function updateMenuState() {
     const rect = manifest.getBoundingClientRect();
     const vh   = window.innerHeight || document.documentElement.clientHeight;
-
+    
     // =========================
     // FASE 1: ANTES DE DESBLOQUEAR
     // =========================
@@ -3844,47 +3925,77 @@ document.addEventListener("DOMContentLoaded", () => {
       // MANIFIESTO COMPLETAMENTE ABAJO DEL VIEWPORT → aún no llegas
       // Menú compacto visible (I, II)
       if (rect.top >= vh) {
-        nav.classList.remove("is-hidden");
+        nav.classList.ass("is-hidden");
         nav.classList.add("compact");
         return;
       }
-
+      
       // MANIFIESTO INTERSECANDO EL VIEWPORT → lo estás viendo
-      // Menú oculto
+      // Calculamos qué tanto ha scrolleado a través del manifest
+      const manifestHeight = rect.height;
+      const scrolledThrough = -rect.top; // cuánto ha subido desde que empezó a verse
+      const scrollProgress = (scrolledThrough / manifestHeight) * 100;
+      
+      // Si está visible pero NO al 95% scrolleado, ocultar menú
       if (rect.top < vh && rect.bottom > 0) {
+        // Si ya scrolleamos el 95% del manifest, desbloquear
+        if (scrollProgress >= 95) {
+          unlocked = true;
+          
+          // Aplicar fade largo solo la primera vez
+          if (firstAppearance) {
+            nav.classList.add("first-fade");
+            firstAppearance = false;
+            setTimeout(() => {
+              nav.classList.remove("first-fade");
+            }, 2000);
+          }
+          
+          nav.classList.remove("is-hidden");
+          nav.classList.remove("compact");
+          return;
+        }
+        
+        // Aún no llegamos al 95%, mantener oculto
         nav.classList.add("is-hidden");
         return;
       }
-
+      
       // MANIFIESTO COMPLETAMENTE ARRIBA DEL VIEWPORT → ya lo pasaste por abajo
-      // Primera vez: desbloquea y muestra menú completo
       if (rect.bottom <= 0) {
         unlocked = true;
+        
+        if (firstAppearance) {
+          nav.classList.add("first-fade");
+          firstAppearance = false;
+          setTimeout(() => {
+            nav.classList.remove("first-fade");
+          }, 2000);
+        }
+        
         nav.classList.remove("is-hidden");
         nav.classList.remove("compact");
         return;
       }
-
-      // Por seguridad, si algo raro pasa, no hagamos nada más aquí.
+      
       return;
     }
-
+    
     // =========================
     // FASE 2: YA DESBLOQUEADO
     // =========================
-
     // Si el manifiesto está visible (intersecando el viewport) → ocultar menú
     if (rect.top < vh && rect.bottom > 0) {
       nav.classList.add("is-hidden");
       return;
     }
-
+    
     // Si el manifiesto está totalmente arriba o totalmente abajo,
     // menú completo (nunca más compacto).
     nav.classList.remove("is-hidden");
     nav.classList.remove("compact");
   }
-
+  
   window.addEventListener("scroll", updateMenuState, { passive: true });
   window.addEventListener("resize", updateMenuState);
   updateMenuState(); // primera evaluación al cargar
