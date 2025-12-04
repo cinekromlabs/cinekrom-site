@@ -3472,15 +3472,27 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
 
 <script>
   (function () {
-    const video = document.querySelector('#ignia-pricing .ignia-video-bg');
+    const section = document.getElementById('ignia-pricing');
+    if (!section) return;
+
+    const video = section.querySelector('.ignia-video-bg');
     if (!video) return;
 
-    // Intento inicial por si el navegador sí lo permite
     function tryPlay() {
-      video.play().catch(function(){ /* Safari se queja en silencio, lo ignoramos */ });
+      video.muted = true;
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+
+      const p = video.play();
+      if (p && p.catch) {
+        p.catch(function () {
+          // Safari puede rechazar; reintentamos luego.
+        });
+      }
     }
 
-    // Probar al cargar
+    // 1) Intentos iniciales al cargar
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
       tryPlay();
     } else {
@@ -3488,20 +3500,37 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
       window.addEventListener('load', tryPlay);
     }
 
-    // Fallback: primer gesto del usuario (tap / scroll / click) → forzar play
+    // 2) IntersectionObserver: cuando la sección entra al viewport
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
+          tryPlay();
+        }
+      });
+    }, {
+      threshold: [0.25, 0.5, 0.75]
+    });
+
+    observer.observe(section);
+
+    // 3) Gestos globales (touch/click/scroll) mientras la sección es visible
     let unlocked = false;
-    function unlock() {
-      if (unlocked) return;
-      unlocked = true;
-      tryPlay();
-      window.removeEventListener('touchstart', unlock);
-      window.removeEventListener('click', unlock);
-      window.removeEventListener('scroll', unlock);
+
+    function isSectionVisible() {
+      const rect = section.getBoundingClientRect();
+      const vh   = window.innerHeight || document.documentElement.clientHeight;
+      return rect.top < vh && rect.bottom > 0;
     }
 
-    window.addEventListener('touchstart', unlock, { passive: true });
-    window.addEventListener('click', unlock);
-    window.addEventListener('scroll', unlock, { passive: true });
+    function interactionHandler() {
+      if (!isSectionVisible()) return;
+      if (!unlocked) unlocked = true;
+      tryPlay();
+    }
+
+    ['touchstart', 'click', 'scroll'].forEach(function (ev) {
+      window.addEventListener(ev, interactionHandler, { passive: true });
+    });
   })();
 </script>
 
