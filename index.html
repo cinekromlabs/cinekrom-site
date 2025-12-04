@@ -3278,155 +3278,197 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
 </section>
 
 <section id="ignia-pricing"
-         class="section-padding section-inverse onepage-section"
-         style="position:relative; text-align:center; overflow:hidden; background:#000;">
+         class="section-padding section-inverse onepage-section ignia-pricing-hero">
 
-  <!-- CAPA: SECUENCIA FULL-WIDTH DETRÁS DEL TEXTO -->
-  <div class="ignia-rotator-layer"
-       style="
-         position:absolute;
-         inset:0;
-         display:flex;
-         align-items:center;
-         justify-content:center;
-         pointer-events:none;
-         z-index:2;
-       ">
-<img
-  id="ignia-seq"
-  src="https://www.cinekrom.com/assets/scroll_seq/ignia-001.webp"
-  alt="Cinekrom IGNIA Mark I rotating"
-  style="
+<style>
+/* INICIA PRICING */
+  /* CONTENEDOR GENERAL DE LA SECCIÓN PRICING */
+  .ignia-pricing-hero {
+    position: relative;
+    text-align: center;
+    background: #000;
+    padding: 0px 0;
+  }
+
+  /* MARCO 16:9 CENTRADO */
+  .ignia-video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 854px;          /* ajusta si la quieres más chica o grande en desktop */
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;       /* mantiene 16:9 en todos los dispositivos */
+    overflow: hidden;
+    border-radius: 0;
+    background:#000;
+  }
+
+  /* VIDEO DE FONDO */
+  .ignia-video-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
     height: 100%;
-    width: auto;
-    max-width: none;
-    opacity: 0.7;
-    filter: saturate(1.4);
-    object-fit: contain;
-  "
->
-  </div>
+    object-fit: cover;          /* llena el marco 16:9 sin deformar */
+  }
 
-  <!-- TEXTO AL FRENTE -->
-  <div class="container" style="position:relative; z-index:3; max-width: 900px; margin: 0 auto;">
+/* laterales difuminados */
+@media (min-width: 1024px) {
+  .ignia-video-bg {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 12%,
+      black 88%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 12%,
+      black 88%,
+      transparent 100%
+    );
+  }
+}
+  /* OVERLAY OSCURO ENCIMA DEL VIDEO */
+  .ignia-video-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 20%, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.75) 100%),
+      rgba(0,0,0,0.10);
+    z-index: 2;
+  }
 
-   <h3 class="videolightbox__heading" style="margin-bottom: 20px; color:#FFFFFF; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);">
-      Cinekrom IGNIA Machina Mark I
-    </h3>
-<p class="lead" style="
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-  color:#FFFFFF;
-  text-shadow:
-    0 3px 10px rgba(0, 0, 0, 0.65),
-    0 1px 3px rgba(0, 0, 0, 0.45);
-">
-  Hybrid AI Workstation — hand-built as a single, uncompromising flagship model.
-</p>
+  /* CONTENIDO AL FRENTE */
+  .ignia-video-content {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1.5rem;
+  }
 
-    <p style="font-size: 2.4rem; font-weight: 700; margin-top: 35px; margin-bottom: 5px; color:#FFFFFF;">
-      🔥 UNDER $35K MSRP
-    </p>
+/* AJUSTES RESPONSIVE */
+@media (max-width: 768px) {
+  .ignia-pricing-hero {
+    padding: 0px 0;
+  }
 
-    <p style="font-size: 1rem; margin-bottom: 25px; color: rgba(255,255,255,0.75);">
-      (Global Pricing)
-    </p>
+  .ignia-video-content {
+    padding: 1.75rem 1.2rem;
+  }
 
-    <p style="font-size: 1rem; margin-bottom: 30px; color:#FFFFFF;">
-      <em>Final pricing provided after a short technical briefing</em>.
-    </p>
+  .ignia-video-content .lead {
+    font-size: 1.05rem !important;
+  }
 
-    <p style="font-size: 1rem; line-height: 1.5; margin: 0 auto; max-width: 680px; color:#FFFFFF;">
-      <strong>Founders Edition</strong> — preferred early-adopter pricing,<br>
-      <strong>significantly lower than global MSRP</strong>.<br>
-      <em>Strictly limited to the first 50 units worldwide</em>.
-    </p>
+  .ignia-video-content p[style*="2.4rem"] {
+    font-size: 1.9rem !important;
+  }
 
-    <!-- SCRIPT: ROTACIÓN CON SCROLL DETRÁS DEL TEXTO -->
-<script>
-  (function () {
-    const totalFrames   = 37;  // Total de frames exportados
-    const exportedFPS   = 12;  // Info de referencia, por si luego ajustas
+  /* 🔧 ARREGLO DEL CORTE EN MÓVIL */
+  .ignia-video-wrapper {
+    aspect-ratio: auto;   /* quitamos el 16:9 fijo */
+    height: auto;
+    min-height: 420px;    /* juega entre 380–450px si quieres ajustar la altura */
+  }
 
-    const framePath = function (i) {
-      const num = String(i).padStart(3, '0');
-      return 'https://www.cinekrom.com/assets/scroll_seq/ignia-' + num + '.webp';
-    };
+  .ignia-video-content {
+    height: auto;         /* que el texto mande en altura */
+  }
+}
 
-    const imgEl   = document.getElementById('ignia-seq');
-    const section = document.getElementById('ignia-pricing');
-    const frames  = [];
+/* TERMINA PRICING */
+</style>
 
-    if (!imgEl || !section) return;
+  <div class="ignia-video-wrapper">
+    <!-- VIDEO DE FONDO -->
+    <video class="ignia-video-bg"
+           autoplay
+           muted
+           loop
+           playsinline
+           preload="auto"
+           poster="https://www.cinekrom.com/assets/ignia-full-setup-pricing.webp">
+      <source src="https://www.cinekrom.com/assets/ignia-full-setup-pricing.webm" type="video/webm">
+      <source src="https://www.cinekrom.com/assets/ignia-full-setup-pricing.mp4" type="video/mp4">
+      <!-- fallback simple -->
+    </video>
 
-    // Opcional: setear el primer frame de entrada
-    imgEl.src = framePath(1);
+    <!-- OVERLAY PARA OSCURECER -->
+    <div class="ignia-video-overlay"></div>
 
-    // Precarga de imágenes
-    for (let i = 1; i <= totalFrames; i++) {
-      const im = new Image();
-      im.src = framePath(i);
-      frames.push(im);
-    }
+    <!-- TEXTO AL FRENTE -->
+    <div class="ignia-video-content">
 
-    let currentFrame = 0;    // float
-    let targetFrame  = 0;    // float
-    const smoothing  = 0.18; // un poco más rápido que 0.12 para 12fps
+      <h3 class="videolightbox__heading" style="
+        margin-bottom: 20px;
+        color:#FFFFFF;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+      ">
+        Cinekrom IGNIA Machina Mark I
+      </h3>
 
-    function updateTargetFromScroll() {
-      const rect = section.getBoundingClientRect();
-      const vh   = window.innerHeight;
+      <p class="lead" style="
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+        color:#FFFFFF;
+        text-shadow:
+          0 3px 10px rgba(0, 0, 0, 0.75),
+          0 1px 3px rgba(0, 0, 0, 0.55);
+        max-width: 720px;
+      ">
+        Hybrid AI Workstation — hand-built as a single, uncompromising flagship model.
+      </p>
 
-      // Si la sección está completamente fuera de vista, no hacemos nada
-      if (rect.bottom < 0 || rect.top > vh) return;
+      <p style="
+        font-size: 2.4rem;
+        font-weight: 700;
+        margin-top: 35px;
+        margin-bottom: 5px;
+        color:#FFFFFF;
+        text-shadow:
+          0 3px 10px rgba(0, 0, 0, 0.9),
+          0 1px 3px rgba(0, 0, 0, 0.7);
+      ">
+        🔥 UNDER $35K MSRP
+      </p>
 
-      const start = vh * 0.1;
-      const end   = vh + rect.height * 0.8;
+      <p style="
+        font-size: 1rem;
+        margin-bottom: 25px;
+        color: rgba(255,255,255,0.8);
+      ">
+        (Global Pricing)
+      </p>
 
-      const raw      = (vh - rect.top - start) / (end - start);
-      const progress = Math.max(0, Math.min(1, raw));
+      <p style="
+        font-size: 1rem;
+        margin-bottom: 30px;
+        color:#FFFFFF;
+      ">
+        <em>Final pricing provided after a short technical briefing</em>.
+      </p>
 
-      // Frame objetivo en reversa (de 36 a 0)
-      targetFrame = (totalFrames - 1) * (1 - progress);
-    }
+      <p style="
+        font-size: 1rem;
+        line-height: 1.5;
+        margin: 0 auto;
+        max-width: 680px;
+        color:#FFFFFF;
+      ">
+        <strong>Founders Edition</strong> — preferred early-adopter pricing,<br>
+        <strong>significantly lower than global MSRP</strong>.<br>
+        <em>Strictly limited to the first 50 units worldwide</em>.
+      </p>
 
-    let lastTime = performance.now();
+    </div><!-- /.ignia-video-content -->
+  </div><!-- /.ignia-video-wrapper -->
 
-    function render(now) {
-      const dt = now - lastTime;
-      lastTime = now;
-
-      // Normalizamos el delta a "múltiplos" de 60fps (~16.67ms)
-      const step = Math.min(dt / 16.67, 2); // clamp para evitar saltos raros
-
-      const diff = targetFrame - currentFrame;
-
-      if (Math.abs(diff) > 0.01) {
-        // Suavizado dependiente del tiempo
-        currentFrame += diff * smoothing * step;
-
-        let frameIndex = Math.round(currentFrame);
-        frameIndex = Math.max(0, Math.min(totalFrames - 1, frameIndex));
-
-        const frame = frames[frameIndex];
-        if (frame && frame.complete && imgEl.src !== frame.src) {
-          imgEl.src = frame.src;
-        }
-      }
-
-      requestAnimationFrame(render);
-    }
-
-    window.addEventListener('scroll', updateTargetFromScroll, { passive: true });
-    window.addEventListener('resize', updateTargetFromScroll);
-
-    // Inicializar
-    updateTargetFromScroll();
-    requestAnimationFrame(render);
-  })();
-</script>
-
-  </div>
 </section>
 
 
