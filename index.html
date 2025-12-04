@@ -3387,12 +3387,13 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
 
   <div class="ignia-video-wrapper">
     <!-- VIDEO DE FONDO -->
-    <video class="ignia-video-bg"
-           autoplay
-           muted
-           loop
-           playsinline
-           preload="auto"
+<video class="ignia-video-bg"
+       autoplay
+       muted
+       loop
+       playsinline
+       webkit-playsinline
+       preload="auto"
            poster="https://www.cinekrom.com/assets/ignia-full-setup-pricing.webp">
       <source src="https://www.cinekrom.com/assets/ignia-full-setup-pricing.webm" type="video/webm">
       <source src="https://www.cinekrom.com/assets/ignia-full-setup-pricing.mp4" type="video/mp4">
@@ -3468,6 +3469,42 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
 
     </div><!-- /.ignia-video-content -->
   </div><!-- /.ignia-video-wrapper -->
+
+<script>
+  (function () {
+    const video = document.querySelector('#ignia-pricing .ignia-video-bg');
+    if (!video) return;
+
+    // Intento inicial por si el navegador sí lo permite
+    function tryPlay() {
+      video.play().catch(function(){ /* Safari se queja en silencio, lo ignoramos */ });
+    }
+
+    // Probar al cargar
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      tryPlay();
+    } else {
+      document.addEventListener('DOMContentLoaded', tryPlay);
+      window.addEventListener('load', tryPlay);
+    }
+
+    // Fallback: primer gesto del usuario (tap / scroll / click) → forzar play
+    let unlocked = false;
+    function unlock() {
+      if (unlocked) return;
+      unlocked = true;
+      tryPlay();
+      window.removeEventListener('touchstart', unlock);
+      window.removeEventListener('click', unlock);
+      window.removeEventListener('scroll', unlock);
+    }
+
+    window.addEventListener('touchstart', unlock, { passive: true });
+    window.addEventListener('click', unlock);
+    window.addEventListener('scroll', unlock, { passive: true });
+  })();
+</script>
+
 
 </section>
 
