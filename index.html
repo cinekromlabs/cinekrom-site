@@ -328,7 +328,9 @@ body > #page > #header-section #masthead {
   display: inline-block;              /* pleca ajustada al texto */
   padding: 0.05em 0.6em;             /* aire alrededor */
   background-color: rgba(0,0,0,0.35); /* pleca negra 50% */
-  border-radius: 6px;                 /* suave, nada tosco */
+  border-radius: 10px;                 /* suave, nada tosco */
+    -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 /* Mejor balance de párrafo y micro-tipografía */
@@ -1658,8 +1660,8 @@ const texts       = document.querySelectorAll('.manifest-text');
 if (fireOrb && orbSpin && seqContainer && seqImg) {
   const seqStartProgress = SEQ_START_INDEX / numTexts; // ~0.85
   const seqEndProgress   = 0.99;
-  const MAX_SEQ_OPACITY  = 0.78; // nunca tapa el texto al 100%
-  const MIN_ORB_OPACITY  = 0.4; // 👈 fantasma: nunca baja de 0.14 aprox.
+  const MAX_SEQ_OPACITY  = 0.78; 
+  const MIN_ORB_OPACITY  = 0.4;  // punto intermedio (fantasma)
 
   if (scrollProgress <= seqStartProgress) {
     // Orb de fuego completo visible, secuencia oculta
@@ -1674,12 +1676,24 @@ if (fireOrb && orbSpin && seqContainer && seqImg) {
       (scrollProgress - seqStartProgress) / (seqEndProgress - seqStartProgress)
     ));
 
-    // Primera mitad: crossfade orb → secuencia
-    const fade = Math.min(1, local * 2);
+    // Primera mitad: crossfade orb → secuencia (como antes)
+    const fade = Math.min(1, local * 1.5);
+    const baseOpacity = 1 - fade; // 1 → 0
 
-    // 👇 Sólo se desvanece el orb de fuego, pero nunca a 0
-    const orbOpacity = Math.max(MIN_ORB_OPACITY, 1 - fade);
-    orbSpin.style.opacity = String(orbOpacity);
+    // Punto donde llegamos a 0.4 con la curva original
+    const THRESH_LOCAL = 0.35; // aquí baseOpacity ≈ 0.4
+
+    let orbOpacity;
+    if (local <= THRESH_LOCAL) {
+      // Tramo 1: 1 → 0.4
+      orbOpacity = baseOpacity;
+    } else {
+      // Tramo 2: 0.4 → 0 en lo que resta
+      const t = (local - THRESH_LOCAL) / (1 - THRESH_LOCAL); // 0→1
+      orbOpacity = MIN_ORB_OPACITY * (1 - t);                 // 0.4→0
+    }
+
+    orbSpin.style.opacity = String(Math.max(0, Math.min(1, orbOpacity)));
 
     const imgOpacity = fade * MAX_SEQ_OPACITY;
     seqContainer.style.opacity = String(imgOpacity);
@@ -1687,8 +1701,8 @@ if (fireOrb && orbSpin && seqContainer && seqImg) {
     // Mapear local → frames IGNIA (34 cuadros → 001–034)
     const frameIndex  = Math.floor(local * (SEQ_FRAMES - 1)); // 0–33
     const clamped     = Math.max(0, Math.min(SEQ_FRAMES - 1, frameIndex));
-    const frameNumber = clamped + 1;                           // 1–34
-    const padded      = String(frameNumber).padStart(3, '0');  // 001, 002...
+    const frameNumber = clamped + 1;                          // 1–34
+    const padded      = String(frameNumber).padStart(3, '0'); // 001, 002...
 
     const nextSrc = `${SEQ_BASE}ignia-manifesto-${padded}.webp`;
 
@@ -1698,7 +1712,6 @@ if (fireOrb && orbSpin && seqContainer && seqImg) {
     }
   }
 }
-
 /* === FIN SECUENCIA IGNIA ============================= */
 
       // Si el CTA está activo, no animamos textos
