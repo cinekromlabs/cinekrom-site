@@ -1677,11 +1677,11 @@ if (fireOrb && orbSpin && seqContainer && seqImg) {
     ));
 
     // Primera mitad: crossfade orb → secuencia (como antes)
-    const fade = Math.min(1, local * 1.5);
+    const fade = Math.min(1, local * 1.8);
     const baseOpacity = 1 - fade; // 1 → 0
 
     // Punto donde llegamos a 0.4 con la curva original
-    const THRESH_LOCAL = 0.35; // aquí baseOpacity ≈ 0.4
+    const THRESH_LOCAL = 0.6; // aquí baseOpacity ≈ 0.4
 
     let orbOpacity;
     if (local <= THRESH_LOCAL) {
