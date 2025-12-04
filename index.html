@@ -154,8 +154,6 @@ display: none;
   background: #000;
 }
 
-
-
 #manifest-wrapper {
   scroll-behavior: smooth;
   /* Solo en móvil/touch: */
@@ -167,6 +165,7 @@ display: none;
   scroll-snap-stop: normal; /* permite scrollear a través de varios textos */
 }
 
+
 /* Opcional: solo activar snap en móviles */
 @media (pointer: coarse) {
   #manifest-wrapper {
@@ -174,27 +173,62 @@ display: none;
   }
 }
 
+/* FIRE ORB + SECUENCIA IGNIA */
+/* Contenedor sticky ya lo tienes arriba, no lo toco */
 
+/* ORBE: por delante de la máquina, detrás del texto */
+.fire-orb {
+  position: absolute;
+  inset: 0;
+  z-index: 3;                     /* ← orb encima de la secuencia */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .35s ease-out;
+  pointer-events: none;
+}
 
-/* Overlay negro sobre el fondo de fuego */
+/* Contenedor de la secuencia de imágenes (máquina) */
+.ignia-sequence {
+  position: absolute;
+  inset: 0;
+  z-index: 2;                     /* ← máquina detrás del orb, delante del fondo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;                     /* arranca oculta */
+  pointer-events: none;
+  transition: opacity .35s ease-out;
+  filter: brightness(0.92) contrast(1.04); /* sutil, para disimular 480/720p */
+}
+
+.ignia-sequence-img {
+  height: 70vh;                   /* tamaño que ya dejaste */
+  width: auto;
+  object-fit: cover;
+  transform-origin: center center;
+}
+
+/* Overlay negro sobre el fondo (atrás de todo lo demás) */
 .dark-overlay {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
   background: transparent;
-  z-index: 1;
+  z-index: 1;                     /* ← fondo/velo más bajo de la escena */
 }
 
-/* Contenedor de texto */
+/* Contenedor de texto (siempre arriba) */
 .text-container {
   position: absolute;
   inset: 0;
+  z-index: 4;                     /* ← texto por encima de orb + máquina */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 3;
   padding: 0 5%;
 }
+
 
 .manifest-text {
   position: absolute;
@@ -211,14 +245,19 @@ display: none;
   will-change: transform, opacity;     /* antes: auto */
   backface-visibility: hidden;         /* evita repintados raros en comp. 3D */
 
-  /* opcionales (si quieres afinar tipograf&iacute;a en Mojave):  */
+  /* opcionales (si quieres afinar tipografía en Mojave):  */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-
 
   contain: paint;                      /* limita repintado */
 }
 
+/* Cuando la secuencia IGNIA está activa, refuerzo legibilidad del acto 5 */
+#manifest.manifest-seq-active .manifest-text[data-mv="5"]{
+  text-shadow:
+    0 0 18px rgba(0,0,0,.80),
+    0 0 36px rgba(0,0,0,.60);
+}
 
 /* Progress bar para debug */
 .progress-bar {
@@ -233,30 +272,23 @@ display: none;
 
 @media (max-width: 768px) {
   .manifest-text { font-size: 1.5rem; }
-  /* El tama&ntilde;o real del orbe lo pone JS, esto solo es fallback */
+  /* El tamaño real del orbe lo pone JS, esto solo es fallback */
   .fire-orb { width: 0; height: 0; }
 }
 
-/* Esconde el men&uacute; suavemente */
+/* Esconde el menú suavemente */
 body > #page > #header-section #masthead {
   transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
 }
 
 /* Paleta por movimientos (legible en fondo oscuro) */
 :root{
-  --ink-1:#FFF8A6; /* Miedo&rarr;Luz / 12W */
+  --ink-1:#FFF8A6; /* Miedo→Luz / 12W */
   --ink-2:#6BCEED; /* Simbiosis */
-  --ink-3:#F9C7E9; /* &Eacute;tica / Autor&iacute;a */
+  --ink-3:#F9C7E9; /* Ética / Autoría */
   --ink-4:#A4EDC5; /* Instrumento / Machina */
   --ink-5:#FC979F; /* Llamado / Wake it (azul plasma encendido) */
 }
-
-/* Glow sutil azul en el acto final */
-/*.manifest-text[data-mv="5"]{
-  text-shadow:
-    0 0 24px rgba(0,207,255,0.40),
-    0 0 48px rgba(0,207,255,0.20);
-} */
 
 /* Color por movimiento (sin tocar JS) */
 .manifest-text{ color: var(--ink, #EEEEEE); }
@@ -266,15 +298,6 @@ body > #page > #header-section #masthead {
 .manifest-text[data-mv="4"]{ --ink: var(--ink-4); }
 .manifest-text[data-mv="5"]{ --ink: var(--ink-5); }
 
-/* Jerarqu&iacute;a tipogr&aacute;fica (t&iacute;tulos y cabeceras) */
-.manifest-text[data-text="0"],
-.manifest-text[data-text="1"],
-.manifest-text[data-text="2"]{
-  font-style: normal;
-  font-weight: 600;
-  letter-spacing: .01em;
-  font-size: clamp(1.8rem, 2.2vw, 2.6rem);
-}
 
 /* T&iacute;tulos centrales: 'CINEKROM IGNIA &mdash; THE MANIFESTO' (5) y 'Mark I &middot; Anima in ferro' (6) */
 .manifest-text[data-text="6"],
@@ -286,8 +309,29 @@ body > #page > #header-section #masthead {
   letter-spacing: .08em;
   font-size: clamp(1.4rem, 1.9vw, 2rem);
 }
+/* Jerarquía tipográfica (títulos y cabeceras) */
+.manifest-text[data-text="0"],
+.manifest-text[data-text="1"],
+.manifest-text[data-text="2"]{
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: .01em;
+  font-size: clamp(1.8rem, 2.2vw, 2.6rem);
+}
 
-/* Mejor balance de p&aacute;rrafo y micro-tipograf&iacute;a */
+/* Pleca negra para 36–40 */
+.manifest-text[data-text="36"],
+.manifest-text[data-text="37"],
+.manifest-text[data-text="38"],
+.manifest-text[data-text="39"],
+.manifest-text[data-text="40"] {
+  display: inline-block;              /* pleca ajustada al texto */
+  padding: 0.05em 0.6em;             /* aire alrededor */
+  background-color: rgba(0,0,0,0.35); /* pleca negra 50% */
+  border-radius: 6px;                 /* suave, nada tosco */
+}
+
+/* Mejor balance de párrafo y micro-tipografía */
 .manifest-text{
   text-wrap: balance;
   hanging-punctuation: first;
@@ -298,13 +342,13 @@ body > #page > #header-section #masthead {
 
 /* Por defecto: texto en redondo */
 .manifest-text { font-style: normal; }
-/* L&iacute;neas po&eacute;ticas / meditativas (voz interna o simb&oacute;lica) */
+/* Líneas poéticas / meditativas (voz interna o simbólica) */
 
 .manifest-text[data-text="13"],  /* IGNIA was born where the analog breathes */
 .manifest-text[data-text="14"],  /* and the artificial listens. */
-.manifest-text[data-text="15"],  /* Where machines do not dictate &mdash; they echo. */
+.manifest-text[data-text="15"],  /* Where machines do not dictate — they echo. */
 .manifest-text[data-text="19"],  /* is only as powerful as the hand that dares to teach it meaning. */
-.manifest-text[data-text="24"],  /* It&rsquo;s a presence. */
+.manifest-text[data-text="24"],  /* It’s a presence. */
 .manifest-text[data-text="26"],  /* It's a Machina. */
 .manifest-text[data-text="29"],  /* The way the dreams once... */
 .manifest-text[data-text="36"],  /* She speaks when you listen. */
@@ -314,17 +358,18 @@ body > #page > #header-section #masthead {
   font-style: italic;
 }
 
-/* Caso general: texto normal  em en it&aacute;lica */
+
+/* Caso general: texto normal  em en itálica */
 .manifest-text:not([data-italic="true"]) em {
   font-style: italic;
 }
 
-/* Caso opuesto: texto it&aacute;lico em en redondo */
+/* Caso opuesto: texto itálico em en redondo */
 .manifest-text[data-italic="true"] em {
   font-style: normal;
 }
 
-/* Y mant&eacute;n tu subrayado fino */
+/* Y mantén tu subrayado fino */
 .manifest-text em {
   color: color-mix(in oklab, white 90%, currentColor 10%);
   text-decoration-line: underline;
@@ -334,8 +379,7 @@ body > #page > #header-section #masthead {
   text-decoration-skip-ink: none;
 }
 
-
-/* Reforzadores de jerarqu&iacute;a */
+/* Reforzadores de jerarquía */
 .manifest-text[data-text="26"]{ /* "It's a Machina." como golpe identitario */
   font-weight:700; font-style: normal;
 }
@@ -359,25 +403,23 @@ body > #page > #header-section #masthead {
   .manifest-text{ max-width: 80vw; }
 }
 
-/* Perfil iOS m&aacute;s ligero (auto) */
+/* Perfil iOS más ligero (auto) */
 html.ios .manifest-text {
   backface-visibility: hidden;
-  transform: translate3d(0,90px,0); /* leve offset inicial, en armon&iacute;a con AMP reducido */
+  transform: translate3d(0,90px,0); /* leve offset inicial, en armonía con AMP reducido */
 }
-/*.ios .manifest-text{
-  text-shadow: 0 0 12px rgba(0,0,0,.55);
-} */
-/* 1) Modo NO-transparente (plantillas sin .is-transparent) &rarr; s&oacute;lido oscuro */
+
+/* 1) Modo NO-transparente (plantillas sin .is-transparent) → sólido oscuro */
 body:not(.is-transparent) .site-header {
   background: #252424 !important;
 }
 
-/* 2) Modo Transparente en el top &rarr; debe seguir transparente */
+/* 2) Modo Transparente en el top → debe seguir transparente */
 .is-transparent .site-header {
   background: transparent !important;
 }
 
-/* 3) Modo Transparente al hacer scroll (header-fixed) &rarr; s&oacute;lido oscuro */
+/* 3) Modo Transparente al hacer scroll (header-fixed) → sólido oscuro */
 .is-transparent .site-header.header-fixed:not(.no-scroll) {
   background: #252424 !important;
 }
@@ -387,7 +429,7 @@ body:not(.is-transparent) .site-header {
   background: transparent !important;
 }
 
-/* (Opcional) Contraste del &ldquo;hamburger&rdquo; solo cuando el header est&aacute; s&oacute;lido oscuro */
+/* (Opcional) Contraste del “hamburger” solo cuando el header está sólido oscuro */
 .is-transparent .site-header.header-fixed:not(.no-scroll) #nav-toggle span,
 body:not(.is-transparent) .site-header #nav-toggle span {
   background-color: #ffffff;
@@ -398,6 +440,8 @@ body:not(.is-transparent) .site-header #nav-toggle span::before,
 body:not(.is-transparent) .site-header #nav-toggle span::after {
   background-color: #ffffff;
 }
+
+
 
 h1, h2, h3, h4, h5, h6 {
   color: #E6E6E6;
@@ -1353,593 +1397,643 @@ Built with hands. Born with purpose.</p>
 							</div>
 											</div>
 			</div>
-							</section><!-- Wrapper del manifiesto con altura extendida --><section id="manifest" data-assets="/cinekrom/assets/"><div class="manifest-wrapper" id="manifestWrapper">
-  <!-- Barra de progreso -->
-  <div class="progress-bar" id="progressBar"></div>
-  
-  <!-- Contenedor sticky -->
-  <div class="manifest-container">
-    <!-- C&iacute;rculo de fuego -->
-  <!--  <div class="fire-orb">
-      <div class="fire-circle"></div>
-      <div class="white-halo"></div>-->
-<!-- C&iacute;rculo de fuego (bitmap) -->
-<div class="fire-orb">
-  <div class="orb-spin">
-    <img class="orb-img" src="https://www.cinekrom.com/assets/fire-orb.webp" alt=""></div>
-</div>
+							</section><!-- Wrapper del manifiesto con altura extendida -->
+<section id="manifest" data-assets="https://www.cinekrom.com/assets/">
+  <div class="manifest-wrapper" id="manifestWrapper">
+    <!-- Barra de progreso -->
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <!-- Contenedor sticky -->
+<div class="manifest-container">
+  <!-- Overlay negro -->
+  <div class="dark-overlay"></div>
 
-    <!-- Overlay negro -->
-    <div class="dark-overlay"></div>
-
-<!-- Textos del manifiesto -->
-<div class="text-container">
-<!-- SCROLL INSTRUCTION -->
-  <div class="manifest-text" data-text="0" data-mv="1">Now Scroll<br>&darr;</div>
-  <!-- Mv 1: 12W + Miedo &rarr; Posibilidad -->
-  <div class="manifest-text" data-text="1" data-mv="1">Your brain runs on <em>12 watts</em> &mdash; less than a lightbulb.</div>
-  <div class="manifest-text" data-text="2" data-mv="1">AI systems doing similar work? <em>2.7 billion watts</em>.</div>
-  <div class="manifest-text" data-text="3" data-mv="1">It takes the same 12 watts to imagine nonsense or genius&mdash; </div>
-  <div class="manifest-text" data-text="4" data-mv="1">intelligence, experience, and creativity are the true fuel.</div>
-  <div class="manifest-text" data-text="5" data-mv="1">Master <em>natural intelligence</em> first, <br>then artificial intelligence becomes power.</div>
-  <div class="manifest-text" data-text="6" data-mv="1">CINEKROM IGNIA &mdash; THE MANIFESTO</div>
-  <div class="manifest-text" data-text="7" data-mv="1">Mark I &middot; Anima in ferro</div>
-  <div class="manifest-text" data-text="8" data-mv="1">The unknown has always frightened us.</div>
-  <div class="manifest-text" data-text="9" data-mv="1">We feared fire, before we learned to cook with it.</div>
-  <div class="manifest-text" data-text="10" data-mv="1">We feared electricity, before it lit our cities.</div>
-  <div class="manifest-text" data-text="11" data-mv="1">Fear never comes from danger &mdash;</div>
-  <div class="manifest-text" data-text="12" data-mv="1">it comes from not having a name for what&rsquo;s new.</div>
-
-  <!-- Mv 2: Arte + Lenguaje &rarr; Simbiosis -->
-  <div class="manifest-text" data-text="13" data-mv="2">IGNIA was born where the analog breathes</div>
-  <div class="manifest-text" data-text="14" data-mv="2">and the artificial listens.</div>
-  <div class="manifest-text" data-text="15" data-mv="2">Where machines do not dictate &mdash; they echo.</div>
-  <div class="manifest-text" data-text="16" data-mv="2">We believe in craft over automation.</div>
-  <div class="manifest-text" data-text="17" data-mv="2">In stories that bleed light and truth.</div>
-  <div class="manifest-text" data-text="18" data-mv="2">Because a machine, at its core,</div>
-  <div class="manifest-text" data-text="19" data-mv="2">is only as powerful as the hand that dares to teach it meaning.</div>
-
-  <!-- Mv 3: &Eacute;tica / Acompa&ntilde;amiento / Autor&iacute;a -->
-  <div class="manifest-text" data-text="20" data-mv="3">AI doesn&rsquo;t replace.</div>
-  <div class="manifest-text" data-text="21" data-mv="3">It never substitutes genuine vision,</div>
-  <div class="manifest-text" data-text="22" data-mv="3">nor amplifies the mediocrity of shortcuts.</div>
-  <div class="manifest-text" data-text="23" data-mv="3">The perfect copilot isn&rsquo;t a system.</div>
-  <div class="manifest-text" data-text="24" data-mv="3">It&rsquo;s a <em>presence</em>.</div>
-
-  <!-- Mv 4: El Instrumento / La Machina -->
-  <div class="manifest-text" data-text="25" data-mv="4">This isn&rsquo;t a workstation.</div>
-  <div class="manifest-text" data-text="26" data-mv="4">It's a <em>Machina</em>.</div>
-  <div class="manifest-text" data-text="27" data-mv="4">A crafted instrument &mdash; built like a Stradivarius.</div>
-  <div class="manifest-text" data-text="28" data-mv="4">Each Mark I is hand-assembled,</div>
-  <div class="manifest-text" data-text="29" data-mv="4">the way dreams once were.</div>
-  <div class="manifest-text" data-text="30" data-mv="4">You&rsquo;re not using a computer &mdash;</div>
-  <div class="manifest-text" data-text="31" data-mv="4">you&rsquo;re awakening a <em>companion</em>.</div>
-
-  <!-- Mv 5: Sentir / Llamado / Wake it -->
-  <div class="manifest-text" data-text="32" data-mv="5">Your film, your music, your story &mdash;</div>
-  <div class="manifest-text" data-text="33" data-mv="5">they deserve an ally with fire of its own.</div>
-  <div class="manifest-text" data-text="34" data-mv="5">Forged in wood, code, and purpose.</div>
-  <div class="manifest-text" data-text="35" data-mv="5">Crafted for rebellion.</div>
-  <div class="manifest-text" data-text="36" data-mv="5"><em>She</em> speaks when you listen.</div>
-  <div class="manifest-text" data-text="37" data-mv="5"><em>She</em> is silent when you understand.</div>
-  <div class="manifest-text" data-text="38" data-mv="5">Welcome to your IGNIA.</div>
-  <div class="manifest-text" data-text="39" data-mv="5">Do not turn <em>her</em> off.</div>
-  <div class="manifest-text" data-text="40" data-mv="5">Wake <em>her</em>.</div>
-</div>
+  <!-- SECUENCIA IGNIA: máquina -->
+  <div class="ignia-sequence">
+    <img class="ignia-sequence-img"
+         src="https://www.cinekrom.com/assets/ignia-manifesto-001.webp"
+         alt="IGNIA Machina sequence frame">
   </div>
-</div>
 
+  <!-- Círculo de fuego (bitmap) -->
+  <div class="fire-orb">
+    <div class="orb-spin">
+      <img class="orb-img" src="https://www.cinekrom.com/assets/fire-orb.webp" alt="">
+    </div>
+  </div>
 
-<script>
-/* ===== IGNIA MANIFEST (overlay CTA + scroll + audio unlock) ===== */
-(function(){
-  /* --- Flag iOS en <html> --- */
-  const ua = navigator.userAgent || '';
-  const isiOS =
-    /iPad|iPhone|iPod/.test(ua) ||
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  if (isiOS) document.documentElement.classList.add('ios');
+  <!-- Textos del manifiesto -->
+  <div class="text-container">
+        <!-- SCROLL INSTRUCTION -->
+        <div class="manifest-text" data-text="0" data-mv="1">Now Scroll<br>&darr;</div>
+        <!-- Mv 1: 12W + Miedo → Posibilidad -->
+        <div class="manifest-text" data-text="1" data-mv="1">Your brain runs on <em>12 watts</em> &mdash; less than a lightbulb.</div>
+        <div class="manifest-text" data-text="2" data-mv="1">AI systems doing similar work? <em>2.7 billion watts</em>.</div>
+        <div class="manifest-text" data-text="3" data-mv="1">It takes the same 12 watts to imagine nonsense or genius&mdash; </div>
+        <div class="manifest-text" data-text="4" data-mv="1">intelligence, experience, and creativity are the true fuel.</div>
+        <div class="manifest-text" data-text="5" data-mv="1">Master <em>natural intelligence</em> first, <br>then artificial intelligence becomes power.</div>
+        <div class="manifest-text" data-text="6" data-mv="1">CINEKROM IGNIA &mdash; THE MANIFESTO</div>
+        <div class="manifest-text" data-text="7" data-mv="1">Mark I &middot; Anima in ferro</div>
+        <div class="manifest-text" data-text="8" data-mv="1">The unknown has always frightened us.</div>
+        <div class="manifest-text" data-text="9" data-mv="1">We feared fire, before we learned to cook with it.</div>
+        <div class="manifest-text" data-text="10" data-mv="1">We feared electricity, before it lit our cities.</div>
+        <div class="manifest-text" data-text="11" data-mv="1">Fear never comes from danger &mdash;</div>
+        <div class="manifest-text" data-text="12" data-mv="1">it comes from not having a name for what&rsquo;s new.</div>
 
-  /* --- refs base --- */
+        <!-- Mv 2: Arte + Lenguaje → Simbiosis -->
+        <div class="manifest-text" data-text="13" data-mv="2">IGNIA was born where the analog breathes</div>
+        <div class="manifest-text" data-text="14" data-mv="2">and the artificial listens.</div>
+        <div class="manifest-text" data-text="15" data-mv="2">Where machines do not dictate &mdash; they echo.</div>
+        <div class="manifest-text" data-text="16" data-mv="2">We believe in craft over automation.</div>
+        <div class="manifest-text" data-text="17" data-mv="2">In stories that bleed light and truth.</div>
+        <div class="manifest-text" data-text="18" data-mv="2">Because a machine, at its core,</div>
+        <div class="manifest-text" data-text="19" data-mv="2">is only as powerful as the hand that dares to teach it meaning.</div>
+
+        <!-- Mv 3: Ética / Acompañamiento / Autoría -->
+        <div class="manifest-text" data-text="20" data-mv="3">AI doesn&rsquo;t replace.</div>
+        <div class="manifest-text" data-text="21" data-mv="3">It never substitutes genuine vision,</div>
+        <div class="manifest-text" data-text="22" data-mv="3">nor amplifies the mediocrity of shortcuts.</div>
+        <div class="manifest-text" data-text="23" data-mv="3">The perfect copilot isn&rsquo;t a system.</div>
+        <div class="manifest-text" data-text="24" data-mv="3">It&rsquo;s a <em>presence</em>.</div>
+
+        <!-- Mv 4: El Instrumento / La Machina -->
+        <div class="manifest-text" data-text="25" data-mv="4">This isn&rsquo;t a workstation.</div>
+        <div class="manifest-text" data-text="26" data-mv="4">It's a <em>Machina</em>.</div>
+        <div class="manifest-text" data-text="27" data-mv="4">A crafted instrument &mdash; built like a Stradivarius.</div>
+        <div class="manifest-text" data-text="28" data-mv="4">Each Mark I is hand-assembled,</div>
+        <div class="manifest-text" data-text="29" data-mv="4">the way dreams once were.</div>
+        <div class="manifest-text" data-text="30" data-mv="4">You&rsquo;re not using a computer &mdash;</div>
+        <div class="manifest-text" data-text="31" data-mv="4">you&rsquo;re awakening a <em>companion</em>.</div>
+
+        <!-- Mv 5: Sentir / Llamado / Wake it -->
+        <div class="manifest-text" data-text="32" data-mv="5">Your film, your music, your story &mdash;</div>
+        <div class="manifest-text" data-text="33" data-mv="5">they deserve an ally with fire of its own.</div>
+        <div class="manifest-text" data-text="34" data-mv="5">Forged in wood, code, and purpose.</div>
+        <div class="manifest-text" data-text="35" data-mv="5">Crafted for rebellion.</div>
+        <div class="manifest-text" data-text="36" data-mv="5"><em>She</em> speaks when you listen.</div>
+        <div class="manifest-text" data-text="37" data-mv="5"><em>She</em> is silent when you understand.</div>
+        <div class="manifest-text" data-text="38" data-mv="5">Welcome to your IGNIA.</div>
+        <div class="manifest-text" data-text="39" data-mv="5">Do not turn <em>her</em> off.</div>
+        <div class="manifest-text" data-text="40" data-mv="5">Wake <em>her</em>.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  /* ===== IGNIA MANIFEST (overlay CTA + scroll + audio unlock) ===== */
+  (function(){
+    /* --- Flag iOS en <html> --- */
+    const ua = navigator.userAgent || '';
+    const isiOS =
+      /iPad|iPhone|iPod/.test(ua) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (isiOS) document.documentElement.classList.add('ios');
+
+    /* --- refs base --- */
 const section     = document.getElementById('manifest');
 const wrapper     = document.getElementById('manifestWrapper');
 const header      = document.querySelector('body > #page > #header-section #masthead');
 const romanNav    = document.querySelector('.ignia-roman-nav'); // << NUEVO
 const progressBar = document.getElementById('progressBar');
 const fireOrb     = document.querySelector('.fire-orb');
+const orbSpin     = document.querySelector('.fire-orb .orb-spin'); // 👈 NUEVO
 const texts       = document.querySelectorAll('.manifest-text');
-  if (!section || !wrapper) return;
 
-  /* ====== CTA OVERLAY (Tap/Click to ignite) ====== */
-  const styleTag = document.createElement('style');
-  styleTag.textContent = `
-  #igniaCta {
-    position:absolute; inset:0;
-    display:flex; align-items:center; justify-content:center;
-    z-index: 9; background: transparent;
-    opacity:0; transition:opacity .22s ease;
-    pointer-events: none;
-  }
-  #igniaCta.visible { opacity:1; pointer-events:auto; }
-  #igniaCta.hidden  { opacity:0; pointer-events:none; }
-  #igniaCta .cta-copy{
-    color: var(--ink-1, #FFF8A6);
-    font-weight: 600; letter-spacing:.01em;
-    font-size: clamp(1.8rem, 2.2vw, 2.6rem);
-    text-align:center; line-height:1.35;
-    text-shadow: 0 0 18px rgba(0,0,0,.7);
-    cursor: pointer; user-select: none;
-    transform: translate3d(0,0,0);
-    transition: transform .25s ease, opacity .25s ease, filter .25s ease;
-  }
-  #igniaCta .cta-copy:hover{ transform: translate3d(0,-2px,0); filter: brightness(1.06); }
+    /* SECUENCIA IGNIA */
+    const seqContainer = document.querySelector('.ignia-sequence');
+    const seqImg       = seqContainer ? seqContainer.querySelector('.ignia-sequence-img') : null;
+    const SEQ_START_INDEX = 35;   // data-text="35" → "Crafted for rebellion."
+    const SEQ_FRAMES      = 34;   // 34 cuadros: 001–034
 
-  /* Mientras el CTA está visible, congela textos */
-  #manifest.awaiting-ignite .manifest-text{
-    opacity: 0 !important;
-    pointer-events: none !important;
-    transform: none !important;
-  }
-  `;
-  document.head.appendChild(styleTag);
-
-  const cta = document.createElement('div');
-  cta.id = 'igniaCta';
-  cta.innerHTML = `<div class="cta-copy">• Tap to ignite •</div>`;
-  (section.querySelector('.manifest-container') || document.getElementById('manifestWrapper') || section).appendChild(cta);
-
-  let ctaShown = false;
-  let ignited  = false;
-
-  function showCTA(){
-    if (ignited || ctaShown) return;
-    ctaShown = true;
-    cta.classList.add('visible');
-    cta.classList.remove('hidden');
-    section.classList.add('awaiting-ignite');   // congela textos
-  }
-  function hideCTA(){
-    if (!ctaShown) return;
-    ctaShown = false;
-    cta.classList.remove('visible');
-    cta.classList.add('hidden');
-    section.classList.remove('awaiting-ignite'); // libera textos
-  }
-
-  // Helper “está en viewport”
-  function isInViewport(el){
-    const r = el.getBoundingClientRect();
-    const vh = window.innerHeight || document.documentElement.clientHeight;
-    const vw = window.innerWidth  || document.documentElement.clientWidth;
-    return r.bottom > 0 && r.right > 0 && r.top < vh && r.left < vw;
-  }
-
-  // CTA inmediato si ya estás sobre el manifiesto al cargar
-  if (!ignited && isInViewport(wrapper)) showCTA();
-
-  /* ====== HELPERS de scroll/progreso ====== */
-  const isMobile = () => window.innerWidth <= 768;
-  const isiOSCls = document.documentElement.classList.contains('ios');
-  const numTexts = texts.length;
-
-  function computeProgress() {
-    const rect = wrapper.getBoundingClientRect();
-    const wrapperTop = rect.top;
-    const wrapperHeight = wrapper.offsetHeight;
-    const windowHeight = window.innerHeight;
-    let p = 0;
-    if (wrapperTop <= 0) p = Math.abs(wrapperTop) / (wrapperHeight - windowHeight);
-    return Math.max(0, Math.min(1, p));
-  }
-
-function handleProgress(scrollProgress){
-  const awaiting = section.classList.contains('awaiting-ignite');
-
-  // ORBE: tamaño por scroll
-  if (fireOrb) {
-    const scaleMobile = isMobile() ? 1.0 : 1;
-    const scaleiOS    = isiOSCls ? 0.85 : 1;
-    const scale = scaleMobile * scaleiOS;
-    const minBase = 216, maxBase = 720;
-    const minSize = minBase * scale;
-    const maxSize = maxBase * scale;
-    const currentSize = minSize + (scrollProgress * (maxSize - minSize));
-    fireOrb.style.width = currentSize + 'px';
-    fireOrb.style.height = currentSize + 'px';
-  }
-
-  // AUDIO
-  if (window._igniaManifestAudio) {
-    window._igniaManifestAudio.updateProgress(scrollProgress);
-    const inside = scrollProgress > 0.01 && scrollProgress < 0.99;
-    window._igniaManifestAudio.setActive(inside);
-  }
-
-  // Barra
-  if (progressBar) {
-    if (scrollProgress > 0 && scrollProgress < 1) {
-      progressBar.style.opacity = '1';
-      progressBar.style.width = (scrollProgress * 100) + '%';
-    } else {
-      progressBar.style.opacity = '0';
+    // base assets desde data-assets del <section>
+    let SEQ_BASE = section ? (section.dataset.assets || '') : '';
+    if (SEQ_BASE && !SEQ_BASE.endsWith('/')) {
+      SEQ_BASE += '/';
     }
-  }
 
-  // Header
-  if (header) {
-    if (scrollProgress > 0.02 && scrollProgress < 0.98) {
-      header.style.opacity = '0';
-      header.style.transform = 'translateY(-100%)';
-      header.style.pointerEvents = 'none';
-    } else {
-      header.style.opacity = '1';
-      header.style.transform = 'translateY(0)';
-      header.style.pointerEvents = 'auto';
+    if (!section || !wrapper) return;
+
+    /* ====== CTA OVERLAY (Tap/Click to ignite) ====== */
+    const styleTag = document.createElement('style');
+    styleTag.textContent = `
+    #igniaCta {
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      z-index: 9; background: transparent;
+      opacity:0; transition:opacity .22s ease;
+      pointer-events: none;
     }
-  }
-
-  // Menú romano (mismo comportamiento que el header)
-  if (romanNav) {
-    if (scrollProgress > 0.02 && scrollProgress < 0.98) {
-      romanNav.style.opacity = '0';
-      romanNav.style.transform = 'translateY(-100%)';
-      romanNav.style.pointerEvents = 'none';
-    } else {
-      romanNav.style.opacity = '1';
-      romanNav.style.transform = 'translateY(0)';
-      romanNav.style.pointerEvents = 'auto';
+    #igniaCta.visible { opacity:1; pointer-events:auto; }
+    #igniaCta.hidden  { opacity:0; pointer-events:none; }
+    #igniaCta .cta-copy{
+      color: var(--ink-1, #FFF8A6);
+      font-weight: 600; letter-spacing:.01em;
+      font-size: clamp(1.8rem, 2.2vw, 2.6rem);
+      text-align:center; line-height:1.35;
+      text-shadow: 0 0 18px rgba(0,0,0,.7);
+      cursor: pointer; user-select: none;
+      transform: translate3d(0,0,0);
+      transition: transform .25s ease, opacity .25s ease, filter .25s ease;
     }
-  }
+    #igniaCta .cta-copy:hover{ transform: translate3d(0,-2px,0); filter: brightness(1.06); }
 
-  // Si el CTA está activo, no animamos textos
-  if (awaiting) return;
+    /* Mientras el CTA está visible, congela textos */
+    #manifest.awaiting-ignite .manifest-text{
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transform: none !important;
+    }
+    `;
+    document.head.appendChild(styleTag);
 
-  // === PERFIL por dispositivo (solo textos) ★
-  const MOBILE = isMobile();
-  const AMP    = isiOSCls ? 90 : 150;    // antes 150; en iOS reduce recorrido
-  const OFFSCR = isiOSCls ? 120 : 200;   // antes 200; en iOS reduce fuera de vista
+    const cta = document.createElement('div');
+    cta.id = 'igniaCta';
+    cta.innerHTML = `<div class="cta-copy">• Tap to ignite •</div>`;
+    (section.querySelector('.manifest-container') || document.getElementById('manifestWrapper') || section).appendChild(cta);
 
-  // Textos (ventana activa)
-  const activeIndex = Math.floor(scrollProgress * numTexts);
-  const radius = MOBILE ? 1 : 2;         // antes ±2 fijo; en móvil ±1 ★
-  const start  = Math.max(0, activeIndex - radius);
-  const end    = Math.min(numTexts - 1, activeIndex + radius);
+    let ctaShown = false;
+    let ignited  = false;
 
-  texts.forEach((text, index) => {
-    if (index < start || index > end) {
-      if (text.style.opacity !== '0') {
-        text.style.opacity = 0;
-        text.style.transform = `translate3d(0,${OFFSCR}px,0)`; // antes 200px ★
+    function showCTA(){
+      if (ignited || ctaShown) return;
+      ctaShown = true;
+      cta.classList.add('visible');
+      cta.classList.remove('hidden');
+      section.classList.add('awaiting-ignite');   // congela textos
+    }
+    function hideCTA(){
+      if (!ctaShown) return;
+      ctaShown = false;
+      cta.classList.remove('visible');
+      cta.classList.add('hidden');
+      section.classList.remove('awaiting-ignite'); // libera textos
+    }
+
+    // Helper “está en viewport”
+    function isInViewport(el){
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const vw = window.innerWidth  || document.documentElement.clientWidth;
+      return r.bottom > 0 && r.right > 0 && r.top < vh && r.left < vw;
+    }
+
+    // CTA inmediato si ya estás sobre el manifiesto al cargar
+    if (!ignited && isInViewport(wrapper)) showCTA();
+
+    /* ====== HELPERS de scroll/progreso ====== */
+    const isMobile = () => window.innerWidth <= 768;
+    const isiOSCls = document.documentElement.classList.contains('ios');
+    const numTexts = texts.length;
+
+    function computeProgress() {
+      const rect = wrapper.getBoundingClientRect();
+      const wrapperTop = rect.top;
+      const wrapperHeight = wrapper.offsetHeight;
+      const windowHeight = window.innerHeight;
+      let p = 0;
+      if (wrapperTop <= 0) p = Math.abs(wrapperTop) / (wrapperHeight - windowHeight);
+      return Math.max(0, Math.min(1, p));
+    }
+
+    function handleProgress(scrollProgress){
+      const awaiting = section.classList.contains('awaiting-ignite');
+
+      // ORBE: tamaño por scroll
+      if (fireOrb) {
+        const scaleMobile = isMobile() ? 1.0 : 1;
+        const scaleiOS    = isiOSCls ? 0.85 : 1;
+        const scale = scaleMobile * scaleiOS;
+        const minBase = 216, maxBase = 720;
+        const minSize = minBase * scale;
+        const maxSize = maxBase * scale;
+        const currentSize = minSize + (scrollProgress * (maxSize - minSize));
+        fireOrb.style.width = currentSize + 'px';
+        fireOrb.style.height = currentSize + 'px';
       }
-      return;
+
+      // AUDIO
+      if (window._igniaManifestAudio) {
+        window._igniaManifestAudio.updateProgress(scrollProgress);
+        const inside = scrollProgress > 0.01 && scrollProgress < 0.99;
+        window._igniaManifestAudio.setActive(inside);
+      }
+
+      // Barra
+      if (progressBar) {
+        if (scrollProgress > 0 && scrollProgress < 1) {
+          progressBar.style.opacity = '1';
+          progressBar.style.width = (scrollProgress * 100) + '%';
+        } else {
+          progressBar.style.opacity = '0';
+        }
+      }
+
+      // Header
+      if (header) {
+        if (scrollProgress > 0.02 && scrollProgress < 0.98) {
+          header.style.opacity = '0';
+          header.style.transform = 'translateY(-100%)';
+          header.style.pointerEvents = 'none';
+        } else {
+          header.style.opacity = '1';
+          header.style.transform = 'translateY(0)';
+          header.style.pointerEvents = 'auto';
+        }
+      }
+
+      // Menú romano (mismo comportamiento que el header)
+      if (romanNav) {
+        if (scrollProgress > 0.02 && scrollProgress < 0.98) {
+          romanNav.style.opacity = '0';
+          romanNav.style.transform = 'translateY(-100%)';
+          romanNav.style.pointerEvents = 'none';
+        } else {
+          romanNav.style.opacity = '1';
+          romanNav.style.transform = 'translateY(0)';
+          romanNav.style.pointerEvents = 'auto';
+        }
+      }
+
+ /* === SECUENCIA IGNIA vs FIREORB ====================== */
+if (fireOrb && orbSpin && seqContainer && seqImg) {
+  const seqStartProgress = SEQ_START_INDEX / numTexts; // ~0.85
+  const seqEndProgress   = 0.99;
+  const MAX_SEQ_OPACITY  = 0.78; // nunca tapa el texto al 100%
+  const MIN_ORB_OPACITY  = 0.4; // 👈 fantasma: nunca baja de 0.14 aprox.
+
+  if (scrollProgress <= seqStartProgress) {
+    // Orb de fuego completo visible, secuencia oculta
+    orbSpin.style.opacity      = '1';
+    seqContainer.style.opacity = '0';
+    section.classList.remove('manifest-seq-active');
+  } else {
+    section.classList.add('manifest-seq-active');
+
+    // Normalizamos [seqStartProgress, seqEndProgress] → [0,1]
+    const local = Math.max(0, Math.min(1,
+      (scrollProgress - seqStartProgress) / (seqEndProgress - seqStartProgress)
+    ));
+
+    // Primera mitad: crossfade orb → secuencia
+    const fade = Math.min(1, local * 2);
+
+    // 👇 Sólo se desvanece el orb de fuego, pero nunca a 0
+    const orbOpacity = Math.max(MIN_ORB_OPACITY, 1 - fade);
+    orbSpin.style.opacity = String(orbOpacity);
+
+    const imgOpacity = fade * MAX_SEQ_OPACITY;
+    seqContainer.style.opacity = String(imgOpacity);
+
+    // Mapear local → frames IGNIA (34 cuadros → 001–034)
+    const frameIndex  = Math.floor(local * (SEQ_FRAMES - 1)); // 0–33
+    const clamped     = Math.max(0, Math.min(SEQ_FRAMES - 1, frameIndex));
+    const frameNumber = clamped + 1;                           // 1–34
+    const padded      = String(frameNumber).padStart(3, '0');  // 001, 002...
+
+    const nextSrc = `${SEQ_BASE}ignia-manifesto-${padded}.webp`;
+
+    if (seqImg.dataset.currentFrame !== String(clamped)) {
+      seqImg.src = nextSrc;
+      seqImg.dataset.currentFrame = String(clamped);
     }
-
-    const textDuration = 1 / numTexts;
-    const textStart = index * textDuration;
-    const textEnd = textStart + textDuration;
-
-    let opacity = 0;
-    let translateY = AMP; // antes 150 ★
-
-    if (scrollProgress >= textStart && scrollProgress < textEnd) {
-      const local = (scrollProgress - textStart) / textDuration;
-
-      // mantiene tu lógica, solo usa AMP en lugar de 150 ★
-if (local < 0.3) {           // Entrada: 30%
-  const f = local / 0.3;
-  opacity = f; translateY = AMP * (1 - f);
-} else if (local < 0.7) {    // Centro: 40% ← MÁS TIEMPO
-  opacity = 1; translateY = 0;
-} else {                      // Salida: 30%
-  const f = (local - 0.7) / 0.3;
-  opacity = 1 - f; translateY = -AMP * f;
-}
-    }
-
-    // === Aplicar estilos finales (suavizado Chrome viejo)
-    const y = Math.round(translateY);
-    text.style.opacity = opacity;
-    text.style.transform = `translate3d(0,${y}px,0)`;
-  });
+  }
 }
 
-  // rAF throttle
-  let ticking = false, latestProgress = 0;
-  function onScroll(){
-    latestProgress = computeProgress();
-    if (!ticking){
-      requestAnimationFrame(() => {
-        handleProgress(latestProgress);
-        ticking = false;
+/* === FIN SECUENCIA IGNIA ============================= */
+
+      // Si el CTA está activo, no animamos textos
+      if (awaiting) return;
+
+      // === PERFIL por dispositivo (solo textos) ★
+      const MOBILE = isMobile();
+      const AMP    = isiOSCls ? 90 : 150;    // antes 150; en iOS reduce recorrido
+      const OFFSCR = isiOSCls ? 120 : 200;   // antes 200; en iOS reduce fuera de vista
+
+      // Textos (ventana activa)
+      const activeIndex = Math.floor(scrollProgress * numTexts);
+      const radius = MOBILE ? 1 : 2;         // antes ±2 fijo; en móvil ±1 ★
+      const start  = Math.max(0, activeIndex - radius);
+      const end    = Math.min(numTexts - 1, activeIndex + radius);
+
+      texts.forEach((text, index) => {
+        if (index < start || index > end) {
+          if (text.style.opacity !== '0') {
+            text.style.opacity = 0;
+            text.style.transform = `translate3d(0,${OFFSCR}px,0)`;
+          }
+          return;
+        }
+
+        const textDuration = 1 / numTexts;
+        const textStart = index * textDuration;
+        const textEnd = textStart + textDuration;
+
+        let opacity = 0;
+        let translateY = AMP;
+
+        if (scrollProgress >= textStart && scrollProgress < textEnd) {
+          const local = (scrollProgress - textStart) / textDuration;
+
+          if (local < 0.3) {           // Entrada: 30%
+            const f = local / 0.3;
+            opacity = f; translateY = AMP * (1 - f);
+          } else if (local < 0.7) {    // Centro: 40%
+            opacity = 1; translateY = 0;
+          } else {                     // Salida: 30%
+            const f = (local - 0.7) / 0.3;
+            opacity = 1 - f; translateY = -AMP * f;
+          }
+        }
+
+        const y = Math.round(translateY);
+        text.style.opacity = opacity;
+        text.style.transform = `translate3d(0,${y}px,0)`;
       });
-      ticking = true;
-    }
-  }
-
-  // IO del WRAPPER
-  const io = new IntersectionObserver(([entry])=>{
-    const active = entry.isIntersecting;
-    section.classList.toggle('audio-active', active);
-    if (!ignited && active) showCTA();
-    if (!active) hideCTA();
-    if (window._igniaManifestAudio) {
-      window._igniaManifestAudio.setActive(active);
-     // if (!active) window._igniaManifestAudio.updateProgress(0);  // ← COMENTAR ESTA LÍNEA
-    }
-  }, { threshold: 0.01, rootMargin: '20% 0px 20% 0px' });
-  io.observe(wrapper);
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  onScroll(); // primer frame
-
-
-/* -- ====== AUDIO (versión con <audio> oculto + WebAudio + fallback local) ====== */
-(function(){
-  const section = document.getElementById('manifest');
-  if (!section) return;
-
-  const IS_LOCAL = location.protocol === 'file:'; // clave para builds abiertos como archivo
-
-  // Ruta base desde .fire-orb img; si no existe, cae a /assets relativo a la página
-  const ASSETS_BASE = (() => {
-    const img = document.querySelector('.fire-orb img');
-    if (img?.src) return img.src.replace(/\/[^\/]+$/, '/'); // .../assets/
-    return new URL('assets/', location.href).href;
-  })();
-
-  // <audio> oculto con ambas fuentes
-  const el = document.createElement('audio');
-  el.volume = 1;   // asegura que la ruta WebAudio reciba señal
-  el.preload = 'auto';
-  el.loop = true;
-  el.muted = true;   // inicia silenciado para políticas de autoplay…
-  el.style.display = 'none';
-  if (!IS_LOCAL) el.crossOrigin = 'anonymous';
-
-  // ── Microcambio: hints iOS
-  el.setAttribute('playsinline','');
-  el.setAttribute('webkit-playsinline','');
-
-  // ── Parche A: arrancar 100% silencioso para evitar “burst”
-  el.volume = 0.5;
-  el.muted  = true;
-
-  el.innerHTML = `
-    <source src="${ASSETS_BASE}ignia-breath-loop.ogg" type="audio/ogg">
-    <source src="${ASSETS_BASE}ignia-breath-loop.mp3" type="audio/mpeg">
-  `;
-  section.appendChild(el);
-
-  // Logs útiles
-  el.addEventListener('error', () => console.warn('[IGNIA] <audio> error cargando fuentes en', ASSETS_BASE));
-  el.addEventListener('stalled', () => console.warn('[IGNIA] <audio> stalled (posible CORS/ruta)'));
-  el.addEventListener('canplay', () => console.log('[IGNIA] <audio> canplay'));
-  el.addEventListener('play', () => console.log('[IGNIA] <audio> play() OK'));
-
-  let ctx, gain, mediaSrc;
-  let unlocked = false;
-  let started  = false;
-  let isFadingOut = false;  // ← NUEVA BANDERA
-  let lastVol  = 0;
-  let rafId    = null;
-  let fadeTimeout = null;
-
-  // En local usamos volumen directo sí o sí; en server intentamos WebAudio
-  let directVolume = IS_LOCAL;
-
-function ensureContext(){
-    if (directVolume) {
-      // En local, asegurar que NO esté muteado
-      el.muted = false;
-      return;
     }
 
-    if (!ctx) {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      ctx = new AC();
-      gain = ctx.createGain();
-      gain.gain.value = 0.0; // El gain arranca en 0 (correcto)
-      
-      try {
-        mediaSrc = ctx.createMediaElementSource(el);
-        mediaSrc.connect(gain);
-        gain.connect(ctx.destination);
-
-        // ✅ CLAVE: desmutear el <audio> pero el gain controla el volumen
-        el.muted = false; // El audio debe sonar para que WebAudio lo procese
-        el.volume = 1.0;  // El <audio> a máximo, el gain controla el volumen real
-        
-        console.log('[IGNIA] WebAudio inicializado, gain:', gain.gain.value);
-      } catch(e) {
-        console.warn('[IGNIA] MediaElementSource no disponible, usando volume directo.', e);
-        directVolume = true;
-        el.muted = false;
-        el.volume = 0.5; // En fallback, volumen razonable
+    // rAF throttle
+    let ticking = false, latestProgress = 0;
+    function onScroll(){
+      latestProgress = computeProgress();
+      if (!ticking){
+        requestAnimationFrame(() => {
+          handleProgress(latestProgress);
+          ticking = false;
+        });
+        ticking = true;
       }
     }
-    if (ctx && ctx.state === 'suspended') ctx.resume();
-  }
 
-async function startLoop(){
-  if (started) return;
-  ensureContext();
-  try { await el.play(); } catch(e) {
-    // En Firefox podría requerir el gesto; ya estamos en él
-  }
-  if (ctx && ctx.state === 'suspended') {
-    try { await ctx.resume(); } catch(_) {}
-    requestAnimationFrame(async ()=> {
-      if (ctx && ctx.state === 'suspended') {
-        try { await ctx.resume(); } catch(_) {}
+    // IO del WRAPPER
+    const io = new IntersectionObserver(([entry])=>{
+      const active = entry.isIntersecting;
+      section.classList.toggle('audio-active', active);
+      if (!ignited && active) showCTA();
+      if (!active) hideCTA();
+      if (window._igniaManifestAudio) {
+        window._igniaManifestAudio.setActive(active);
       }
-    });
-  }
-  started = true;
-}
+    }, { threshold: 0.01, rootMargin: '20% 0px 20% 0px' });
+    io.observe(wrapper);
 
-  function setVolumeSmooth(target, time = 0.18){
-    const v = Math.max(0, Math.min(1, target));
-    lastVol = v;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll(); // primer frame
 
-    if (directVolume) {
-      // Fade manual sobre <audio>.volume
-      const start = (typeof el.volume === 'number') ? el.volume : 0;
-      const delta = v - start;
-      const dur = Math.max(0.01, time);
-      const steps = 30;
-      let i = 0;
-      if (fadeTimeout) clearInterval(fadeTimeout);
-      fadeTimeout = setInterval(()=>{
-        i++;
-        el.volume = Math.max(0, Math.min(1, start + delta * (i/steps)));
-        if (i >= steps) clearInterval(fadeTimeout);
-      }, (dur*1000)/steps);
-      return;
-    }
+    /* -- ====== AUDIO (versión con <audio> oculto + WebAudio + fallback local) ====== */
+    (function(){
+      const section = document.getElementById('manifest');
+      if (!section) return;
 
-    if (!gain || !ctx) return;
-    const now = ctx.currentTime;
-    try {
-      gain.gain.cancelScheduledValues(now);
-      gain.gain.setValueAtTime(gain.gain.value || 0.0001, now);
-      gain.gain.linearRampToValueAtTime(v, now + time);
-    } catch {
-      gain.gain.value = v;
-    }
-  }
+      const IS_LOCAL = location.protocol === 'file:'; // clave para builds abiertos como archivo
 
-  function volumeFromProgress(p){
-    const base = Math.max(0, Math.min(1, p));
-    const eased = base < 0.75
-      ? Math.pow(base, 1.2) * 0.85
-      : 0.85 + (base - 0.75) * (0.15 / 0.25);
-    return Math.min(0.95, eased);
-  }
+      // Ruta base desde .fire-orb img; si no existe, cae a /assets relativo a la página
+      const ASSETS_BASE = (() => {
+        const img = document.querySelector('.fire-orb img');
+        if (img?.src) return img.src.replace(/\/[^\/]+$/, '/'); // .../assets/
+        return new URL('assets/', location.href).href;
+      })();
 
-  // ── Microcambio: fade-out largo (2.0 s)
-function hardPause(){
-  if (isFadingOut) return;  // ← Evitar múltiples llamadas
-  isFadingOut = true;  // ← Activar bandera INMEDIATAMENTE
-  
-  setTimeout(() => {
-    setVolumeSmooth(0.0, 2.0);
-    setTimeout(()=>{
-      try { el.pause(); } catch(_) {}
-      if (!directVolume && ctx?.state === 'running') ctx.suspend();
-      started = false;
-      isFadingOut = false;  // ← Resetear bandera
-    }, 2100);
-  }, 1000);
-}
-  // Desbloqueo por interacción (CTA/scroll en sección)
-function unlockAudioOnce(){
-  if (unlocked) return;
-  unlocked = true;
+      // <audio> oculto con ambas fuentes
+      const el = document.createElement('audio');
+      el.volume = 1;
+      el.preload = 'auto';
+      el.loop = true;
+      el.muted = true;
+      el.style.display = 'none';
+      if (!IS_LOCAL) el.crossOrigin = 'anonymous';
 
-  // 🔊 Desmutea sí o sí en el primer gesto
-  el.muted = false;
-  el.volume = directVolume ? Math.max(lastVol, 0.25) : 1.0;
+      el.setAttribute('playsinline','');
+      el.setAttribute('webkit-playsinline','');
 
-  ensureContext();
+      el.volume = 0.5;
+      el.muted  = true;
 
-  // 🧠 Firefox: intenta reanudar el contexto 2 veces
-  (async () => {
-    if (ctx && ctx.state === 'suspended') {
-      try { await ctx.resume(); } catch(_) {}
-      requestAnimationFrame(async () => {
+      el.innerHTML = `
+        <source src="${ASSETS_BASE}ignia-breath-loop.ogg" type="audio/ogg">
+        <source src="${ASSETS_BASE}ignia-breath-loop.mp3" type="audio/mpeg">
+      `;
+      section.appendChild(el);
+
+      el.addEventListener('error', () => console.warn('[IGNIA] <audio> error cargando fuentes en', ASSETS_BASE));
+      el.addEventListener('stalled', () => console.warn('[IGNIA] <audio> stalled (posible CORS/ruta)'));
+      el.addEventListener('canplay', () => console.log('[IGNIA] <audio> canplay'));
+      el.addEventListener('play', () => console.log('[IGNIA] <audio> play() OK'));
+
+      let ctx, gain, mediaSrc;
+      let unlocked = false;
+      let started  = false;
+      let isFadingOut = false;
+      let lastVol  = 0;
+      let rafId    = null;
+      let fadeTimeout = null;
+
+      let directVolume = IS_LOCAL;
+
+      function ensureContext(){
+        if (directVolume) {
+          el.muted = false;
+          return;
+        }
+
+        if (!ctx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          ctx = new AC();
+          gain = ctx.createGain();
+          gain.gain.value = 0.0;
+          
+          try {
+            mediaSrc = ctx.createMediaElementSource(el);
+            mediaSrc.connect(gain);
+            gain.connect(ctx.destination);
+
+            el.muted = false;
+            el.volume = 1.0;
+          } catch(e) {
+            console.warn('[IGNIA] MediaElementSource no disponible, usando volume directo.', e);
+            directVolume = true;
+            el.muted = false;
+            el.volume = 0.5;
+          }
+        }
+        if (ctx && ctx.state === 'suspended') ctx.resume();
+      }
+
+      async function startLoop(){
+        if (started) return;
+        ensureContext();
+        try { await el.play(); } catch(e) {}
         if (ctx && ctx.state === 'suspended') {
           try { await ctx.resume(); } catch(_) {}
+          requestAnimationFrame(async ()=> {
+            if (ctx && ctx.state === 'suspended') {
+              try { await ctx.resume(); } catch(_) {}
+            }
+          });
+        }
+        started = true;
+      }
+
+      function setVolumeSmooth(target, time = 0.18){
+        const v = Math.max(0, Math.min(1, target));
+        lastVol = v;
+
+        if (directVolume) {
+          const start = (typeof el.volume === 'number') ? el.volume : 0;
+          const delta = v - start;
+          const dur = Math.max(0.01, time);
+          const steps = 30;
+          let i = 0;
+          if (fadeTimeout) clearInterval(fadeTimeout);
+          fadeTimeout = setInterval(()=>{
+            i++;
+            el.volume = Math.max(0, Math.min(1, start + delta * (i/steps)));
+            if (i >= steps) clearInterval(fadeTimeout);
+          }, (dur*1000)/steps);
+          return;
+        }
+
+        if (!gain || !ctx) return;
+        const now = ctx.currentTime;
+        try {
+          gain.gain.cancelScheduledValues(now);
+          gain.gain.setValueAtTime(gain.gain.value || 0.0001, now);
+          gain.gain.linearRampToValueAtTime(v, now + time);
+        } catch {
+          gain.gain.value = v;
+        }
+      }
+
+      function volumeFromProgress(p){
+        const base = Math.max(0, Math.min(1, p));
+        const eased = base < 0.75
+          ? Math.pow(base, 1.2) * 0.85
+          : 0.85 + (base - 0.75) * (0.15 / 0.25);
+        return Math.min(0.95, eased);
+      }
+
+      function hardPause(){
+        if (isFadingOut) return;
+        isFadingOut = true;
+        
+        setTimeout(() => {
+          setVolumeSmooth(0.0, 2.0);
+          setTimeout(()=>{
+            try { el.pause(); } catch(_) {}
+            if (!directVolume && ctx?.state === 'running') ctx.suspend();
+            started = false;
+            isFadingOut = false;
+          }, 2100);
+        }, 1000);
+      }
+
+      function unlockAudioOnce(){
+        if (unlocked) return;
+        unlocked = true;
+
+        el.muted = false;
+        el.volume = directVolume ? Math.max(lastVol, 0.25) : 1.0;
+
+        ensureContext();
+
+        (async () => {
+          if (ctx && ctx.state === 'suspended') {
+            try { await ctx.resume(); } catch(_) {}
+            requestAnimationFrame(async () => {
+              if (ctx && ctx.state === 'suspended') {
+                try { await ctx.resume(); } catch(_) {}
+              }
+            });
+          }
+        })();
+
+        startLoop();
+
+        setVolumeSmooth(Math.max(lastVol, 0.12), 0.28);
+
+        detachUnlockers();
+      }
+
+      function onWheelInSection(){
+        if (!section.classList.contains('audio-active')) return;
+        unlockAudioOnce();
+      }
+      function onScrollInSection(){
+        if (!section.classList.contains('audio-active')) return;
+        unlockAudioOnce();
+      }
+      function onKeyInSection(){
+        if (!section.classList.contains('audio-active')) return;
+        unlockAudioOnce();
+      }
+      function attachUnlockers(){
+        section.addEventListener('pointerdown', unlockAudioOnce, {passive:true});
+        section.addEventListener('touchstart',  unlockAudioOnce, {passive:true});
+        section.addEventListener('wheel',       onWheelInSection, {passive:true});
+        document.addEventListener('keydown',    onKeyInSection, {passive:true});
+        document.addEventListener('scroll',     onScrollInSection, {passive:true});
+      }
+      function detachUnlockers(){
+        section.removeEventListener('pointerdown', unlockAudioOnce, {passive:true});
+        section.removeEventListener('touchstart',  unlockAudioOnce, {passive:true});
+        section.removeEventListener('wheel',       onWheelInSection, {passive:true});
+        document.removeEventListener('keydown',    onKeyInSection, {passive:true});
+        document.removeEventListener('scroll',     onScrollInSection, {passive:true});
+      }
+      attachUnlockers();
+
+      window._igniaManifestAudio = {
+        updateProgress(p){
+          if (!unlocked || !section.classList.contains('audio-active')) return;
+          if (isFadingOut) return;
+          
+          const target = volumeFromProgress(p);
+          if (rafId) cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(()=> setVolumeSmooth(target, 0.14));
+        },
+        setActive(active){
+          if (!unlocked){ return; }
+          if (active){
+            isFadingOut = false;
+            startLoop();
+            setVolumeSmooth(Math.max(lastVol, 0.08), 0.28);
+          } else {
+            hardPause();
+          }
+        },
+        unlock(){ unlockAudioOnce(); }
+      };
+
+      document.addEventListener('visibilitychange', ()=>{
+        if (document.hidden) {
+          hardPause();
+        } else if (unlocked && section.classList.contains('audio-active')) {
+          startLoop();
+          setVolumeSmooth(lastVol || 0.08, 0.28);
         }
       });
-    }
+
+      window.addEventListener('pagehide', hardPause);
+    })();
+
+    /* ====== CLICK del CTA ====== */
+    cta.addEventListener('click', () => {
+      ignited = true;
+      if (window._igniaManifestAudio && window._igniaManifestAudio.unlock) {
+        window._igniaManifestAudio.unlock();
+      }
+      hideCTA();
+      const top = wrapper.getBoundingClientRect().top + window.scrollY;
+      try{ window.scrollTo({ top: top + 100, behavior: 'smooth' }); }catch(_){ window.scrollTo(0, top + 2); }
+      if (window._igniaManifestAudio){
+        window._igniaManifestAudio.setActive(true);
+        window._igniaManifestAudio.updateProgress(0.02);
+      }
+      setTimeout(()=>{ window.dispatchEvent(new Event('scroll')); }, 30);
+    }, { passive: true });
+
   })();
-
-  startLoop();
-
-  // Sube un poco para “enganchar” señal
-  setVolumeSmooth(Math.max(lastVol, 0.12), 0.28);
-
-  detachUnlockers();
-}
-
-  function onWheelInSection(){
-    if (!section.classList.contains('audio-active')) return;
-    unlockAudioOnce();
-  }
-  function onScrollInSection(){
-    if (!section.classList.contains('audio-active')) return;
-    unlockAudioOnce();
-  }
-  function onKeyInSection(){
-    if (!section.classList.contains('audio-active')) return;
-    unlockAudioOnce();
-  }
-  function attachUnlockers(){
-    section.addEventListener('pointerdown', unlockAudioOnce, {passive:true});
-    section.addEventListener('touchstart',  unlockAudioOnce, {passive:true});
-    section.addEventListener('wheel',       onWheelInSection, {passive:true});
-    document.addEventListener('keydown',    onKeyInSection, {passive:true});
-    document.addEventListener('scroll',     onScrollInSection, {passive:true});
-  }
-  function detachUnlockers(){
-    section.removeEventListener('pointerdown', unlockAudioOnce, {passive:true});
-    section.removeEventListener('touchstart',  unlockAudioOnce, {passive:true});
-    section.removeEventListener('wheel',       onWheelInSection, {passive:true});
-    document.removeEventListener('keydown',    onKeyInSection, {passive:true});
-    document.removeEventListener('scroll',     onScrollInSection, {passive:true});
-  }
-  attachUnlockers();
-
-  // API pública (igual que antes)
-  window._igniaManifestAudio = {
-updateProgress(p){
-  if (!unlocked || !section.classList.contains('audio-active')) return;
-  if (isFadingOut) return;  // ← NO actualizar si estamos en fadeout
-  
-  const target = volumeFromProgress(p);
-  if (rafId) cancelAnimationFrame(rafId);
-  rafId = requestAnimationFrame(()=> setVolumeSmooth(target, 0.14));
-},
-setActive(active){
-  if (!unlocked){ return; }
-  if (active){
-    isFadingOut = false;  // ← Resetear si vuelves a entrar
-    startLoop();
-    setVolumeSmooth(Math.max(lastVol, 0.08), 0.28);
-  } else {
-    hardPause();
-  }
-},
-    unlock(){ unlockAudioOnce(); }
-  };
-
-  document.addEventListener('visibilitychange', ()=>{ if (document.hidden) { hardPause(); } else if
-  (unlocked && section.classList.contains('audio-active')) { startLoop(); setVolumeSmooth(lastVol || 0.08,
-  0.28); } });
-
-  window.addEventListener('pagehide', hardPause);
-})();
-
-
-  /* ====== CLICK del CTA ====== */
-  cta.addEventListener('click', () => {
-    ignited = true;
-    if (window._igniaManifestAudio && window._igniaManifestAudio.unlock) {
-      window._igniaManifestAudio.unlock();
-    }
-    hideCTA();
-    const top = wrapper.getBoundingClientRect().top + window.scrollY;
-    try{ window.scrollTo({ top: top + 100, behavior: 'smooth' }); }catch(_){ window.scrollTo(0, top + 2); }
-    if (window._igniaManifestAudio){
-      window._igniaManifestAudio.setActive(true);
-      window._igniaManifestAudio.updateProgress(0.02);
-    }
-    setTimeout(()=>{ window.dispatchEvent(new Event('scroll')); }, 30);
-  }, { passive: true });
-
-})();
-</script>
+  </script>
 </section><section id="capabilities" class="section-services section-padding section-meta onepage-section"><div class="container">
 								<div class="section-title-area">
 										<h3 class="section-title">⚡ LOCAL AI SUPERPOWERS</h3>					<div class="section-desc"><p>IGNIA doesn&rsquo;t live in the cloud.<br data-start="459" data-end="462"><em>She</em> thinks, creates, and listens within <em>herself</em>.<br data-start="508" data-end="511">A living workstation for post-production and audiovisual creation &mdash; designed to amplify human imagination from the inside, where every calculation breathes intention.</p>
