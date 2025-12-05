@@ -3352,89 +3352,73 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
     padding: 2.5rem 1.5rem;
   }
 
-/* AJUSTES RESPONSIVE */
+/* 🎯 AJUSTE RESPONSIVE PRICING – SIN ESPACIOS FANTASMA */
 @media (max-width: 768px) {
-  .ignia-pricing-hero {
-    padding: 0; /* sección pegada al video, sin panza extra */
-  }
-
-  /* Marco del video: sin 16:9 forzado y altura flexible */
-  .ignia-video-wrapper {
-    aspect-ratio: auto;   /* quitamos el 16:9 fijo en móvil */
-    height: auto;
-    min-height: 420px;    /* si lo ves muy alto/bajo, juega entre 380–450px */
-  }
-
-  /* Contenido centrado con altura libre y padding equilibrado */
-  .ignia-video-content {
-    height: auto;                     /* que el texto mande en altura */
-    padding: 1.2rem 1.2rem 1.3rem;    /* top, lados, bottom → más parejo visualmente */
-  }
-
-  /* Ajuste fino de texto para compactar un poco */
-  .ignia-video-content h3 {
-    margin-top: 0.35rem;
-    margin-bottom: 0.85rem;
-  }
-
-  .ignia-video-content p {
-    margin-bottom: 0.8rem;
-  }
-
-  .ignia-video-content p:last-child {
-    margin-bottom: 0;  /* que el último renglón no deje hueco abajo */
-  }
-
-  /* Tamaños de fuente que ya traías */
-  .ignia-video-content .lead {
-    font-size: 1.05rem !important;
-  }
-
-  .ignia-video-content p[style*="2.4rem"] {
-    font-size: 1.9rem !important;
-  }
-}
-
-/* 🔧 Ajuste fino de spacing en PRICING – MOBILE ONLY */
-@media (max-width: 768px) {
-
   .ignia-pricing-hero {
     padding: 0 !important;
+    margin: 0 !important;
   }
-
+  
   .ignia-video-wrapper {
-    aspect-ratio: auto !important;
+    aspect-ratio: unset !important;      /* 🔥 Elimina el 16:9 forzado */
     height: auto !important;
-    min-height: 360px !important;   /* si lo ves muy alto, baja a 340; si muy bajo, sube a 380 */
+    min-height: unset !important;        /* Sin altura mínima fija */
+    max-height: none !important;
+    position: relative !important;
+    overflow: hidden !important;
   }
-
+  
+  /* El video de fondo debe cubrir SIN dejar espacios */
+  .ignia-video-wrapper video {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: cover !important;
+  }
+  
   .ignia-video-content {
+    position: relative !important;       /* 🔥 Clave: el contenido define la altura total */
     height: auto !important;
-    padding: 1rem 1.2rem 1rem !important;  /* top / lados / bottom simétrico */
+    padding: 1.5rem 1.2rem 1.5rem !important;  /* Padding equilibrado */
+    z-index: 2 !important;
   }
-
-  /* Quitamos panza de márgenes heredados/inline */
+  
+  /* Eliminar márgenes heredados que crean espacios fantasma */
+  .ignia-video-content * {
+    margin-top: 0 !important;
+  }
+  
   .ignia-video-content h3 {
-    margin-top: 0.3rem !important;
     margin-bottom: 0.8rem !important;
   }
-
+  
   .ignia-video-content p {
-    margin-top: 0 !important;
-    margin-bottom: 0.7rem !important;
+    margin-bottom: 0.6rem !important;
   }
-
+  
   .ignia-video-content p:last-child {
     margin-bottom: 0 !important;
   }
-
-  /* Mantén los tamaños de fuente que ya usábamos */
+  
+  /* Tamaños de fuente compactos */
   .ignia-video-content .lead {
-    font-size: 1.05rem !important;
+    font-size: 1rem !important;
+    line-height: 1.3 !important;
   }
-
+  
   .ignia-video-content p[style*="2.4rem"] {
-    font-size: 1.9rem !important;
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .ignia-video-content h3 {
+    font-size: 1.3rem !important;
+    line-height: 1.3 !important;
   }
 }
 /* TERMINA PRICING */
