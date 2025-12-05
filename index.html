@@ -3369,7 +3369,7 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
     max-width: 100% !important;
     margin: 0 auto !important;
     position: relative !important;
-    overflow: hidden !important;
+    overflow: visible !important;
   }
 
   /* Video dentro del wrapper */
@@ -3406,8 +3406,8 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
     height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
-    padding: 3rem 1.2rem !important;
+    justify-content: space-between !important;
+    padding: 3rem 1.2rem 3rem !important;
     z-index: 2 !important;
   }
 
@@ -3441,14 +3441,14 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
 
   /* Que el contenido se estire en todo el alto del cuadro */
   .ignia-video-content {
-    justify-content: space-between !important;  /* en vez de center */
-    padding: 2.5rem 1.2rem 2.5rem !important;   /* más aire arriba y abajo */
+    justify-content: center !important;  /* en vez de center */
+    padding: 4rem 1.2rem 2.5rem !important;   /* más aire arriba y abajo */
   }
 
   /* Un pelín más de respiro entre líneas */
   .ignia-video-content p {
-    margin-bottom: 0.45rem !important;
-    line-height: 1.35 !important;
+    margin-bottom: 0.80rem !important;
+    line-height: 2 !important;
   }
 
   .ignia-video-content h3 {
