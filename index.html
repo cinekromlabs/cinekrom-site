@@ -1150,7 +1150,7 @@ body::-webkit-scrollbar {
   <span class="dot">•</span>
   <a href="#ignia-faq"  data-label="Key Questions">IV</a>
   <span class="dot">•</span>
-  <a href="#team"  data-label="The Creators">V</a>
+  <a href="#ignia-pricing"  data-label="Explore Further">V</a>
     <span class="dot">•</span>
 </nav>
 <div id="page" class="hfeed site">
@@ -3352,7 +3352,7 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
     padding: 2.5rem 1.5rem;
   }
 
-/* 🎯 AJUSTE RESPONSIVE PRICING – SIN ESPACIOS FANTASMA */
+/* 🎯 AJUSTE RESPONSIVE PRICING – VIDEO COMPLETO CON MÁS SPACING */
 @media (max-width: 768px) {
   .ignia-pricing-hero {
     padding: 0 !important;
@@ -3360,65 +3360,73 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
   }
   
   .ignia-video-wrapper {
-    aspect-ratio: unset !important;      /* 🔥 Elimina el 16:9 forzado */
+    aspect-ratio: 16 / 9 !important;
     height: auto !important;
-    min-height: unset !important;        /* Sin altura mínima fija */
-    max-height: none !important;
+    width: 100% !important;
     position: relative !important;
     overflow: hidden !important;
   }
   
-  /* El video de fondo debe cubrir SIN dejar espacios */
   .ignia-video-wrapper video {
     position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    min-width: 100% !important;
-    min-height: 100% !important;
-    width: auto !important;
-    height: auto !important;
-    object-fit: cover !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
   }
   
   .ignia-video-content {
-    position: relative !important;       /* 🔥 Clave: el contenido define la altura total */
-    height: auto !important;
-    padding: 1.5rem 1.2rem 1.5rem !important;  /* Padding equilibrado */
+    position: relative !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding: 2rem 1.2rem !important;
     z-index: 2 !important;
   }
   
-  /* Eliminar márgenes heredados que crean espacios fantasma */
+  /* 🔥 MÁS SPACING entre elementos */
   .ignia-video-content * {
     margin-top: 0 !important;
   }
   
   .ignia-video-content h3 {
-    margin-bottom: 0.8rem !important;
+    margin-bottom: 0.65rem !important;   /* 🔥 Aumentado de 0.5rem */
+    line-height: 1.3 !important;         /* 🔥 Más altura de línea */
   }
   
   .ignia-video-content p {
-    margin-bottom: 0.6rem !important;
+    margin-bottom: 0.6rem !important;    /* 🔥 Aumentado de 0.45rem */
+    line-height: 1.3 !important;         /* 🔥 Más altura de línea */
   }
   
   .ignia-video-content p:last-child {
     margin-bottom: 0 !important;
   }
   
-  /* Tamaños de fuente compactos */
+  /* Tamaños de fuente ajustados */
   .ignia-video-content .lead {
-    font-size: 1rem !important;
+    font-size: 0.95rem !important;
     line-height: 1.3 !important;
   }
   
   .ignia-video-content p[style*="2.4rem"] {
-    font-size: 1.8rem !important;
+    font-size: 1.7rem !important;
     line-height: 1.2 !important;
+    margin-bottom: 0.4rem !important;    /* 🔥 Más espacio después del precio */
   }
   
   .ignia-video-content h3 {
-    font-size: 1.3rem !important;
+    font-size: 1.25rem !important;
     line-height: 1.3 !important;
+  }
+  
+  /* 🔥 AJUSTE ESPECÍFICO para "Founders Edition" y texto final */
+  .ignia-video-content p:nth-last-child(2),
+  .ignia-video-content p:nth-last-child(3) {
+    margin-bottom: 0.5rem !important;    /* 🔥 Más espacio */
   }
 }
 /* TERMINA PRICING */
@@ -3462,7 +3470,7 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
           0 1px 3px rgba(0, 0, 0, 0.55);
         max-width: 720px;
       ">
-        Hybrid AI Workstation — hand-built as a single, uncompromising flagship model.
+        Hybrid AI Workstation — hand-built as a single, uncompromising&nbsp;flagship&nbsp;model.
       </p>
 
       <p style="
