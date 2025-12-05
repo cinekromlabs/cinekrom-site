@@ -3355,30 +3355,43 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
 /* AJUSTES RESPONSIVE */
 @media (max-width: 768px) {
   .ignia-pricing-hero {
-    padding: 0px 0;
+    padding: 0; /* sección pegada al video, sin panza extra */
   }
 
+  /* Marco del video: sin 16:9 forzado y altura flexible */
+  .ignia-video-wrapper {
+    aspect-ratio: auto;   /* quitamos el 16:9 fijo en móvil */
+    height: auto;
+    min-height: 420px;    /* si lo ves muy alto/bajo, juega entre 380–450px */
+  }
+
+  /* Contenido centrado con altura libre y padding equilibrado */
   .ignia-video-content {
-    padding: 1.75rem 1.2rem;
+    height: auto;                     /* que el texto mande en altura */
+    padding: 1.2rem 1.2rem 1.3rem;    /* top, lados, bottom → más parejo visualmente */
   }
 
+  /* Ajuste fino de texto para compactar un poco */
+  .ignia-video-content h3 {
+    margin-top: 0.35rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .ignia-video-content p {
+    margin-bottom: 0.8rem;
+  }
+
+  .ignia-video-content p:last-child {
+    margin-bottom: 0;  /* que el último renglón no deje hueco abajo */
+  }
+
+  /* Tamaños de fuente que ya traías */
   .ignia-video-content .lead {
     font-size: 1.05rem !important;
   }
 
   .ignia-video-content p[style*="2.4rem"] {
     font-size: 1.9rem !important;
-  }
-
-  /* 🔧 ARREGLO DEL CORTE EN MÓVIL */
-  .ignia-video-wrapper {
-    aspect-ratio: auto;   /* quitamos el 16:9 fijo */
-    height: auto;
-    min-height: 420px;    /* juega entre 380–450px si quieres ajustar la altura */
-  }
-
-  .ignia-video-content {
-    height: auto;         /* que el texto mande en altura */
   }
 }
 
