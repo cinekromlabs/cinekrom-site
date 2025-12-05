@@ -154,24 +154,7 @@ display: none;
   background: #000;
 }
 
-#manifest-wrapper {
-  scroll-behavior: smooth;
-  /* Solo en móvil/touch: */
-  scroll-snap-type: y proximity; /* ← "proximity" en lugar de "mandatory" */
-}
 
-.manifest-text {
-  scroll-snap-align: center;
-  scroll-snap-stop: normal; /* permite scrollear a través de varios textos */
-}
-
-
-/* Opcional: solo activar snap en móviles */
-@media (pointer: coarse) {
-  #manifest-wrapper {
-    scroll-snap-type: y proximity;
-  }
-}
 
 /* FIRE ORB + SECUENCIA IGNIA */
 /* Contenedor sticky ya lo tienes arriba, no lo toco */
