@@ -3395,6 +3395,48 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
   }
 }
 
+/* 🔧 Ajuste fino de spacing en PRICING – MOBILE ONLY */
+@media (max-width: 768px) {
+
+  .ignia-pricing-hero {
+    padding: 0 !important;
+  }
+
+  .ignia-video-wrapper {
+    aspect-ratio: auto !important;
+    height: auto !important;
+    min-height: 360px !important;   /* si lo ves muy alto, baja a 340; si muy bajo, sube a 380 */
+  }
+
+  .ignia-video-content {
+    height: auto !important;
+    padding: 1rem 1.2rem 1rem !important;  /* top / lados / bottom simétrico */
+  }
+
+  /* Quitamos panza de márgenes heredados/inline */
+  .ignia-video-content h3 {
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  .ignia-video-content p {
+    margin-top: 0 !important;
+    margin-bottom: 0.7rem !important;
+  }
+
+  .ignia-video-content p:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Mantén los tamaños de fuente que ya usábamos */
+  .ignia-video-content .lead {
+    font-size: 1.05rem !important;
+  }
+
+  .ignia-video-content p[style*="2.4rem"] {
+    font-size: 1.9rem !important;
+  }
+}
 /* TERMINA PRICING */
 </style>
 
