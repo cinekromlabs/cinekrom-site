@@ -303,7 +303,7 @@ body > #page > #header-section #masthead {
 }
 
 /* Pleca negra para 36–40 */
-.manifest-text[data-text="36"],
+
 .manifest-text[data-text="37"],
 .manifest-text[data-text="38"],
 .manifest-text[data-text="39"],
@@ -365,6 +365,7 @@ body > #page > #header-section #masthead {
 }
 
 /* Reforzadores de jerarquía */
+.manifest-text[data-text="40"],
 .manifest-text[data-text="26"]{ /* "It's a Machina." como golpe identitario */
   font-weight:700; font-style: normal;
 }
@@ -2582,6 +2583,22 @@ if (fireOrb && orbSpin && seqContainer && seqImg) {
         <strong>In creative work, privacy isn’t a luxury — it’s survival</strong>. Ideas leak, styles get scraped, footage becomes data, and cloud-based AI turns every draft into someone else’s training set. Local AI changes everything: no uploads, no intermediaries, no silent harvesting. With IGNIA, your imagination never leaves the room. That’s why serious studios and real creators need IGNIA: because genius deserves solitude, not surveillance.
       </p>
 
+<p>
+  AI is only half the story. Your days aren’t spent <em>just</em> running models — you edit, composite, color, render, 
+  track, design, revise, export, and deliver. You need a machine that won’t crash under pressure, that can open massive timelines, 
+  that can run your full suite of tools at once without stutter. IGNIA isn’t just an AI engine; she’s a fully armed 
+  post-production workstation, built so you can cut, grade, stabilize, mix, simulate, and finish without waiting, 
+  without freezing, and without praying your system survives the deadline.
+</p>
+
+<p>
+  And here’s the simplest truth: <strong>every studio needs a powerful machine anyway</strong>. 
+  If you’re going to invest in a workstation for editing, grading, rendering, and daily production, 
+  why not choose one that also gives you sovereign AI, cinematic storage, and pro-grade stability in the same chassis? 
+  IGNIA replaces the need to buy two systems — your creative workstation and your AI engine — folding them into a single, 
+  uncompromising instrument. <strong>One investment. One machine. Everything accelerated</strong>.
+</p>
+
       <p>
         But above all, you get a machine that feels like a creative partner — crafted software, a responsive personality, and a workflow that feels like collaboration instead of resistance.
       </p>
@@ -3335,81 +3352,89 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
     padding: 2.5rem 1.5rem;
   }
 
-/* 🎯 AJUSTE RESPONSIVE PRICING – VIDEO COMPLETO CON MEJOR SPACING */
+/* 🎯 AJUSTE RESPONSIVE PRICING – MOBILE CON “CAJA NEGRA” ARRIBA/ABAJO */
 @media (max-width: 768px) {
+
+  /* La sección ahora es más alta y negra */
   .ignia-pricing-hero {
-    padding: 0 !important;
+    padding: 2rem 0 !important;  /* 🔥 aire negro arriba/abajo */
     margin: 0 !important;
+    background: #000;
   }
-  
+
+  /* Wrapper mantiene 16:9 */
   .ignia-video-wrapper {
     aspect-ratio: 16 / 9 !important;
-    height: auto !important;
     width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
     position: relative !important;
     overflow: hidden !important;
   }
-  
+
+  /* Video dentro del wrapper */
   .ignia-video-wrapper video {
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
-    transform: none !important;
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important;
+    object-fit: cover !important;
   }
-  
+
+  /* DIFUMINADO VERTICAL PARA MOBILE — 18% / 82% */
+  .ignia-video-bg {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 18%,
+      black 82%,
+      transparent 100%
+    ) !important;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 18%,
+      black 82%,
+      transparent 100%
+    ) !important;
+  }
+
+  /* Contenido frontal */
   .ignia-video-content {
     position: relative !important;
     height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
-    padding: 2rem 1.2rem !important;     /* Mantiene margen con bordes */
+    padding: 1.8rem 1.2rem !important;
     z-index: 2 !important;
   }
-  
-  /* 🔥 REDUCIR espacios entre elementos de texto */
+
+  /* Márgenes y tipografía compacta */
   .ignia-video-content * {
     margin-top: 0 !important;
   }
-  
+
   .ignia-video-content h3 {
-    margin-bottom: 0.4rem !important;    /* 🔥 Reducido de 0.8rem */
-    line-height: 1.2 !important;         /* 🔥 Menos altura de línea */
+    margin-bottom: 0.4rem !important;
+    line-height: 1.2 !important;
   }
-  
+
   .ignia-video-content p {
-    margin-bottom: 0.3rem !important;    /* 🔥 Reducido de 0.6rem */
-    line-height: 1.2 !important;         /* 🔥 Menos altura de línea */
-  }
-  
-  .ignia-video-content p:last-child {
-    margin-bottom: 0 !important;
-  }
-  
-  /* Tamaños de fuente ajustados */
-  .ignia-video-content .lead {
-    font-size: 0.95rem !important;       /* 🔥 Ligeramente más pequeño */
+    margin-bottom: 0.3rem !important;
     line-height: 1.2 !important;
   }
-  
+
   .ignia-video-content p[style*="2.4rem"] {
-    font-size: 1.7rem !important;        /* 🔥 Reducido de 1.8rem */
+    font-size: 1.7rem !important;
     line-height: 1.1 !important;
-    margin-bottom: 0.2rem !important;    /* 🔥 Menos espacio después del precio */
+    margin-bottom: 0.2rem !important;
   }
-  
-  .ignia-video-content h3 {
-    font-size: 1.25rem !important;       /* 🔥 Ligeramente más pequeño */
+
+  .ignia-video-content .lead {
+    font-size: 0.95rem !important;
     line-height: 1.2 !important;
-  }
-  
-  /* 🔥 AJUSTE ESPECÍFICO para "Founders Edition" y texto final */
-  .ignia-video-content p:nth-last-child(2),
-  .ignia-video-content p:nth-last-child(3) {
-    margin-bottom: 0.25rem !important;
   }
 }
 /* TERMINA PRICING */
