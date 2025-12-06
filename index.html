@@ -503,6 +503,7 @@ display: none;
   width: 100%;
   overflow: hidden;
   background: #000;
+  isolation: isolate; /* 👈 clave para que el blend no contagie fuera */
 }
 
 
@@ -938,6 +939,7 @@ body::-webkit-scrollbar {
   transform-origin: center;
   backface-visibility: hidden;
   filter: blur(1.1px) contrast(1.03);
+  mix-blend-mode: screen;  /* elimina lo negro, deja luces/fuego */
 }
 
 /* Keyframes */
@@ -2015,7 +2017,7 @@ if (fireOrb) {
   // Solo monitores grandes (no laptops normales)
   if (window.innerWidth >= 1920 || window.innerHeight >= 1200) {
     minScale = 0.9 * baseScale;   // arranca un poco más grande
-    maxScale = 2.7 * baseScale;   // termina más grande
+    maxScale = 2.9 * baseScale;   // termina más grande
   }
 
   const currentScale = minScale + (scrollProgress * (maxScale - minScale));
