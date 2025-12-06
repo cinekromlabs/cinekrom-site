@@ -1315,23 +1315,26 @@ body::-webkit-scrollbar {
       if (!title || !sub) return;
 
       var w = window.innerWidth;
+      var h = window.innerHeight;
 
-      // 🔒 Solo aplicar el fix en "modo tablet":
-      // entre ~700 y ~1100 px de ancho (ajustable)
-      if (w < 700 || w > 800) {
-        // fuera de ese rango, NO tocamos nada
+      // 👇 Solo actuamos en "modo tablet vertical"
+      var isTabletWidth   = (w >= 700 && w <= 800);
+      var isPortrait      = (h > w);
+
+      if (!(isTabletWidth && isPortrait)) {
+        // Si NO estamos en ese rango/orientación, devolvemos a normal
         sub.style.marginTop = "0";
         return;
       }
 
-      // 🔧 Dentro del rango tablet sí hacemos el cálculo
+      // 🔧 Dentro de tablet vertical sí aplicamos el ajuste
       sub.style.marginTop = "0";  // reset para medir natural
 
       var titleRect = title.getBoundingClientRect();
       var subRect   = sub.getBoundingClientRect();
 
-      // espacio mínimo deseado entre título y párrafo
-      var desiredGap = 45; // 24px, súbelo/bájalo a gusto
+      // Tu gap de 45px
+      var desiredGap = 45;
 
       var delta = (titleRect.bottom + desiredGap) - subRect.top;
 
