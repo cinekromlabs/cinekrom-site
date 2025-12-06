@@ -2009,9 +2009,14 @@ if (fireOrb) {
   const scaleiOS    = isiOSCls ? 0.85 : 1;
   const baseScale   = scaleMobile * scaleiOS;
 
-  // rango de escala, ajústalo “a ojo” si quieres
-  const minScale = 0.7 * baseScale;
-  const maxScale = 2.25 * baseScale;
+  let minScale = 0.7 * baseScale;
+  let maxScale = 2.25 * baseScale;
+
+  // Solo monitores grandes (no laptops normales)
+  if (window.innerWidth >= 1920 || window.innerHeight >= 1200) {
+    minScale = 0.9 * baseScale;   // arranca un poco más grande
+    maxScale = 2.7 * baseScale;   // termina más grande
+  }
 
   const currentScale = minScale + (scrollProgress * (maxScale - minScale));
   fireOrb.style.setProperty('--orb-scale', currentScale);
