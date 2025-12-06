@@ -1309,24 +1309,36 @@ body::-webkit-scrollbar {
   </div>
 <script>
   (function () {
-    // detectar iPad / iOS con touch
-    var ua = navigator.userAgent || "";
-    var isIOS =
-      /iPad|iPhone|iPod/.test(ua) ||
-      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-
     function adjustHeroSubcopy() {
-      var sub = document.querySelector("#hero .hero-subcopy");
-      if (!sub) return;
+      var title = document.querySelector("#hero .hero-title");
+      var sub   = document.querySelector("#hero .hero-subcopy");
+      if (!title || !sub) return;
 
       var w = window.innerWidth;
-      var h = window.innerHeight;
 
-      // iPad / tablet en vertical aprox (ajustado a tu caso problemático)
-      if (isIOS && w >= 768 && w <= 1024 && h > w) {
-        sub.style.marginTop = "3.5rem";  // súbelo o bájalo a ojo
+      // 🔒 Solo aplicar el fix en "modo tablet":
+      // entre ~700 y ~1100 px de ancho (ajustable)
+      if (w < 500 || w > 1100) {
+        // fuera de ese rango, NO tocamos nada
+        sub.style.marginTop = "0";
+        return;
+      }
+
+      // 🔧 Dentro del rango tablet sí hacemos el cálculo
+      sub.style.marginTop = "0";  // reset para medir natural
+
+      var titleRect = title.getBoundingClientRect();
+      var subRect   = sub.getBoundingClientRect();
+
+      // espacio mínimo deseado entre título y párrafo
+      var desiredGap = 32; // 24px, súbelo/bájalo a gusto
+
+      var delta = (titleRect.bottom + desiredGap) - subRect.top;
+
+      if (delta > 0) {
+        sub.style.marginTop = delta + "px";
       } else {
-        sub.style.marginTop = "";        // resto de dispositivos: normal
+        sub.style.marginTop = "0";
       }
     }
 
