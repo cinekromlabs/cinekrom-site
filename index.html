@@ -1288,7 +1288,7 @@ body::-webkit-scrollbar {
             <span id="typeit_217559"></span>
           </h2>
 
-          <p>
+          <p class="hero-subcopy">
             <em>She doesn’t boot. She awakens.</em><br>
             Not just a machine. A myth reborn.<br>
             Crafted like a <em>Stradivarius</em>.<br>
@@ -1307,7 +1307,33 @@ body::-webkit-scrollbar {
       <div class="col-md-12 col-lg-6"></div>
     </div>
   </div>
+<script>
+  (function () {
+    // detectar iPad / iOS con touch
+    var ua = navigator.userAgent || "";
+    var isIOS =
+      /iPad|iPhone|iPod/.test(ua) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
+    function adjustHeroSubcopy() {
+      var sub = document.querySelector("#hero .hero-subcopy");
+      if (!sub) return;
+
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+
+      // iPad / tablet en vertical aprox (ajustado a tu caso problemático)
+      if (isIOS && w >= 768 && w <= 1024 && h > w) {
+        sub.style.marginTop = "3.5rem";  // súbelo o bájalo a ojo
+      } else {
+        sub.style.marginTop = "";        // resto de dispositivos: normal
+      }
+    }
+
+    window.addEventListener("load", adjustHeroSubcopy);
+    window.addEventListener("resize", adjustHeroSubcopy);
+  })();
+</script>
 </section></div></div>
 	<div id="content" class="site-content">
 		<main id="main" class="site-main" role="main"><section id="features" class="section-features section-padding section-meta onepage-section"><div class="container">
@@ -4320,7 +4346,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // MANIFIESTO COMPLETAMENTE ABAJO DEL VIEWPORT → aún no llegas
       // Menú compacto visible (I, II)
       if (rect.top >= vh) {
-        nav.classList.ass("is-hidden");
+        nav.classList.add("is-hidden");
         nav.classList.add("compact");
         return;
       }
