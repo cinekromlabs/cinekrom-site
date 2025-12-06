@@ -9,9 +9,8 @@
 
 				h1, h2, h3, h4, h5, h6 {
 					font-family: 'sharpsans', sans-serif !important;
-  					font-weight: 700;
+  					font-weight: 700 !important;
   					-webkit-font-smoothing: antialiased;
   					-moz-osx-font-smoothing: grayscale;
   					text-rendering: optimizeLegibility;
 					}
-		
