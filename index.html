@@ -1965,6 +1965,7 @@ const texts       = document.querySelectorAll('.manifest-text');
 
     let ctaShown = false;
     let ignited  = false;
+    let lockScrollY = null;   // aquí guardamos el scroll “máximo” permitido
 
     function showCTA(){
       if (ignited || ctaShown) return;
@@ -1972,6 +1973,9 @@ const texts       = document.querySelectorAll('.manifest-text');
       cta.classList.add('visible');
       cta.classList.remove('hidden');
       section.classList.add('awaiting-ignite');   // congela textos
+
+      // Candado: hasta aquí puedes bajar mientras no hayas “ignitado”
+      //lockScrollY = window.scrollY;//
     }
     function hideCTA(){
       if (!ctaShown) return;
@@ -1979,6 +1983,8 @@ const texts       = document.querySelectorAll('.manifest-text');
       cta.classList.remove('visible');
       cta.classList.add('hidden');
       section.classList.remove('awaiting-ignite'); // libera textos
+
+      lockScrollY = null; // 👈 desbloquea scroll
     }
 
     // Helper “está en viewport”
@@ -2009,6 +2015,9 @@ const texts       = document.querySelectorAll('.manifest-text');
 
     function handleProgress(scrollProgress){
       const awaiting = section.classList.contains('awaiting-ignite');
+
+  // Si el CTA está visible, no animamos nada del manifiesto todavía
+  if (awaiting) return;
 
 // ORBE: tamaño por scroll usando scale (más ligero)
 if (fireOrb) {
@@ -2181,17 +2190,45 @@ if (fireOrb && orbSpin && seqContainer && seqImg) {
     }
 
     // rAF throttle
-    let ticking = false, latestProgress = 0;
-    function onScroll(){
-      latestProgress = computeProgress();
-      if (!ticking){
-        requestAnimationFrame(() => {
-          handleProgress(latestProgress);
-          ticking = false;
-        });
-        ticking = true;
+let ticking = false, latestProgress = 0;
+
+function onScroll(){
+  const awaiting = section.classList.contains('awaiting-ignite');
+
+  // 🔒 Candado SOLO cuando:
+  // - el CTA está esperando,
+  // - aún no hemos “ignitado”,
+  // - y la sección del manifiesto ya está pegada ocupando el viewport
+  if (awaiting && !ignited) {
+    const rect = wrapper.getBoundingClientRect();
+    const vh   = window.innerHeight || document.documentElement.clientHeight;
+
+    // la sección está “montada” en pantalla (como cuando el sticky ya tomó control)
+    if (rect.top <= 0 && rect.bottom >= vh) {
+      if (lockScrollY === null) {
+        lockScrollY = window.scrollY;     // guardamos el punto donde se pegó
       }
+      if (window.scrollY > lockScrollY) {
+        // no te dejo bajar más, pero sí puedes subir / salir
+        window.scrollTo(0, lockScrollY);
+        return; // no seguimos con handleProgress para este frame
+      }
+    } else {
+      // todavía no estás dentro del “pegado” → sin bloqueo
+      lockScrollY = null;
     }
+  }
+
+  // flujo normal de animación
+  latestProgress = computeProgress();
+  if (!ticking){
+    requestAnimationFrame(() => {
+      handleProgress(latestProgress);
+      ticking = false;
+    });
+    ticking = true;
+  }
+}
 
     // IO del WRAPPER
     const io = new IntersectionObserver(([entry])=>{
