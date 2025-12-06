@@ -1318,7 +1318,7 @@ body::-webkit-scrollbar {
 
       // 🔒 Solo aplicar el fix en "modo tablet":
       // entre ~700 y ~1100 px de ancho (ajustable)
-      if (w < 500 || w > 1100) {
+      if (w < 700 || w > 1100) {
         // fuera de ese rango, NO tocamos nada
         sub.style.marginTop = "0";
         return;
@@ -1331,7 +1331,7 @@ body::-webkit-scrollbar {
       var subRect   = sub.getBoundingClientRect();
 
       // espacio mínimo deseado entre título y párrafo
-      var desiredGap = 37; // 24px, súbelo/bájalo a gusto
+      var desiredGap = 45; // 24px, súbelo/bájalo a gusto
 
       var delta = (titleRect.bottom + desiredGap) - subRect.top;
 
