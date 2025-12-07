@@ -4481,7 +4481,7 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener('submit', submitForm);
 
   /* ========= Partículas (solo una inicialización) ========= */
-  if (window.particlesJS && !document.getElementById('waitlist-particles').dataset.init) {
+  /*if (window.particlesJS && !document.getElementById('waitlist-particles').dataset.init) {
     particlesJS("waitlist-particles", {
       "particles": {
         "number": { "value": 60 },
@@ -4505,7 +4505,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     // marca para no reinicializar si vuelves a inyectar scripts
     document.getElementById('waitlist-particles').dataset.init = "1";
-  }
+  } */
 });
 </script>
 </section></main></div>
@@ -4629,20 +4629,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Waitlist particles
     particlesJS("waitlist-particles", {
-      particles: {
-        number: { value: 70 },
-        size: { value: 2 },
-        opacity: { value: 0.4 },
-        color: {
-          value: [
-            "#ffffff", "#ffff00", "#00ffff",
-            "#00ff00", "#ff00ff", "#ff0000", "#0000ff"
-          ]
+        "particles": {
+            "number": { "value": 70 },
+            "color": { "value": ["#ffffff", "#ffff00", "#00ffff", "#00ff00", "#ff00ff", "#ff0000", "#0000ff"] },
+            "shape": { "type": "edge" },
+            "opacity": { "value": 0.4 },
+            "size": { "value": 3.5 },
+            "line_linked": {
+                "enable": true,
+                "distance": 150,
+                "color": "#ffffff",
+                "opacity": 0.2,
+                "width": 1
+            },
+            "move": { "enable": true, "speed": 2 }
         },
-        shape: { type: "edge" }, // Cuadradas
-        move: { enable: true, speed: 2 },
-        line_linked: { enable: false }
-      }
+        "interactivity": {
+            "events": { "onhover": { "enable": true, "mode": "repulse" } }
+        },
+        "retina_detect": true
     });
   };
   document.head.appendChild(script);
