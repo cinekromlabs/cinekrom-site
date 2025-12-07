@@ -4021,7 +4021,26 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
     const video = section.querySelector('.ignia-video-bg');
     if (!video) return;
 
+    /* 🔥 NUEVO: pre-carga suave del video */
+    let warmedUp = false;
+    function warmup() {
+      if (warmedUp) return;
+      warmedUp = true;
+
+      // Empuja al navegador a tener listo el video sin bloquear el render inicial
+      try {
+        // No usamos preload="auto" en HTML; sólo aquí, ya con la página pintada
+        video.preload = 'metadata';
+        video.load();
+      } catch (e) {
+        // Si algún navegador se queja, simplemente lo ignoramos
+      }
+    }
+
     function tryPlay() {
+      // Siempre que vayamos a intentar reproducir, nos aseguramos de haber calentado el buffer
+      warmup();
+
       video.muted = true;
       video.playsInline = true;
       video.setAttribute('playsinline', '');
@@ -4037,16 +4056,24 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
 
     // 1) Intentos iniciales al cargar
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      warmup();
       tryPlay();
     } else {
-      document.addEventListener('DOMContentLoaded', tryPlay);
-      window.addEventListener('load', tryPlay);
+      document.addEventListener('DOMContentLoaded', function () {
+        warmup();
+        tryPlay();
+      });
+      window.addEventListener('load', function () {
+        warmup();
+        tryPlay();
+      });
     }
 
     // 2) IntersectionObserver: cuando la sección entra al viewport
     const observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
+          warmup();
           tryPlay();
         }
       });
@@ -4068,6 +4095,7 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
     function interactionHandler() {
       if (!isSectionVisible()) return;
       if (!unlocked) unlocked = true;
+      warmup();
       tryPlay();
     }
 
