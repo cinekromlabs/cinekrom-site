@@ -598,11 +598,6 @@ display: none;
     0 0 36px rgba(0,0,0,.60);
 }
 
-html.win .manifest-text{
-  text-rendering: auto !important;
-  -webkit-font-smoothing: antialiased !important;
-  contain: none !important;
-}
 
 
 /* Progress bar para debug */
@@ -790,9 +785,12 @@ body:not(.is-transparent) .site-header #nav-toggle span::after {
   background-color: #ffffff;
 }
 
+/* ===== AJUSTES TIPOGRÁFICOS SOLO WINDOWS (preserva pesos) ===== */
 html.win .manifest-text {
-  font-weight: 300;
-  font-size: 0.95em;
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  contain: none !important;
+  font-size: 0.96em !important;   /* micro-shrink (≈4%) sin tocar font-weight */
 }
 
 h1, h2, h3, h4, h5, h6 {
