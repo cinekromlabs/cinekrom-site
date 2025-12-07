@@ -598,6 +598,12 @@ display: none;
     0 0 36px rgba(0,0,0,.60);
 }
 
+html.win .manifest-text{
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  contain: none !important;
+}
+
 /* Progress bar para debug */
 .progress-bar {
   position: fixed;
@@ -4814,5 +4820,11 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", updateMenuState);
   updateMenuState(); // primera evaluación al cargar
 });
+</script>
+
+<script>
+  if (navigator.userAgent.includes('Windows')) {
+    document.documentElement.classList.add('win');
+  }
 </script>
 </body></html>
