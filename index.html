@@ -2843,7 +2843,379 @@ function onScroll(){
               </div>
                       </div>
       </div>
-              </section><div class="section-parallax jarallax"> <div class="parallax-bg jarallax-img"><img src="https://www.cinekrom.com/wp-content/uploads/2025/09/ai-evolution.webp" alt=""></div>        <section id="videolightbox" class="section-videolightbox section-padding section-padding-larger section-inverse onepage-section"><div class="container">
+              </section>
+
+<section id="freedom-of-ignia" class="freedom-of-ignia-section">
+
+  <style>
+    /* ========= FREEDOM OF IGNIA – ESTILOS ========= */
+
+.freedom-of-ignia-section {
+  position: relative;
+  background: #162f40;
+  color: #CCCCCC;
+  padding: 0 0 80px;   /* arriba 0, abajo sí dejamos aire para el texto */
+}
+
+/* CONTAINER SOLO PARA EL TEXTO (NO para el video hero) */
+.freedom-of-ignia-section .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px 0;  /* espacio ya debajo del video */
+}
+
+/* HERO DE VIDEO – FULL WIDTH LATERAL */
+.freedom-video-shell {
+  width: 100%;
+  /* barras laterales: izquierda #232122, derecha #000000 */
+  background: linear-gradient(
+    to right,
+    #232122 0%,
+    #232122 50%,
+    #000000 50%,
+    #000000 100%
+  );
+  display: flex;
+  justify-content: center;
+  margin: 0;          /* sin espacio arriba/abajo: pegado a la sección anterior */
+}
+
+/* FRAME QUE CONTIENE LA RELACIÓN 16:9 */
+.freedom-video-frame {
+  position: relative;
+  width: 100%;
+  max-width: 854px;
+  padding: 0 14px;    /* 👈 SOLO laterales, sin top/bottom */
+}
+
+/* “Pantalla” 16:9 */
+.freedom-video-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+}
+
+.freedom-video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* TIPOGRAFÍA Y COPY (lo que ya tenías, con el fix de color blanco en el H3, etc.) */
+
+.freedom-heading-main {
+  text-align: center;
+  font-size: 1.7rem;
+  margin-bottom: 5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+}
+
+.freedom-body {
+  font-size: 1rem;
+  line-height: 1.55;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.freedom-subheading {
+  margin-top: 2rem !important;   /* separa del párrafo anterior */
+  margin-bottom: 0.7rem !important; /* espacio hacia las bullets */
+  text-transform: uppercase;
+}
+
+/* ===== H4 más grande en desktop ===== */
+@media (min-width: 1025px) {
+  .freedom-subheading {
+    font-size: 1.35rem !important;
+    font-weight: 650 !important;   /* ligeramente más fuerte */
+    letter-spacing: 0.01em !important;
+
+  }
+}
+
+    /* TARJETAS DE COSTO */
+
+    .freedom-card {
+      margin: 1.8rem auto;
+      padding: 1.4rem 1.4rem 1.2rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: radial-gradient(circle at top, rgba(255,255,255,0.08) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.7) 100%);
+      backdrop-filter: blur(4px);
+      max-width: 100%;
+      text-align: center;
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+
+    .freedom-card strong {
+      font-size: 1.05rem;
+    }
+
+    .freedom-card small {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+
+
+.freedom-card--zero strong {
+  font-size: 1.1rem;
+}
+
+/* ===== EDITORIAL INTRO PARAGRAPH ===== */
+.freedom-editorial-lead {
+  font-size: 1.35rem;              /* más grande */
+  line-height: 1.55;
+  max-width: 1400px;                /* más ancho que el body text */
+ margin: 1.5rem auto 1rem auto;  /* aire editorial */
+  text-align: center;              /* centrado */
+  letter-spacing: 0.02em;          /* leve tracking editorial */                 /* un blanco suave */
+}
+
+    /* AJUSTES MOBILE */
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .freedom-of-ignia-section {
+    padding: 0 0 60px;
+  }
+
+  .freedom-video-frame {
+    max-width: 100%;
+    padding: 0 10px;   /* laterales un poco más compactos en móvil */
+  }
+
+  .freedom-heading-main {
+    font-size: 1.8rem;
+    margin-bottom: 24px;
+  }
+
+  .freedom-body {
+    font-size: 0.95rem;
+  }
+
+  .freedom-subheading {
+    font-size: 1.3rem;
+  }
+
+  .freedom-card {
+    padding: 1.2rem 1rem 1rem;
+    margin: 1.4rem auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .freedom-editorial-lead {
+    font-size: 1.18rem;
+    line-height: 1.5;
+    margin: 1rem auto 1rem auto;
+  }
+}
+  </style>
+
+
+
+
+
+  <!-- HERO DE VIDEO FULL-WIDTH -->
+  <div class="freedom-video-shell">
+    <div class="freedom-video-frame">
+      <div class="freedom-video-inner">
+        <video class="freedom-video-bg"
+               autoplay
+               muted
+               loop
+               playsinline
+               webkit-playsinline
+               preload="metadata"
+               poster="https://www.cinekrom.com/assets/cinefy/cinefy.webp">
+          <source src="https://www.cinekrom.com/assets/cinefy/cinefy.webm" type="video/webm">
+          <source src="https://www.cinekrom.com/assets/cinefy/cinefy.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <!-- COPY PRINCIPAL -->
+    <h3 class="freedom-heading-main">
+      THE COST OF CLOUD AI — AND THE FREEDOM OF IGNIA
+    </h3>
+
+    <div class="freedom-body">
+
+      <p class="freedom-editorial-lead">Studios are being asked to pay for creativity one credit at a time. Upscaling here. Denoise there. A monthly bill disguised as innovation. Every frame uploaded to someone else’s servers. Every pixel helping train someone else’s machine.</p>
+
+      <p>But creativity was never meant to leave the editing room.<br>
+      Not the story.<br>
+      Not the dailies.<br>
+      Not the soul of the work.</p>
+
+      <p><strong>IGNIA breaks that cycle. Local. Private. Unlimited</strong>. A home where every tool can live — from upscalers to language models, from restoration to generative intelligence. No credits. No meters. No cloud. Just you, your craft, and a machine built to ignite it.</p>
+
+      <!-- BLOQUE: Kalyx Post en la nube -->
+      <h4 class="freedom-subheading">
+        A Practical Example: “Kalyx Post”
+      </h4>
+
+      <p><em>A fictional studio</em>. <strong>A very real problem</strong>.</p>
+
+      <p>If Kalyx Post uses cloud-AI:</p>
+
+      <ul>
+        <li>AI upscaling for 4K footage</li>
+        <li>Denoise for dailies</li>
+        <li>Cleanup + restoration for weekly deliverables</li>
+        <li>Text generation for ideas, scripts, and production notes</li>
+        <li>Voice tools + audio enhancements</li>
+      </ul>
+
+      <div class="freedom-card">
+        <strong>Annual cloud-AI cost: ≈ between $7K and $35K+/year</strong>
+        <small>(credits, per-minute processing, per-operation fees, storage, priority queues)</small>
+      </div>
+
+      <p>And still — the studio must buy a workstation.<br>
+      Still — the footage must be uploaded.<br>
+      Still — the data leaves the room.</p>
+
+      <p>One cloud-AI subscription is never enough. A studio gathers them like candles in a dark room — one for image, one for sound, one for words, one for tasks — each adding its own quiet fee, each whispering for more.</p>
+
+      <p>Then come the tools themselves, asking for rent month after month, until creation feels less like a craft and more like a debt. What was meant to lift the artist slowly becomes a chorus of meters, all ticking at once, charging for every breath of imagination.</p>
+
+      <!-- BLOQUE: Kalyx Post con IGNIA -->
+      <h4 class="freedom-subheading">
+        If Kalyx Post uses IGNIA
+      </h4>
+
+      <ul>
+        <li>Unlimited upscaling</li>
+        <li>Unlimited cleanup + restoration</li>
+        <li>Unlimited language models</li>
+        <li>Unlimited generative tools</li>
+        <li><strong>Unlimited everything</strong></li>
+        <li>All private, local, and immediate</li>
+      </ul>
+
+      <div class="freedom-card freedom-card--zero">
+        <strong>Annual AI cost:<br>$0</strong>
+        <small>(Once you own your MARK I, the intelligence is yours.)</small>
+      </div>
+
+      <p>What happens inside your editing room, stays inside your editing room.</p>
+
+      <p>IGNIA gives you a complete creative universe — the home where your tools, your ideas, your workflows, and your privacy finally belong. Empowered by unlimited AI.</p>
+
+      <p>No credits. No limits. No permission required.</p>
+
+      <p><strong>IGNIA is not where AI lives. It’s where your creativity lives.</strong></p>
+
+    </div><!-- /.freedom-body -->
+
+  </div><!-- /.container -->
+
+  <!-- ========= AUTOPLAY / WARMUP SOLO PARA ESTA SECCIÓN ========= -->
+  <script>
+    (function () {
+      const section = document.getElementById('freedom-of-ignia');
+      if (!section) return;
+
+      const video = section.querySelector('.freedom-video-bg');
+      if (!video) return;
+
+      let warmedUp = false;
+      function warmup() {
+        if (warmedUp) return;
+        warmedUp = true;
+        try {
+          video.preload = 'metadata';
+          video.load();
+        } catch (e) {
+          // silencioso
+        }
+      }
+
+      function tryPlay() {
+        warmup();
+
+        video.muted = true;
+        video.playsInline = true;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+
+        try {
+          const p = video.play();
+          if (p && p.catch) {
+            p.catch(function () {
+              // iOS puede rechazar; reintentaremos luego
+            });
+          }
+        } catch (e) {
+          // nada
+        }
+      }
+
+      // 1) Precalentar / intentar reproducir cuando el documento está listo
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        warmup();
+        tryPlay();
+      } else {
+        document.addEventListener('DOMContentLoaded', function () {
+          warmup();
+          tryPlay();
+        });
+        window.addEventListener('load', function () {
+          warmup();
+          tryPlay();
+        });
+      }
+
+      // 2) IntersectionObserver: asegurar play cuando entra al viewport
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
+            warmup();
+            tryPlay();
+          }
+        });
+      }, {
+        threshold: [0.25, 0.5, 0.75]
+      });
+
+      observer.observe(section);
+
+      // 3) Refuerzos con interacción mientras la sección es visible
+      function isSectionVisible() {
+        const rect = section.getBoundingClientRect();
+        const vh   = window.innerHeight || document.documentElement.clientHeight;
+        return rect.top < vh && rect.bottom > 0;
+      }
+
+      function interactionHandler() {
+        if (!isSectionVisible()) return;
+        warmup();
+        tryPlay();
+      }
+
+      ['touchstart', 'click', 'scroll'].forEach(function (ev) {
+        window.addEventListener(ev, interactionHandler, { passive: true });
+      });
+    })();
+  </script>
+
+</section>
+
+
+              <div class="section-parallax jarallax"> <div class="parallax-bg jarallax-img"><img src="https://www.cinekrom.com/wp-content/uploads/2025/09/ai-evolution.webp" alt=""></div>        <section id="videolightbox" class="section-videolightbox section-padding section-padding-larger section-inverse onepage-section"><div class="container">
                             <h3 class="videolightbox__heading">ANIMA IN FERRO</h3>
             </div>
                 </section></div>                      <section id="ignia-faq" data-accordion="true" class="section-padding"><style>
