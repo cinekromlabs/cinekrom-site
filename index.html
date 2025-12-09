@@ -3170,6 +3170,7 @@ function onScroll(){
 
       let warmedUp = false;
       let needsResetAfterBackground = false;
+      let unlocked = false;              // 👈 AGREGA ESTA LÍNEA
       function warmup() {
         if (warmedUp) return;
         warmedUp = true;
@@ -3250,7 +3251,9 @@ function onScroll(){
       // 🔁 Si venimos de background, recarga el video para recuperar poster/frame
       if (needsResetAfterBackground) {
         try {
-          video.load();            // vuelve a mostrar el poster
+          video.pause();
+          video.currentTime = 0;   // nos aseguramos de volver al inicio
+          video.load();            // fuerza el poster otra vez
         } catch (e) {}
         needsResetAfterBackground = false;
       }
@@ -4466,8 +4469,9 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
     if (!video) return;
 
     /* 🔥 NUEVO: pre-carga suave del video */
-    let warmedUp = false;
-    let needsResetAfterBackground = false;
+      let warmedUp = false;
+      let needsResetAfterBackground = false;
+      let unlocked = false;              // 👈 AGREGA ESTA LÍNEA
     function warmup() {
       if (warmedUp) return;
       warmedUp = true;
@@ -4550,7 +4554,9 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
       // 🔁 Si venimos de background, recarga el video para recuperar poster/frame
       if (needsResetAfterBackground) {
         try {
-          video.load();            // vuelve a mostrar el poster
+          video.pause();
+          video.currentTime = 0;   // nos aseguramos de volver al inicio
+          video.load();            // fuerza el poster otra vez
         } catch (e) {}
         needsResetAfterBackground = false;
       }
