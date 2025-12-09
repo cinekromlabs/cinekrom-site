@@ -3169,6 +3169,7 @@ function onScroll(){
       if (!video) return;
 
       let warmedUp = false;
+      let needsResetAfterBackground = false;
       function warmup() {
         if (warmedUp) return;
         warmedUp = true;
@@ -3199,7 +3200,13 @@ function onScroll(){
           // nada
         }
       }
-
+    // 👀 Cuando la pestaña/app vuelve al frente
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) {
+        // marcamos que al siguiente gesto hay que recargar el video
+        needsResetAfterBackground = true;
+      }
+    });
       // 1) Precalentar / intentar reproducir cuando el documento está listo
       if (document.readyState === 'complete' || document.readyState === 'interactive') {
         warmup();
@@ -3236,11 +3243,21 @@ function onScroll(){
         return rect.top < vh && rect.bottom > 0;
       }
 
-      function interactionHandler() {
-        if (!isSectionVisible()) return;
-        warmup();
-        tryPlay();
+    function interactionHandler() {
+      if (!isSectionVisible()) return;
+      if (!unlocked) unlocked = true;
+
+      // 🔁 Si venimos de background, recarga el video para recuperar poster/frame
+      if (needsResetAfterBackground) {
+        try {
+          video.load();            // vuelve a mostrar el poster
+        } catch (e) {}
+        needsResetAfterBackground = false;
       }
+
+      warmup();
+      tryPlay();
+    }
 
       ['touchstart', 'click', 'scroll'].forEach(function (ev) {
         window.addEventListener(ev, interactionHandler, { passive: true });
@@ -4450,6 +4467,7 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
 
     /* 🔥 NUEVO: pre-carga suave del video */
     let warmedUp = false;
+    let needsResetAfterBackground = false;
     function warmup() {
       if (warmedUp) return;
       warmedUp = true;
@@ -4480,7 +4498,13 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
         });
       }
     }
-
+    // 👀 Cuando la pestaña/app vuelve al frente
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) {
+        // marcamos que al siguiente gesto hay que recargar el video
+        needsResetAfterBackground = true;
+      }
+    });
     // 1) Intentos iniciales al cargar
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
       warmup();
@@ -4522,6 +4546,15 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
     function interactionHandler() {
       if (!isSectionVisible()) return;
       if (!unlocked) unlocked = true;
+
+      // 🔁 Si venimos de background, recarga el video para recuperar poster/frame
+      if (needsResetAfterBackground) {
+        try {
+          video.load();            // vuelve a mostrar el poster
+        } catch (e) {}
+        needsResetAfterBackground = false;
+      }
+
       warmup();
       tryPlay();
     }
