@@ -3162,10 +3162,10 @@ function onScroll(){
   <!-- ========= AUTOPLAY / WARMUP SOLO PARA ESTA SECCIÓN ========= -->
 <script>
   (function () {
-    const section = document.getElementById('freedom-of-ignia');
+    const section = document.getElementById('freedom-of-ignia'); // <-- ojo aquí
     if (!section) return;
 
-    const video = section.querySelector('.freedom-video-bg');
+    const video   = section.querySelector('.freedom-video-bg');
     if (!video) return;
 
     let warmedUp = false;
@@ -3252,6 +3252,21 @@ function onScroll(){
     ['touchstart', 'click', 'scroll'].forEach(function (ev) {
       window.addEventListener(ev, interactionHandler, { passive: true });
     });
+
+    // 5) 🔥 Tap/click directo sobre el video (paracaídas iOS/Chrome iOS)
+    function directPlay() {
+      warmup();
+      try {
+        video.muted = true;
+        video.playsInline = true;
+        const p = video.play();
+        if (p && p.catch) p.catch(function () {});
+      } catch (e) {}
+    }
+
+    video.addEventListener('click', directPlay);
+    video.addEventListener('touchstart', directPlay, { passive: true });
+
   })();
 </script>
 
@@ -4449,7 +4464,7 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
 
 <script>
   (function () {
-    const section = document.getElementById('ignia-pricing');
+    const section = document.getElementById('ignia-pricing'); // <-- ojo aquí
     if (!section) return;
 
     const video   = section.querySelector('.ignia-video-bg');
@@ -4539,6 +4554,21 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
     ['touchstart', 'click', 'scroll'].forEach(function (ev) {
       window.addEventListener(ev, interactionHandler, { passive: true });
     });
+
+    // 5) 🔥 Tap/click directo sobre el video (paracaídas iOS/Chrome iOS)
+    function directPlay() {
+      warmup();
+      try {
+        video.muted = true;
+        video.playsInline = true;
+        const p = video.play();
+        if (p && p.catch) p.catch(function () {});
+      } catch (e) {}
+    }
+
+    video.addEventListener('click', directPlay);
+    video.addEventListener('touchstart', directPlay, { passive: true });
+
   })();
 </script>
 
