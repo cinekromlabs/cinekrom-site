@@ -460,6 +460,9 @@ display: none;
 
 }
 
+strong {
+  color: #ffffff !important;
+}
 
 .heart {
     display: inline-block;
@@ -1512,9 +1515,26 @@ body::-webkit-scrollbar {
   }
 }
 
+#waitlist + * {
+  position: relative;
+}
+
+#waitlist + *::before {
+  content: "";
+  position: absolute;
+  top: -10px;                  /* solapa hacia arriba */
+  left: 0; 
+  right: 0;
+  height: 10px;                /* mismo total del de arriba */
+  background: #050505;           /* mismo color para que &ldquo;cosen&rdquo; perfecto */
+  z-index: 1;
+  pointer-events: none;
+}
+
+
 #capabilities {padding-bottom: 0px !important;}
 
-
+#features .section-title { color: #FFFFFF !important; }
 
 
   </style></head><body class="home wp-singular page-template page-template-template-frontpage page-template-template-frontpage-php page page-id-1415 wp-custom-logo wp-theme-onepress">
@@ -2937,6 +2957,7 @@ function onScroll(){
   margin-top: 2rem !important;   /* separa del párrafo anterior */
   margin-bottom: 0.7rem !important; /* espacio hacia las bullets */
   text-transform: uppercase;
+  color: #fff;
 }
 
 /* ===== H4 más grande en desktop ===== */
@@ -2991,6 +3012,10 @@ function onScroll(){
   letter-spacing: 0.02em;          /* leve tracking editorial */                 /* un blanco suave */
 }
 
+
+.freedom-of-ignia-section strong {
+  color: #ffffff !important;
+}
     /* AJUSTES MOBILE */
 
 /* MOBILE */
@@ -3001,7 +3026,7 @@ function onScroll(){
 
   .freedom-video-frame {
     max-width: 100%;
-    padding: 0 10px;   /* laterales un poco más compactos en móvil */
+    padding: 0 0px;   /* laterales un poco más compactos en móvil */
   }
 
   .freedom-heading-main {
@@ -3067,7 +3092,7 @@ function onScroll(){
       <p>But creativity was never meant to leave the editing room.<br>
       Not the story.<br>
       Not the dailies.<br>
-      Not the soul of the work.</p>
+      <strong>Not the soul of the work</strong>.</p>
 
       <p><strong>IGNIA breaks that cycle. Local. Private. Unlimited</strong>. A home where every tool can live — from upscalers to language models, from restoration to generative intelligence. No credits. No meters. No cloud. Just you, your craft, and a machine built to ignite it.</p>
 
@@ -3093,13 +3118,15 @@ function onScroll(){
         <small>(credits, per-minute processing, per-operation fees, storage, priority queues)</small>
       </div>
 
-      <p>And still — the studio must buy a workstation.<br>
+      <p>And still — <strong>the studio must buy a workstation</strong>.<br>
       Still — the footage must be uploaded.<br>
       Still — the data leaves the room.</p>
 
-      <p>One cloud-AI subscription is never enough. A studio gathers them like candles in a dark room — one for image, one for sound, one for words, one for tasks — each adding its own quiet fee, each whispering for more.</p>
+      <p><strong>One cloud-AI subscription is never enough</strong>. Studios end up stacking multiple services — one for image, one for sound, one for text, one for tasks — each adding its own monthly fee, each increasing the cost of simply getting the work done.</p>
 
-      <p>Then come the tools themselves, asking for rent month after month, until creation feels less like a craft and more like a debt. What was meant to lift the artist slowly becomes a chorus of meters, all ticking at once, charging for every breath of imagination.</p>
+      <p>Then come the tools themselves, <strong>asking for rent month after month</strong>, until creation feels less like a craft and more like a debt. What was meant to lift the artist slowly becomes a chorus of meters, all ticking at once, charging for every breath of imagination.</p>
+
+      <p><strong>And now creative applications themselves are joining the trend</strong>. Software you already pay for now adds AI as a separate upgrade — another tier, another subscription, another layer of cost on top of the cost. What once felt like owning your creative pipeline <strong>now feels like renting it back</strong>, one feature at a time.</p>
 
       <!-- BLOQUE: Kalyx Post con IGNIA -->
       <h4 class="freedom-subheading">
@@ -3122,7 +3149,7 @@ function onScroll(){
 
       <p>What happens inside your editing room, stays inside your editing room.</p>
 
-      <p>IGNIA gives you a complete creative universe — the home where your tools, your ideas, your workflows, and your privacy finally belong. Empowered by unlimited AI.</p>
+      <p><strong>IGNIA gives you a complete creative universe</strong> — the home where your tools, your ideas, your workflows, and your privacy finally belong. <strong>Empowered by unlimited AI</strong>.</p>
 
       <p>No credits. No limits. No permission required.</p>
 
@@ -4890,23 +4917,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 </section></main></div>
 
-<footer id="colophon" class="site-footer" role="contentinfo"><style>
-#waitlist + * {
-  position: relative;
-}
-
-#waitlist + *::before {
-  content: "";
-  position: absolute;
-  top: -10px;                  /* solapa hacia arriba */
-  left: 0; 
-  right: 0;
-  height: 10px;                /* mismo total del de arriba */
-  background: #050505;           /* mismo color para que &ldquo;cosen&rdquo; perfecto */
-  z-index: 1;
-  pointer-events: none;
-}
-</style><div id="footer-widgets" class="footer-widgets section-padding ">
+<footer id="colophon" class="site-footer" role="contentinfo"><div id="footer-widgets" class="footer-widgets section-padding ">
     <div class="container">
       <div class="row">
         <div id="footer-1" class="col-md-3 col-sm-12 footer-column widget-area sidebar" role="complementary">
