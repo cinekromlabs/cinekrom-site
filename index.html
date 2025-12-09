@@ -3159,115 +3159,121 @@ function onScroll(){
 
   </div><!-- /.container -->
 
-  <!-- ========= AUTOPLAY / WARMUP SOLO PARA ESTA SECCIÓN ========= -->
+<!-- ========= AUTOPLAY / WARMUP SOLO PARA ESTA SECCIÓN ========= -->
 <script>
-  (function () {
-    const section = document.getElementById('freedom-of-ignia'); // <-- ojo aquí
-    if (!section) return;
+(function () {
+  const section = document.getElementById('freedom-of-ignia');
+  if (!section) return;
 
-    const video   = section.querySelector('.freedom-video-bg');
-    if (!video) return;
+  const video = section.querySelector('.freedom-video-bg');
+  if (!video) return;
 
-    let warmedUp = false;
+  let warmedUp = false;
+  let needsResetAfterBackground = false;
 
-    function warmup() {
-      if (warmedUp) return;
-      warmedUp = true;
-      try {
-        // Prepara el video sin bloquear el primer render
-        video.preload = 'metadata';
-        video.load();
-      } catch (e) {
-        // silencioso
-      }
-    }
+  function warmup() {
+    if (warmedUp) return;
+    warmedUp = true;
+    try {
+      video.preload = 'metadata';
+      video.load();
+    } catch (e) {}
+  }
 
-    function tryPlay() {
-      warmup();
+  function tryPlay() {
+    warmup();
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
 
-      video.muted = true;
-      video.playsInline = true;
-      video.setAttribute('playsinline', '');
-      video.setAttribute('webkit-playsinline', '');
+    try {
+      const p = video.play();
+      if (p && p.catch) p.catch(()=>{});
+    } catch (e) {}
+  }
 
-      try {
-        const p = video.play();
-        if (p && p.catch) {
-          p.catch(function () {
-            // iOS puede rechazar; reintentamos con interacción
-          });
-        }
-      } catch (e) {
-        // nada
-      }
-    }
+  // 👀 Cuando la app/pestaña vuelve al frente
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) {
+      needsResetAfterBackground = true;
 
-    function isSectionVisible() {
+      // Si ya estamos viendo la sección, intenta reanudar
       const rect = section.getBoundingClientRect();
-      const vh   = window.innerHeight || document.documentElement.clientHeight;
-      return rect.top < vh && rect.bottom > 0;
-    }
+      const vh   = window.innerHeight;
+      const visible = rect.top < vh && rect.bottom > 0;
 
-    // 1) Al cargar el documento, lo “calentamos” y tratamos de reproducir
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      warmup();
-      tryPlay();
-    } else {
-      document.addEventListener('DOMContentLoaded', function () {
+      if (visible) {
         warmup();
         tryPlay();
-      });
-      window.addEventListener('load', function () {
-        warmup();
-        tryPlay();
-      });
+        needsResetAfterBackground = false;
+      }
     }
+  });
 
-    // 2) IntersectionObserver: cuando la sección entra al viewport
-    const observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
-          tryPlay();
-        }
-      });
-    }, {
-      threshold: [0.25, 0.5, 0.75]
-    });
+  // 1) On document ready
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    warmup();
+    tryPlay();
+  } else {
+    document.addEventListener('DOMContentLoaded', () => { warmup(); tryPlay(); });
+    window.addEventListener('load', () => { warmup(); tryPlay(); });
+  }
 
-    observer.observe(section);
-
-    // 3) visibilitychange: si al volver la sección está visible, intentamos play otra vez
-    document.addEventListener('visibilitychange', function () {
-      if (!document.hidden && isSectionVisible()) {
+  // 2) IntersectionObserver: play si la sección entra en viewport
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
+        warmup();
         tryPlay();
       }
     });
+  }, { threshold: [0.25, 0.5, 0.75] });
 
-    // 4) Gestos globales (touch/click/scroll) mientras la sección es visible
-    function interactionHandler() {
-      if (!isSectionVisible()) return;
-      tryPlay();
+  observer.observe(section);
+
+  // 3) Reintento por gestos
+  function isSectionVisible() {
+    const rect = section.getBoundingClientRect();
+    const vh   = window.innerHeight;
+    return rect.top < vh && rect.bottom > 0;
+  }
+
+  function interactionHandler() {
+    if (!isSectionVisible()) return;
+
+    if (needsResetAfterBackground) {
+      try { video.load(); } catch(e){}
+      needsResetAfterBackground = false;
     }
 
-    ['touchstart', 'click', 'scroll'].forEach(function (ev) {
-      window.addEventListener(ev, interactionHandler, { passive: true });
-    });
+    warmup();
+    tryPlay();
+  }
 
-    // 5) 🔥 Tap/click directo sobre el video (paracaídas iOS/Chrome iOS)
-    function directPlay() {
-      warmup();
-      try {
-        video.muted = true;
-        video.playsInline = true;
-        const p = video.play();
-        if (p && p.catch) p.catch(function () {});
-      } catch (e) {}
-    }
+  ['touchstart', 'click', 'scroll'].forEach(ev =>
+    window.addEventListener(ev, interactionHandler, { passive: true })
+  );
 
-    video.addEventListener('click', directPlay);
-    video.addEventListener('touchstart', directPlay, { passive: true });
+  /* 
+  ===========================================================
+  4) 🔥 Reproducción directa por tap/click (paracaídas iOS)
+     - Esto se añade al FINAL del script
+     - No rompe nada, solo da una segunda oportunidad.
+  ===========================================================
+  */
+  function directPlay() {
+    warmup();
+    try {
+      video.muted = true;
+      video.play();
+    } catch(e){}
+  }
 
-  })();
+  video.addEventListener('click', directPlay);
+  video.addEventListener('touchstart', directPlay, { passive: true });
+
+})();
 </script>
 
 </section>
@@ -4462,114 +4468,121 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
     </div><!-- /.ignia-video-content -->
   </div><!-- /.ignia-video-wrapper -->
 
+<!-- ========= AUTOPLAY / WARMUP SOLO PARA ESTA SECCIÓN ========= -->
 <script>
-  (function () {
-    const section = document.getElementById('ignia-pricing'); // <-- ojo aquí
-    if (!section) return;
+(function () {
+  const section = document.getElementById('ignia-pricing');
+  if (!section) return;
 
-    const video   = section.querySelector('.ignia-video-bg');
-    if (!video) return;
+  const video   = section.querySelector('.ignia-video-bg');
+  if (!video) return;
 
-    let warmedUp = false;
+  let warmedUp = false;
+  let needsResetAfterBackground = false;
 
-    function warmup() {
-      if (warmedUp) return;
-      warmedUp = true;
-      try {
-        // Prepara el video sin bloquear el primer render
-        video.preload = 'metadata';
-        video.load();
-      } catch (e) {
-        // silencioso
-      }
-    }
+  function warmup() {
+    if (warmedUp) return;
+    warmedUp = true;
+    try {
+      video.preload = 'metadata';
+      video.load();
+    } catch (e) {}
+  }
 
-    function tryPlay() {
-      warmup();
+  function tryPlay() {
+    warmup();
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
 
-      video.muted = true;
-      video.playsInline = true;
-      video.setAttribute('playsinline', '');
-      video.setAttribute('webkit-playsinline', '');
+    try {
+      const p = video.play();
+      if (p && p.catch) p.catch(()=>{});
+    } catch (e) {}
+  }
 
-      try {
-        const p = video.play();
-        if (p && p.catch) {
-          p.catch(function () {
-            // iOS puede rechazar; reintentamos con interacción
-          });
-        }
-      } catch (e) {
-        // nada
-      }
-    }
+  // 👀 Cuando la app/pestaña vuelve al frente
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) {
+      needsResetAfterBackground = true;
 
-    function isSectionVisible() {
+      // Si ya estamos viendo la sección, intenta reanudar
       const rect = section.getBoundingClientRect();
-      const vh   = window.innerHeight || document.documentElement.clientHeight;
-      return rect.top < vh && rect.bottom > 0;
-    }
+      const vh   = window.innerHeight;
+      const visible = rect.top < vh && rect.bottom > 0;
 
-    // 1) Al cargar el documento, lo “calentamos” y tratamos de reproducir
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      warmup();
-      tryPlay();
-    } else {
-      document.addEventListener('DOMContentLoaded', function () {
+      if (visible) {
         warmup();
         tryPlay();
-      });
-      window.addEventListener('load', function () {
-        warmup();
-        tryPlay();
-      });
+        needsResetAfterBackground = false;
+      }
     }
+  });
 
-    // 2) IntersectionObserver: cuando la sección entra al viewport
-    const observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
-          tryPlay();
-        }
-      });
-    }, {
-      threshold: [0.25, 0.5, 0.75]
-    });
+  // 1) On document ready
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    warmup();
+    tryPlay();
+  } else {
+    document.addEventListener('DOMContentLoaded', () => { warmup(); tryPlay(); });
+    window.addEventListener('load', () => { warmup(); tryPlay(); });
+  }
 
-    observer.observe(section);
-
-    // 3) visibilitychange: si al volver la sección está visible, intentamos play otra vez
-    document.addEventListener('visibilitychange', function () {
-      if (!document.hidden && isSectionVisible()) {
+  // 2) IntersectionObserver: play si la sección entra en viewport
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
+        warmup();
         tryPlay();
       }
     });
+  }, { threshold: [0.25, 0.5, 0.75] });
 
-    // 4) Gestos globales (touch/click/scroll) mientras la sección es visible
-    function interactionHandler() {
-      if (!isSectionVisible()) return;
-      tryPlay();
+  observer.observe(section);
+
+  // 3) Reintento por gestos
+  function isSectionVisible() {
+    const rect = section.getBoundingClientRect();
+    const vh   = window.innerHeight;
+    return rect.top < vh && rect.bottom > 0;
+  }
+
+  function interactionHandler() {
+    if (!isSectionVisible()) return;
+
+    if (needsResetAfterBackground) {
+      try { video.load(); } catch(e){}
+      needsResetAfterBackground = false;
     }
 
-    ['touchstart', 'click', 'scroll'].forEach(function (ev) {
-      window.addEventListener(ev, interactionHandler, { passive: true });
-    });
+    warmup();
+    tryPlay();
+  }
 
-    // 5) 🔥 Tap/click directo sobre el video (paracaídas iOS/Chrome iOS)
-    function directPlay() {
-      warmup();
-      try {
-        video.muted = true;
-        video.playsInline = true;
-        const p = video.play();
-        if (p && p.catch) p.catch(function () {});
-      } catch (e) {}
-    }
+  ['touchstart', 'click', 'scroll'].forEach(ev =>
+    window.addEventListener(ev, interactionHandler, { passive: true })
+  );
 
-    video.addEventListener('click', directPlay);
-    video.addEventListener('touchstart', directPlay, { passive: true });
+  /* 
+  ===========================================================
+  4) 🔥 Reproducción directa por tap/click (paracaídas iOS)
+     - Esto se añade al FINAL del script
+     - No rompe nada, solo da una segunda oportunidad.
+  ===========================================================
+  */
+  function directPlay() {
+    warmup();
+    try {
+      video.muted = true;
+      video.play();
+    } catch(e){}
+  }
 
-  })();
+  video.addEventListener('click', directPlay);
+  video.addEventListener('touchstart', directPlay, { passive: true });
+
+})();
 </script>
 
 
