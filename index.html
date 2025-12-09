@@ -3160,113 +3160,100 @@ function onScroll(){
   </div><!-- /.container -->
 
   <!-- ========= AUTOPLAY / WARMUP SOLO PARA ESTA SECCIÓN ========= -->
-  <script>
-    (function () {
-      const section = document.getElementById('freedom-of-ignia');
-      if (!section) return;
+<script>
+  (function () {
+    const section = document.getElementById('freedom-of-ignia');
+    if (!section) return;
 
-      const video = section.querySelector('.freedom-video-bg');
-      if (!video) return;
+    const video = section.querySelector('.freedom-video-bg');
+    if (!video) return;
 
-      let warmedUp = false;
-      let needsResetAfterBackground = false;
-      let unlocked = false;              // 👈 AGREGA ESTA LÍNEA
-      function warmup() {
-        if (warmedUp) return;
-        warmedUp = true;
-        try {
-          video.preload = 'metadata';
-          video.load();
-        } catch (e) {
-          // silencioso
+    let warmedUp = false;
+
+    function warmup() {
+      if (warmedUp) return;
+      warmedUp = true;
+      try {
+        // Prepara el video sin bloquear el primer render
+        video.preload = 'metadata';
+        video.load();
+      } catch (e) {
+        // silencioso
+      }
+    }
+
+    function tryPlay() {
+      warmup();
+
+      video.muted = true;
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+
+      try {
+        const p = video.play();
+        if (p && p.catch) {
+          p.catch(function () {
+            // iOS puede rechazar; reintentamos con interacción
+          });
         }
+      } catch (e) {
+        // nada
       }
+    }
 
-      function tryPlay() {
-        warmup();
+    function isSectionVisible() {
+      const rect = section.getBoundingClientRect();
+      const vh   = window.innerHeight || document.documentElement.clientHeight;
+      return rect.top < vh && rect.bottom > 0;
+    }
 
-        video.muted = true;
-        video.playsInline = true;
-        video.setAttribute('playsinline', '');
-        video.setAttribute('webkit-playsinline', '');
-
-        try {
-          const p = video.play();
-          if (p && p.catch) {
-            p.catch(function () {
-              // iOS puede rechazar; reintentaremos luego
-            });
-          }
-        } catch (e) {
-          // nada
-        }
-      }
-    // 👀 Cuando la pestaña/app vuelve al frente
-    document.addEventListener('visibilitychange', function () {
-      if (!document.hidden) {
-        // marcamos que al siguiente gesto hay que recargar el video
-        needsResetAfterBackground = true;
-      }
-    });
-      // 1) Precalentar / intentar reproducir cuando el documento está listo
-      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    // 1) Al cargar el documento, lo “calentamos” y tratamos de reproducir
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      warmup();
+      tryPlay();
+    } else {
+      document.addEventListener('DOMContentLoaded', function () {
         warmup();
         tryPlay();
-      } else {
-        document.addEventListener('DOMContentLoaded', function () {
-          warmup();
-          tryPlay();
-        });
-        window.addEventListener('load', function () {
-          warmup();
-          tryPlay();
-        });
-      }
-
-      // 2) IntersectionObserver: asegurar play cuando entra al viewport
-      const observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
-            warmup();
-            tryPlay();
-          }
-        });
-      }, {
-        threshold: [0.25, 0.5, 0.75]
       });
+      window.addEventListener('load', function () {
+        warmup();
+        tryPlay();
+      });
+    }
 
-      observer.observe(section);
+    // 2) IntersectionObserver: cuando la sección entra al viewport
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
+          tryPlay();
+        }
+      });
+    }, {
+      threshold: [0.25, 0.5, 0.75]
+    });
 
-      // 3) Refuerzos con interacción mientras la sección es visible
-      function isSectionVisible() {
-        const rect = section.getBoundingClientRect();
-        const vh   = window.innerHeight || document.documentElement.clientHeight;
-        return rect.top < vh && rect.bottom > 0;
+    observer.observe(section);
+
+    // 3) visibilitychange: si al volver la sección está visible, intentamos play otra vez
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden && isSectionVisible()) {
+        tryPlay();
       }
+    });
 
+    // 4) Gestos globales (touch/click/scroll) mientras la sección es visible
     function interactionHandler() {
       if (!isSectionVisible()) return;
-      if (!unlocked) unlocked = true;
-
-      // 🔁 Si venimos de background, recarga el video para recuperar poster/frame
-      if (needsResetAfterBackground) {
-        try {
-          video.pause();
-          video.currentTime = 0;   // nos aseguramos de volver al inicio
-          video.load();            // fuerza el poster otra vez
-        } catch (e) {}
-        needsResetAfterBackground = false;
-      }
-
-      warmup();
       tryPlay();
     }
 
-      ['touchstart', 'click', 'scroll'].forEach(function (ev) {
-        window.addEventListener(ev, interactionHandler, { passive: true });
-      });
-    })();
-  </script>
+    ['touchstart', 'click', 'scroll'].forEach(function (ev) {
+      window.addEventListener(ev, interactionHandler, { passive: true });
+    });
+  })();
+</script>
 
 </section>
 
@@ -4465,29 +4452,24 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
     const section = document.getElementById('ignia-pricing');
     if (!section) return;
 
-    const video = section.querySelector('.ignia-video-bg');
+    const video   = section.querySelector('.ignia-video-bg');
     if (!video) return;
 
-    /* 🔥 NUEVO: pre-carga suave del video */
-      let warmedUp = false;
-      let needsResetAfterBackground = false;
-      let unlocked = false;              // 👈 AGREGA ESTA LÍNEA
+    let warmedUp = false;
+
     function warmup() {
       if (warmedUp) return;
       warmedUp = true;
-
-      // Empuja al navegador a tener listo el video sin bloquear el render inicial
       try {
-        // No usamos preload="auto" en HTML; sólo aquí, ya con la página pintada
+        // Prepara el video sin bloquear el primer render
         video.preload = 'metadata';
         video.load();
       } catch (e) {
-        // Si algún navegador se queja, simplemente lo ignoramos
+        // silencioso
       }
     }
 
     function tryPlay() {
-      // Siempre que vayamos a intentar reproducir, nos aseguramos de haber calentado el buffer
       warmup();
 
       video.muted = true;
@@ -4495,21 +4477,25 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
       video.setAttribute('playsinline', '');
       video.setAttribute('webkit-playsinline', '');
 
-      const p = video.play();
-      if (p && p.catch) {
-        p.catch(function () {
-          // Safari puede rechazar; reintentamos luego.
-        });
+      try {
+        const p = video.play();
+        if (p && p.catch) {
+          p.catch(function () {
+            // iOS puede rechazar; reintentamos con interacción
+          });
+        }
+      } catch (e) {
+        // nada
       }
     }
-    // 👀 Cuando la pestaña/app vuelve al frente
-    document.addEventListener('visibilitychange', function () {
-      if (!document.hidden) {
-        // marcamos que al siguiente gesto hay que recargar el video
-        needsResetAfterBackground = true;
-      }
-    });
-    // 1) Intentos iniciales al cargar
+
+    function isSectionVisible() {
+      const rect = section.getBoundingClientRect();
+      const vh   = window.innerHeight || document.documentElement.clientHeight;
+      return rect.top < vh && rect.bottom > 0;
+    }
+
+    // 1) Al cargar el documento, lo “calentamos” y tratamos de reproducir
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
       warmup();
       tryPlay();
@@ -4528,7 +4514,6 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
     const observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
-          warmup();
           tryPlay();
         }
       });
@@ -4538,30 +4523,16 @@ We carefully curate every optional peripheral offered with IGNIA. Not just for c
 
     observer.observe(section);
 
-    // 3) Gestos globales (touch/click/scroll) mientras la sección es visible
-    let unlocked = false;
+    // 3) visibilitychange: si al volver la sección está visible, intentamos play otra vez
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden && isSectionVisible()) {
+        tryPlay();
+      }
+    });
 
-    function isSectionVisible() {
-      const rect = section.getBoundingClientRect();
-      const vh   = window.innerHeight || document.documentElement.clientHeight;
-      return rect.top < vh && rect.bottom > 0;
-    }
-
+    // 4) Gestos globales (touch/click/scroll) mientras la sección es visible
     function interactionHandler() {
       if (!isSectionVisible()) return;
-      if (!unlocked) unlocked = true;
-
-      // 🔁 Si venimos de background, recarga el video para recuperar poster/frame
-      if (needsResetAfterBackground) {
-        try {
-          video.pause();
-          video.currentTime = 0;   // nos aseguramos de volver al inicio
-          video.load();            // fuerza el poster otra vez
-        } catch (e) {}
-        needsResetAfterBackground = false;
-      }
-
-      warmup();
       tryPlay();
     }
 
