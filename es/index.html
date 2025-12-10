@@ -1773,15 +1773,30 @@ body::-webkit-scrollbar {
       }
     }
 
-  @media (max-width: 600px) {
-  .hero-lang-btn {
-    padding: 8px 18px;      /* un poco más pequeño que desktop */
-    font-size: 0.7rem;      /* baja ligeramente el tamaño del texto */
-    min-width: 95px;        /* evita que se haga demasiado chico */
-    min-height: 34px;       /* tamaño suficiente para tocar con el dedo */
-    border-radius: 5px;   /* mantiene el óvalo perfecto */
-    gap: 4px;               /* reduce la separación emoji-texto */
+@media (max-width: 600px) {
+
+  /* Contenedor del switcher (posición) */
+  #hero-lang-switcher {
+    bottom: 24px;       /* un poquito más de aire */
+    right: 24px;
   }
+
+  /* Botón: MÁS GRANDE, MÁS ALTO, TEXTO LEGIBLE */
+  .hero-lang-btn {
+    padding: 10px 20px;     /* antes 8px 18px */
+    font-size: 0.85rem;     /* antes 0.7rem */
+    min-width: 115px;       /* antes 95px */
+    min-height: 42px;       /* antes 34px */
+    border-radius: 7px;     /* más suave */
+    gap: 6px;               /* antes 4px */
+  }
+
+  /* Ajuste del label (texto del idioma) */
+  .hero-lang-btn .lang-label {
+    gap: 6px;               /* mantiene aire */
+    font-size: 0.85rem;     /* lo mismo que el botón */
+  }
+}
 
   .hero-lang-btn .lang-label {
     gap: 4px;               /* ajusta el espacio interno */
