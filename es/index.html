@@ -4992,7 +4992,7 @@ Los estudios ya no pagan solo por sus herramientas: pagan también <strong>por c
   /* Que el contenido se estire en todo el alto del cuadro */
   .ignia-video-content {
     justify-content: center !important;  /* en vez de center */
-    padding: 4rem 0.9rem 2.5rem !important;   /* más aire arriba y abajo */
+    padding: 4rem 1.2rem 2.5rem !important;   /* más aire arriba y abajo */
   }
 
   /* Un pelín más de respiro entre líneas */
@@ -5004,6 +5004,27 @@ Los estudios ya no pagan solo por sus herramientas: pagan también <strong>por c
   .ignia-video-content h3 {
     margin-bottom: 0.8rem !important;
     line-height: 1.3 !important;
+  }
+}
+
+/* AJUSTES FINOS PARA ESPAÑOL – PRICING MOBILE */
+@media (max-width: 768px) {
+
+  /* Headline de precio: que quepa en una sola línea */
+  #ignia-pricing .ignia-video-content p[style*="2.4rem"] {
+    font-size: 1.15rem !important;
+    line-height: 1.1 !important;
+    margin-top: 20px !important;
+    margin-bottom: 4px !important;
+  }
+}
+@media (max-width: 768px) {
+
+  /* Bloque Founders Edition: menos altura entre líneas y fuente un poco más chica */
+  #ignia-pricing .ignia-video-content p:last-of-type {
+    font-size: 0.9rem !important;
+    line-height: 1.25 !important;
+    margin-bottom: 0.6rem !important;
   }
 }
 /* TERMINA PRICING */
